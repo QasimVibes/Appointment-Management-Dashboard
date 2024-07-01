@@ -35,24 +35,25 @@ export default function Register() {
 
   return (
     <div className="flex flex-col items-center pt-[51.28px] pb-[73.5px]">
-      <div>
+      <div className="pb-[8.77px]">
         <Image src={logo} alt="logo" />
       </div>
-      <div className="w-[268.65px] h-[43.2px]">
+      <div className="w-[268.65px] mb-[9.3px]">
         <h1 className="text-[20px] font-bold font-inter leading-[28px] text-center">
           Sign up with Calendly for free
         </h1>
       </div>
       <div className="w-[440px] h-[600px] rounded-[6px] border border-solid border-[#DADADA] py-[28px] px-[33px] flex flex-col shadow-[0px_1px_5px_0px_#004A7426]">
         <form onSubmit={onHandleSubmit}>
+          <div>
           <Input
             label="Enter your email to get started."
             type="email"
             placeholder="Email"
             name="email"
             onChange={onchangeHandler}
-            className="w-[374px] h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
-            labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px]"
+            className="mb-[12px] w-[374px] h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
+            labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A]  mb-[8px]"
           />
           <Input
             label="Enter your full name."
@@ -60,7 +61,7 @@ export default function Register() {
             placeholder="John Doe"
             name="name"
             onChange={onchangeHandler}
-            className="w-[374px] h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
+            className="mb-[12px] w-[374px] h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
             labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A]  mb-[8px]"
           />
           <Input
@@ -69,7 +70,7 @@ export default function Register() {
             placeholder="John Doe"
             name="username"
             onChange={onchangeHandler}
-            className="w-[374px] h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
+            className="mb-[12px] w-[374px] h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
             labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A]  mb-[8px]"
           />
           <Input
@@ -78,9 +79,10 @@ export default function Register() {
             placeholder="Password"
             name="password"
             onChange={onchangeHandler}
-            className="w-[374px] h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
+            className="mb-[12px] w-[374px] h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
             labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A]  mb-[8px]"
           />
+          </div>
           <div className="font-inter font-normal text-[12.91px] leading-[21px] text-[#C84545] pt-[17.5px] pl-[20px] mb-[12px]">
             <p>Use a few words, avoid common phrases</p>
             <p>No need for symbols, digits, or uppercase letters</p>

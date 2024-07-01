@@ -12,8 +12,10 @@ export default function Input({
   ...props
 }: any) {
   return (
-    <div className="flex flex-col mb-[12px]">
-      <label htmlFor={name} className={labelClassName}>{label}</label>
+    <>
+      <label htmlFor={name} className={`block ${labelClassName}`}>
+        {label}
+      </label>
       <input
         type={type}
         name={name}
@@ -24,6 +26,6 @@ export default function Input({
         className={className}
         {...props}
       />
-    </div>
+    </>
   );
 }

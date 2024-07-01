@@ -35,7 +35,7 @@ export default function Login() {
 
   const handleGoogleSignIn = async () => {
     try {
-     await signIn("google");
+      await signIn("google");
     } catch (error) {
       toast.error("Google sign-in failed");
       console.error("Google sign-in error:", error);
@@ -50,40 +50,42 @@ export default function Login() {
 
   return (
     <div className="flex flex-col items-center pt-[51.28px] pb-[73.5px]">
-      <div>
+      <div className="mb-[8.77px]">
         <Image src={logo} alt="logo" />
       </div>
-      <div className="w-[268.65px] h-[43.2px]">
+      <div className="w-[268.65px] mb-[9.3px]">
         <h1 className="text-[20px] font-bold font-inter leading-[28px] text-center">
           Sign in with Calendly for free
         </h1>
       </div>
       <div className="w-[440px] rounded-[6px] border border-solid border-[#DADADA] py-[28px] px-[33px] flex flex-col shadow-[0px_1px_5px_0px_#004A7426]">
         <form onSubmit={handleEmailSignIn}>
-          <Input
-            label="Enter your email."
-            type="email"
-            placeholder="Email"
-            name="email"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setEmail(e.target.value)
-            }
-            className="w-[374px] h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
-            labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px]"
-          />
-          <Input
-            label="Enter your password"
-            type="password"
-            placeholder="Password"
-            name="password"
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setPassword(e.target.value)
-            }
-            className="w-[374px] h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
-            labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A]  mb-[8px]"
-          />
-          <div className="flex justify-end font-inter font-normal text-[14px] leading-[21px]  mb-[12px]">
-            <Link href="#">Forgot password?</Link>
+          <div>
+            <Input
+              label="Enter your email."
+              type="email"
+              placeholder="Email"
+              name="email"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setEmail(e.target.value)
+              }
+              className="mb-[12px] w-[374px] h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
+              labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px]"
+            />
+            <Input
+              label="Enter your password"
+              type="password"
+              placeholder="Password"
+              name="password"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setPassword(e.target.value)
+              }
+              className="mb-[12px] w-[374px] h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
+              labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A]  mb-[8px]"
+            />
+          </div>
+          <div className="flex justify-end font-inter font-normal text-[14px] leading-[21px]  mb-[12px] hover:text-[#C84545]">
+            <Link href="/forgotPassword">Forgot password?</Link>
           </div>
           <div className="flex justify-center">
             <Button
@@ -92,10 +94,10 @@ export default function Login() {
             />
           </div>
           <div className="flex flex-col items-center p-2">
-            <div className="flex w-full items-center gap-2 py-2 text-sm text-slate-600">
-              <div className="h-px w-full bg-slate-200"></div>
+            <div className="flex w-full items-center gap-2 py-2 text-sm font-[400] font-inter ">
+              <div className="h-px w-full bg-[#DADADA]"></div>
               OR
-              <div className="h-px w-full bg-slate-200"></div>
+              <div className="h-px w-full bg-[#DADADA]"></div>
             </div>
 
             <button
