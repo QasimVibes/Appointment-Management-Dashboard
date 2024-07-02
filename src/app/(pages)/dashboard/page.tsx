@@ -17,7 +17,7 @@ export default function Dashboard() {
   return (
     <>
       <div className="grid grid-cols-[260px_1fr] h-[100vh]">
-        <div className="w-[260px] flex flex-col justify-between">
+        <div className="w-[260px] flex flex-col justify-between border border-solid border-[#DADADA]">
           <div className="space-y-[4px]">
             <div className="flex items-center justify-between p-[20px]">
               <Image src={logo} alt="logo" className="w-[132px] h-[32px]" />

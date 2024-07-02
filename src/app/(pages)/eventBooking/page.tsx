@@ -5,6 +5,7 @@ import { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./customCalendar.css";
+import Button from "@/app/(components)/Button";
 
 type ValuePiece = Date | null;
 
@@ -12,6 +13,7 @@ type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 export default function EventBooking() {
   const [value, onChange] = useState<Value>(new Date());
+
   return (
     <>
       <Navbar />
@@ -78,26 +80,40 @@ export default function EventBooking() {
                 <div className="col-span-5  space-y-8 px-[16px]">
                   <div className="pt-[36px]">
                     <h2 className="font-[400] text-[16px] leading-[24px] text-[#1A1A1A]">
-                      Wednesday January 10
+                      {value?.toString().slice(0, 16)}
                     </h2>
                   </div>
                   <div className="space-y-[10px] overflow-auto h-[60%]">
                     <div>
-                      <button className="w-[90%] pt-2 pb-5 border border-solid border-[#0069FF] rounded-[6px] font-[700] text-[14px] leading-[22px] text-[#0069FF] ">90:00am</button>
+                      <Button
+                        text="9:00am"
+                        className="w-[90%] pt-2 pb-5 border border-solid border-[#0069FF] rounded-[6px] font-[700] text-[14px] leading-[22px] text-[#0069FF] "
+                      />
                     </div>
                     <div>
-                      <button className="w-[90%] pt-2 pb-5 border border-solid border-[#0069FF] rounded-[6px] font-[700] text-[14px] leading-[22px] text-[#0069FF] ">90:00am</button>
+                      <Button
+                        text="9:30am"
+                        className="w-[90%] pt-2 pb-5 border border-solid border-[#0069FF] rounded-[6px] font-[700] text-[14px] leading-[22px] text-[#0069FF] "
+                      />
                     </div>
                     <div>
-                      <button className="w-[90%] pt-2 pb-5 border border-solid border-[#0069FF] rounded-[6px] font-[700] text-[14px] leading-[22px] text-[#0069FF] ">90:00am</button>
-                    </div>
-                     <div>
-                      <button className="w-[90%] pt-2 pb-5 border border-solid border-[#0069FF] rounded-[6px] font-[700] text-[14px] leading-[22px] text-[#0069FF] ">90:00am</button>
+                      <Button
+                        text="10:00am"
+                        className="w-[90%] pt-2 pb-5 border border-solid border-[#0069FF] rounded-[6px] font-[700] text-[14px] leading-[22px] text-[#0069FF] "
+                      />
                     </div>
                     <div>
-                      <button className="w-[90%] pt-2 pb-5 border border-solid border-[#0069FF] rounded-[6px] font-[700] text-[14px] leading-[22px] text-[#0069FF] ">90:00am</button>
+                      <Button
+                        text="10:30am"
+                        className="w-[90%] pt-2 pb-5 border border-solid border-[#0069FF] rounded-[6px] font-[700] text-[14px] leading-[22px] text-[#0069FF] "
+                      />
                     </div>
-                    
+                    <div>
+                      <Button
+                        text="11:00am"
+                        className="w-[90%] pt-2 pb-5 border border-solid border-[#0069FF] rounded-[6px] font-[700] text-[14px] leading-[22px] text-[#0069FF] "
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

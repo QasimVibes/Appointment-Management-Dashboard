@@ -21,6 +21,18 @@ import filter from "../../../public/asset/filter.svg";
 import exportIcon from "../../../public/asset/export.svg";
 import circle from "../../../public/asset/circle.svg";
 import details from "../../../public/asset/details.svg";
+import leftArrow from "../../../public/asset/leftArrow.svg";
+import profilePerson from "../../../public/asset/profilePerson.svg";
+import star from "../../../public/asset/star.svg";
+import link from "../../../public/asset/link.svg";
+import settingIcon from "../../../public/asset/settings.svg";
+import preferences from "../../../public/asset/preferences.svg";
+import calender from "../../../public/asset/calender.svg";
+import helpIcon from "../../../public/asset/helpIcon.svg";
+import logoutIcon from "../../../public/asset/logoutIcon.svg";
+import personAdd from "../../../public/asset/personAdd.svg";
+import personButton from "../../../public/asset/personButton.svg";
+import progressbar from "../../../public/asset/progressbar.svg";
 
 export {
   logo,
@@ -46,4 +58,16 @@ export {
   exportIcon,
   circle,
   details,
+  leftArrow,
+  profilePerson,
+  star,
+  link,
+  settingIcon,
+  preferences,
+  calender,
+  helpIcon,
+  personAdd,
+  logoutIcon,
+  personButton,
+  progressbar,
 };

@@ -14,7 +14,7 @@ export default function ScheduledEvent() {
   return (
     <>
       <Navbar />
-      <div className="pt-[46px] flex justify-center bg-[#F9F9F9]">
+      <div className="pt-[46px] flex justify-center bg-[#F9F9F9] mb-[48px]">
         <div className="relative flex flex-col items-center w-[80vw]  h-[80vh] rounded">
           <div className="grid grid-cols-3 h-[100%]  ">
             <div className="col-span-1">
