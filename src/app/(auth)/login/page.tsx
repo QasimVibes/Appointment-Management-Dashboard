@@ -1,16 +1,15 @@
 "use client";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { Image, logo, google } from "@/app/constants/images";
-import Input from "@/app/(components)/Input";
+import { Image, logo, google } from "@/constants/images";
+import Input from "@/(components)/Input";
 import Link from "next/link";
-import Button from "@/app/(components)/Button";
+import Button from "@/(components)/Button";
 import toast from "react-hot-toast";
 
 export default function Login() {
-  const { data: session } = useSession();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
@@ -25,7 +24,7 @@ export default function Login() {
       });
       if (response?.ok) {
         toast.success("Welcome back!");
-        router.push("/");
+        router.push("/dashboard");
       }
     } catch (error) {
       toast.error("Sign in failed");
@@ -36,17 +35,14 @@ export default function Login() {
   const handleGoogleSignIn = async () => {
     try {
       await signIn("google");
+      router.push("/dashboard");
     } catch (error) {
       toast.error("Google sign-in failed");
       console.error("Google sign-in error:", error);
     }
   };
 
-  // Remove after middleware is added
-  if (session) {
-    router.push("/");
-    return null;
-  }
+
 
   return (
     <div className="flex flex-col items-center pt-[51.28px] pb-[73.5px]">
@@ -120,7 +116,7 @@ export default function Login() {
         <div className="font-inter font-normal text-[14px] leading-[18px] text-center text-[#1A1A1A] pt-[15px]">
           <p>
             Don't have an account?{" "}
-            <Link href="/register" className="text-[#0069FF]">
+            <Link href="/signup" className="text-[#0069FF]">
               Sign Up
             </Link>
           </p>

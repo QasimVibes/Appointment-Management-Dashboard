@@ -1,11 +1,11 @@
 "use client";
-import Navbar from "@/app/(components)/Navbar";
-import { topCornerImage, Image, clock, globe } from "@/app/constants/images";
+import Navbar from "@/(components)/Navbar";
+import { topCornerImage, Image, clock, globe } from "@/constants/images";
 import { useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./customCalendar.css";
-import Button from "@/app/(components)/Button";
+import Button from "@/(components)/Button";
 
 type ValuePiece = Date | null;
 

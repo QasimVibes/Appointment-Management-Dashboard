@@ -11,8 +11,8 @@ import {
   filter,
   circle,
   details,
-} from "@/app/constants/images";
-import Button from "@/app/(components)/Button";
+} from "@/constants/images";
+import Button from "@/(components)/Button";
 export default function Dashboard() {
   return (
     <>

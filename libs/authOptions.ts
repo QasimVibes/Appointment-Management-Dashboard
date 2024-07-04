@@ -5,6 +5,14 @@ import prisma from "../libs/prisma";
 import bcrypt from "bcrypt";
 
 export const authOptions: NextAuthOptions = {
+  secret: process.env.NEXTAUTH_SECRET || "randomsecretkey",
+  session: {
+    strategy: "jwt",
+    maxAge: 60 * 60 * 24 * 7, // 1 week
+  },
+  pages: {
+    signIn: "/login",
+  },
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -45,7 +53,7 @@ export const authOptions: NextAuthOptions = {
             throw new Error("Invalid credentials");
           }
 
-          return { ...user, id: user.id.toString() };
+          return user;
         } catch (error: any) {
           throw new Error("Authentication failed: " + error.message);
         }
@@ -56,38 +64,52 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
-  pages: {
-    signIn: "/login",
-  },
+
   callbacks: {
-    async signIn({ account, profile }: any) {
+    async signIn({ user, account, profile }: any) {
       if (account?.provider === "google") {
         const existingUser = await prisma.user.findUnique({
           where: { email: profile.email },
         });
         if (existingUser) {
           console.log("User already exists:", existingUser);
+          profile.id = existingUser.id;
         } else {
           try {
             const newUser = await prisma.user.create({
               data: {
-                name: profile.name,
+                fullname: profile.name,
                 email: profile.email,
                 username: profile.email.split("@")[0],
                 password: "",
               },
             });
             console.log("User created:", newUser);
+            profile.id = newUser.id;
           } catch (error) {
             console.error("Error creating user:", error);
+            return false;
           }
         }
       }
+
+      if (profile?.id) {
+        user.id = profile.id;
+      }
       return true;
     },
-  },
-  secret: process.env.NEXTAUTH_SECRET || "randomsecretkey",
-  session: {
-    strategy: "jwt",
+
+    async session({ session, token }) {
+      if (token) {
+        (session.user.id = token.id), (session.user.email = token.email);
+      }
+      return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        (token.id = user.id?.toString()), (token.email = user.email);
+      }
+      return token;
+    },
   },
 };

@@ -1,7 +1,7 @@
 "use client";
-import { Image, logo } from "@/app/constants/images";
-import Input from "@/app/(components)/Input";
-import Button from "@/app/(components)/Button";
+import { Image, logo } from "@/constants/images";
+import Input from "@/(components)/Input";
+import Button from "@/(components)/Button";
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 export default function Register() {
   const [data, setData] = useState({
     email: "",
-    name: "",
+    fullname: "",
     username: "",
     password: "",
   });
@@ -59,7 +59,7 @@ export default function Register() {
             label="Enter your full name."
             type="text"
             placeholder="John Doe"
-            name="name"
+            name="fullname"
             onChange={onchangeHandler}
             className="mb-[12px] w-[374px] h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
             labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A]  mb-[8px]"

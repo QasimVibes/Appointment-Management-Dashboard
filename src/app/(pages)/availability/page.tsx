@@ -1,12 +1,20 @@
 "use client";
-import { Image, logo, availability, progressbar } from "@/app/constants/images";
-import Button from "@/app/(components)/Button";
+import { Image, logo, availability, progressbar } from "@/constants/images";
+import Button from "@/(components)/Button";
 import { days, startingHours } from "./availabilityData";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
+import axios from "axios";
 
 export default function Availability() {
   const [selectTime, setSelectTime] = useState("");
+  const [nextSelectTime, setNextSelectTime] = useState("");
   const [nextSelectOptions, setNextSelectOptions] = useState<string[]>([]);
+  const { data: session } = useSession();
+  const [selectedDays, setSelectedDays] = useState<string[]>([]);
+
+  console.log(session?.user);
+  
 
   const handleFirstSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedTime = e.target.value;
@@ -15,7 +23,19 @@ export default function Availability() {
     const data = startingHours.slice(index + 1);
     setNextSelectOptions(data);
   };
-  
+
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
+    const response = await axios.post("/api/availability", {
+      startHour: selectTime,
+      days: selectedDays,
+      endHour: nextSelectTime,
+      userId: session?.user.id,
+    });
+    if (response.status === 200) {
+      console.log(response.data);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center space-y-[32px] mb-[48px]">
@@ -50,10 +70,11 @@ export default function Availability() {
                 <div className="flex flex-row  gap-x-[32px]">
                   <div>
                     <select
-                      name="time"
+                      name="startHour"
                       id="firstTimeSelect"
                       value={selectTime}
                       onChange={handleFirstSelectChange}
+                      required
                       className="py-[13px] px-[17px]  w-[278px] rounded-[8px] border border-solid border-[#B2B2B2]"
                     >
                       <option value="" disabled>
@@ -68,8 +89,11 @@ export default function Availability() {
                   </div>
                   <div>
                     <select
-                      name="time"
+                      name="endHour"
                       id="secondTimeSelect"
+                      value={nextSelectTime}
+                      onChange={(e) => setNextSelectTime(e.target.value)}
+                      required
                       className="py-[13px] w-[278px] px-[17px] rounded-[8px] border border-solid border-[#B2B2B2]"
                     >
                       <option value="" disabled>
@@ -101,6 +125,17 @@ export default function Availability() {
                         id={day.data}
                         name={day.data}
                         value={day.data}
+                        required
+                        checked={selectedDays.includes(day.data)}
+                        onChange={() => {
+                          if (selectedDays.includes(day.data)) {
+                            setSelectedDays(
+                              selectedDays.filter((d) => d !== day.data)
+                            );
+                          } else {
+                            setSelectedDays([...selectedDays, day.data]);
+                          }
+                        }}
                       />
                       <label
                         htmlFor={day.data}
@@ -133,6 +168,7 @@ export default function Availability() {
 
             <Button
               text="Continue"
+              onClick={handleSubmit}
               className="px-[17px] py-[11px] rounded-[40px] border border-solid bg-[#0069ff] border-[#0069ff] text-white font-inter font-[700] text-[12.91px] leading-[22px]"
             />
           </div>

@@ -1,6 +1,6 @@
-import Navbar from "@/app/(components)/Navbar";
-import Button from "@/app/(components)/Button";
-import Input from "@/app/(components)/Input";
+import Navbar from "@/(components)/Navbar";
+import Button from "@/(components)/Button";
+import Input from "@/(components)/Input";
 import {
   topCornerImage,
   Image,
@@ -8,7 +8,7 @@ import {
   clock,
   briefcase,
   globe,
-} from "@/app/constants/images";
+} from "@/constants/images";
 
 export default function ScheduledEvent() {
   return (

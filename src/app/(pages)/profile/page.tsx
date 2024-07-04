@@ -16,8 +16,8 @@ import {
   dropDown,
   personAdd,
   personButton,
-} from "@/app/constants/images";
-import Button from "@/app/(components)/Button";
+} from "@/constants/images";
+import Button from "@/(components)/Button";
 export default function Profile() {
   const handleLogout = async () => {
     try {

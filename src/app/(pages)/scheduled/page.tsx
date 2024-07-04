@@ -1,4 +1,4 @@
-import Navbar from "@/app/(components)/Navbar";
+import Navbar from "@/(components)/Navbar";
 import {
   checkmark,
   Image,
@@ -7,7 +7,7 @@ import {
   briefcase,
   globe,
   topCornerImage,
-} from "@/app/constants/images";
+} from "@/constants/images";
 
 export default function Scheduled() {
   return (
