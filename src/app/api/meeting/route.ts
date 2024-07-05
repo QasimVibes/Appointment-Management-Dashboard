@@ -3,21 +3,45 @@ import prisma from "../../../../libs/prisma";
 
 export async function POST(request: NextRequest) {
   try {
-    const { startHour, endHour, days, userId } = await request.json();
-    if (!startHour || !endHour || !days || !userId || days.length === 0) {
+    const body = await request.json();
+    const {
+      schedulerEmail,
+      schedulerName,
+      description,
+      selectedTime,
+      selectedDate,
+      hostName,
+      userId,
+    } = body;
+
+    if (
+      !schedulerEmail ||
+      !schedulerName ||
+      !description ||
+      !selectedTime ||
+      !selectedDate ||
+      !hostName ||
+      !userId
+    ) {
       return NextResponse.json(
         { message: "Please provide all the fields" },
         { status: 400 }
       );
     }
 
-    const upsertAvailability = await prisma.availability.upsert({
-      where: { userId },
-      create: { startHour, endHour, days, userId },
-      update: { startHour, endHour, days, userId },
+    const newMeeting = await prisma.meeting.create({
+      data: {
+        schedulerEmail,
+        schedulerName,
+        description,
+        selectedTime,
+        selectedDate,
+        hostName,
+        userId,
+      },
     });
 
-    if (!upsertAvailability) {
+    if (!newMeeting) {
       return NextResponse.json(
         { message: "Something went wrong" },
         { status: 500 }
@@ -25,11 +49,10 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { message: "Availability updated", availability:upsertAvailability },
+      { message: "Meeting scheduled successfully" },
       { status: 200 }
     );
   } catch (error) {
-    console.error(error);
     return NextResponse.json(
       { message: "Something went wrong" },
       { status: 500 }
@@ -40,7 +63,6 @@ export async function POST(request: NextRequest) {
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    
     const userId = searchParams.get("userId");
     if (!userId) {
       return NextResponse.json(
@@ -48,13 +70,22 @@ export async function GET(request: NextRequest) {
         { status: 400 }
       );
     }
-    const availability = await prisma.availability.findUnique({
+
+    const meetings = await prisma.meeting.findMany({
       where: { userId },
     });
 
-    return NextResponse.json({ availability }, { status: 200 });
+    if (!meetings) {
+      return NextResponse.json(
+        { message: "Meetings not found" },
+        { status: 404 }
+      );
+    }
+    return NextResponse.json(
+      { message: "Meetings found", meetings },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error(error);
     return NextResponse.json(
       { message: "Something went wrong" },
       { status: 500 }

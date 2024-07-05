@@ -1,41 +1,37 @@
 "use client";
 import { Image, logo, availability, progressbar } from "@/constants/images";
 import Button from "@/(components)/Button";
-import { days, startingHours } from "./availabilityData";
-import { useState } from "react";
-import { useSession } from "next-auth/react";
-import axios from "axios";
+import {
+  useAvailability,
+  useSelectAvailability,
+  useSubmitAvailability,
+  useFetchAvailability,
+} from "./useAvailability";
 
 export default function Availability() {
-  const [selectTime, setSelectTime] = useState("");
-  const [nextSelectTime, setNextSelectTime] = useState("");
-  const [nextSelectOptions, setNextSelectOptions] = useState<string[]>([]);
-  const { data: session } = useSession();
-  const [selectedDays, setSelectedDays] = useState<string[]>([]);
+  const { days, startingHours } = useAvailability();
+  const {
+    selectTime,
+    nextSelectTime,
+    nextSelectOptions,
+    selectedDays,
+    setNextSelectTime,
+    setSelectedDays,
+    setSelectTime,
+    handleFirstSelectChange,
+  } = useSelectAvailability();
 
-  console.log(session?.user);
-  
+  const { handleSubmit } = useSubmitAvailability();
 
-  const handleFirstSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedTime = e.target.value;
-    setSelectTime(selectedTime);
-    const index = startingHours.indexOf(selectedTime);
-    const data = startingHours.slice(index + 1);
-    setNextSelectOptions(data);
+  const handleButtonClick = () => {
+    handleSubmit(selectTime, nextSelectTime, selectedDays);
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    const response = await axios.post("/api/availability", {
-      startHour: selectTime,
-      days: selectedDays,
-      endHour: nextSelectTime,
-      userId: session?.user.id,
-    });
-    if (response.status === 200) {
-      console.log(response.data);
-    }
-  };
+  const { isLoading, isError } = useFetchAvailability(
+    setSelectTime,
+    setNextSelectTime,
+    setSelectedDays
+  );
 
   return (
     <div className="flex flex-col items-center space-y-[32px] mb-[48px]">
@@ -58,7 +54,6 @@ export default function Availability() {
               <Image src={availability} alt="availability logo" />
             </div>
           </div>
-
           <div className="px-[24px] pt-[32px] pb-[24px] border border-solid border-[#DADADA]  ">
             <div className="space-y-[20px]">
               <div className="space-y-[8px]">
@@ -77,14 +72,14 @@ export default function Availability() {
                       required
                       className="py-[13px] px-[17px]  w-[278px] rounded-[8px] border border-solid border-[#B2B2B2]"
                     >
-                      <option value="" disabled>
-                        Select a time
-                      </option>
-                      {startingHours?.map((time, index) => (
-                        <option value={time} key={index}>
-                          {time}
-                        </option>
-                      ))}
+                      <option value="">Select a time</option>
+                      {startingHours
+                        ?.slice(0, startingHours.length - 1)
+                        .map((time, index) => (
+                          <option value={time} key={index}>
+                            {time}
+                          </option>
+                        ))}
                     </select>
                   </div>
                   <div>
@@ -96,10 +91,10 @@ export default function Availability() {
                       required
                       className="py-[13px] w-[278px] px-[17px] rounded-[8px] border border-solid border-[#B2B2B2]"
                     >
-                      <option value="" disabled>
-                        Select a time
-                      </option>
-                      {nextSelectOptions?.map((time, index) => (
+                      {!nextSelectOptions.length && (
+                        <option value="">{nextSelectTime}</option>
+                      )}
+                      {nextSelectOptions.map((time, index) => (
                         <option value={time} key={index}>
                           {time}
                         </option>
@@ -115,33 +110,33 @@ export default function Availability() {
                   </h2>
                 </div>
                 <div className="flex flex-row justify-between">
-                  {days.map((day, index) => (
+                  {days?.map((day, index) => (
                     <div
                       className="flex flex-col px-[19.85px] py-[8px]"
                       key={index}
                     >
                       <input
                         type="checkbox"
-                        id={day.data}
-                        name={day.data}
-                        value={day.data}
+                        id={day}
+                        name={day}
+                        value={day}
                         required
-                        checked={selectedDays.includes(day.data)}
+                        checked={selectedDays.includes(day)}
                         onChange={() => {
-                          if (selectedDays.includes(day.data)) {
+                          if (selectedDays?.includes(day)) {
                             setSelectedDays(
-                              selectedDays.filter((d) => d !== day.data)
+                              selectedDays.filter((d) => d !== day)
                             );
                           } else {
-                            setSelectedDays([...selectedDays, day.data]);
+                            setSelectedDays([...selectedDays, day]);
                           }
                         }}
                       />
                       <label
-                        htmlFor={day.data}
+                        htmlFor={day}
                         className="font-inter font-[400] text-[11.06px] leading-[18px]"
                       >
-                        {day.day}
+                        {day}
                       </label>
                     </div>
                   ))}
@@ -165,10 +160,9 @@ export default function Availability() {
               text="Set up later"
               className="px-[17px] py-[11px] rounded-[40px] border border-solid hover:border-[grey]  text-[##1A1A1A] font-inter font-[700] text-[12.91px] leading-[22px]"
             />
-
             <Button
               text="Continue"
-              onClick={handleSubmit}
+              onClick={handleButtonClick}
               className="px-[17px] py-[11px] rounded-[40px] border border-solid bg-[#0069ff] border-[#0069ff] text-white font-inter font-[700] text-[12.91px] leading-[22px]"
             />
           </div>

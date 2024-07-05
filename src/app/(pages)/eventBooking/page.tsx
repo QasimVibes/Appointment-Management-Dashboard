@@ -17,6 +17,7 @@ export default function EventBooking() {
   return (
     <>
       <Navbar />
+   
       <div className="pt-[46px] flex justify-center bg-[#F9F9F9]">
         <div className="relative flex flex-col items-center h-[100vh] rounded ">
           <div className="grid grid-cols-3 h-[90%]  ">

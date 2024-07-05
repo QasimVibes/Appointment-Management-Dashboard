@@ -1,49 +1,13 @@
 "use client";
-import { signIn } from "next-auth/react";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
 import React from "react";
 import { Image, logo, google } from "@/constants/images";
 import Input from "@/(components)/Input";
 import Link from "next/link";
 import Button from "@/(components)/Button";
-import toast from "react-hot-toast";
+import { useLogin, inputFields } from "./useLogin";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const router = useRouter();
-
-  const handleEmailSignIn = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const response = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
-      if (response?.ok) {
-        toast.success("Welcome back!");
-        router.push("/dashboard");
-      }
-    } catch (error) {
-      toast.error("Sign in failed");
-      console.error("Sign in error:", error);
-    }
-  };
-
-  const handleGoogleSignIn = async () => {
-    try {
-      await signIn("google");
-      router.push("/dashboard");
-    } catch (error) {
-      toast.error("Google sign-in failed");
-      console.error("Google sign-in error:", error);
-    }
-  };
-
-
-
+  const { onChangeHandler, handleEmailSignIn, handleGoogleSignIn } = useLogin();
   return (
     <div className="flex flex-col items-center pt-[51.28px] pb-[73.5px]">
       <div className="mb-[8.77px]">
@@ -57,28 +21,18 @@ export default function Login() {
       <div className="w-[440px] rounded-[6px] border border-solid border-[#DADADA] py-[28px] px-[33px] flex flex-col shadow-[0px_1px_5px_0px_#004A7426]">
         <form onSubmit={handleEmailSignIn}>
           <div>
-            <Input
-              label="Enter your email."
-              type="email"
-              placeholder="Email"
-              name="email"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setEmail(e.target.value)
-              }
-              className="mb-[12px] w-[374px] h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
-              labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px]"
-            />
-            <Input
-              label="Enter your password"
-              type="password"
-              placeholder="Password"
-              name="password"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setPassword(e.target.value)
-              }
-              className="mb-[12px] w-[374px] h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
-              labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A]  mb-[8px]"
-            />
+            {inputFields?.map((input) => (
+              <Input
+                key={input.name}
+                label={input.label}
+                type={input.type}
+                placeholder={input.placeholder}
+                name={input.name}
+                onChange={onChangeHandler}
+                className="mb-[12px] w-[374px] h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
+                labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px]"
+              />
+            ))}
           </div>
           <div className="flex justify-end font-inter font-normal text-[14px] leading-[21px]  mb-[12px] hover:text-[#C84545]">
             <Link href="/forgotPassword">Forgot password?</Link>

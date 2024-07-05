@@ -14,6 +14,10 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login",
   },
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -30,38 +34,32 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         try {
-          if (!credentials?.email || !credentials?.password) {
-            throw new Error("Invalid credentials");
+          if (credentials?.email && credentials?.password) {
+            const user = await prisma.user.findUnique({
+              where: {
+                email: credentials.email,
+              },
+            });
+
+            if (!user || !user.password) {
+              throw new Error("Invalid credentials");
+            }
+            const isPasswordCorrect = await bcrypt.compare(
+              credentials.password,
+              user.password
+            );
+
+            if (!isPasswordCorrect) {
+              throw new Error("Incorrect password");
+            }
+            return user;
+          } else {
+            return null;
           }
-
-          const user = await prisma.user.findUnique({
-            where: {
-              email: credentials.email,
-            },
-          });
-
-          if (!user || !user.password) {
-            throw new Error("Invalid credentials");
-          }
-
-          const isPasswordCorrect = await bcrypt.compare(
-            credentials.password,
-            user.password
-          );
-
-          if (!isPasswordCorrect) {
-            throw new Error("Invalid credentials");
-          }
-
-          return user;
         } catch (error: any) {
-          throw new Error("Authentication failed: " + error.message);
+          throw new Error(error.message);
         }
       },
-    }),
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
 
