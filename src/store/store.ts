@@ -3,6 +3,7 @@ import availabilitySlice from "./slice/availabilitySlice";
 import signupSlice from "./slice/signupSlice";
 import loginSlice from "./slice/loginSlice";
 import userSlice from "./slice/userSlice";
+import scheduledEventSlice from "./slice/scheduledEventSlice";
 
 const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
     signup: signupSlice,
     login: loginSlice,
     user: userSlice,
+    scheduledEvent: scheduledEventSlice,
   },
 });
 

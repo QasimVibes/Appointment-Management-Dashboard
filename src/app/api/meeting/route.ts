@@ -13,7 +13,9 @@ export async function POST(request: NextRequest) {
       hostName,
       userId,
     } = body;
+console.log(body);
 
+    
     if (
       !schedulerEmail ||
       !schedulerName ||
@@ -49,7 +51,7 @@ export async function POST(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { message: "Meeting scheduled successfully" },
+      { message: "Meeting Scheduled successfully" },
       { status: 200 }
     );
   } catch (error) {

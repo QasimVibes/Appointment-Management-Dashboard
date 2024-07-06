@@ -6,18 +6,57 @@ import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./customCalendar.css";
 import Button from "@/(components)/Button";
+import { useEventBooking, locations, useTimeSlots } from "./useEventBooking";
+import Link from "next/link";
 
 type ValuePiece = Date | null;
 
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 export default function EventBooking() {
+  const { eventData, loading, error } = useEventBooking();
+  const { timeSlots, getNextTimeSlot } = useTimeSlots(
+    eventData.data.startHour,
+    eventData.data.endHour
+  );
+
+  const [selectedTime, setSelectedTime] = useState("");
+  const [selectedTimezone, setSelectedTimezone] = useState("");
+
+  const handleTimeSlotClick = (time: any) => {
+    setSelectedTime(time);
+  };
+
+  const enabledDays: string[] = eventData.data.days;
   const [value, onChange] = useState<Value>(new Date());
+  const tileDisabled: (props: { date: Date; view: string }) => boolean = ({
+    date,
+  }) => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return (
+      date < today ||
+      !enabledDays.includes(
+        date.toLocaleDateString("en-US", { weekday: "long" })
+      )
+    );
+  };
+
+  const nextTime = getNextTimeSlot(selectedTime);
+
+  const paramData = {
+    id: eventData?.data?.user?.id,
+    email: eventData?.data?.user?.email,
+    host: eventData?.data?.user?.fullname,
+    startingTime: selectedTime,
+    endingTime: nextTime,
+    day: value?.toString().slice(0, 16),
+    location: selectedTimezone,
+  };
 
   return (
     <>
       <Navbar />
-   
       <div className="pt-[46px] flex justify-center bg-[#F9F9F9]">
         <div className="relative flex flex-col items-center h-[100vh] rounded ">
           <div className="grid grid-cols-3 h-[90%]  ">
@@ -25,7 +64,7 @@ export default function EventBooking() {
               <div className="px-[26px] py-[34px] h-full border-[0.5px] border-solid border-[#DADADA] space-y-[28px]">
                 <div className="space-y-[6px]">
                   <p className="font-[400] text-[16px] leading-[22px] text-[#1A1A1A]">
-                    Muhammad Qasim
+                    {eventData?.data?.user?.fullname}
                   </p>
                   <h1 className="font-[700] text-[28px] leading-[28px] text-[#1A1A1A]">
                     30 Minute Meeting
@@ -47,8 +86,12 @@ export default function EventBooking() {
                       Select a Date & Time
                     </h2>
                   </div>
-                  <div className="">
-                    <Calendar onChange={onChange} value={value} />
+                  <div>
+                    <Calendar
+                      onChange={onChange}
+                      value={value}
+                      tileDisabled={tileDisabled}
+                    />
                   </div>
                   <div>
                     <div className="space-y-2">
@@ -64,14 +107,15 @@ export default function EventBooking() {
                         <select
                           name="timezone"
                           id="timezone"
+                          value={selectedTimezone}
+                          onChange={(e) => setSelectedTimezone(e.target.value)}
                           className="font-[400] text-[14px] leading-[22px] text-[#1A1A1A] "
                         >
-                          <option value="timezone">
-                            Pakistan, Maldives Time (UTC+5)
-                          </option>
-                          <option value="timezone">
-                            Canada, New York Time (UTC-5)
-                          </option>
+                          {locations?.map((location) => (
+                            <option key={location} value={location}>
+                              {location}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </div>
@@ -84,37 +128,34 @@ export default function EventBooking() {
                       {value?.toString().slice(0, 16)}
                     </h2>
                   </div>
-                  <div className="space-y-[10px] overflow-auto h-[60%]">
-                    <div>
-                      <Button
-                        text="9:00am"
-                        className="w-[90%] pt-2 pb-5 border border-solid border-[#0069FF] rounded-[6px] font-[700] text-[14px] leading-[22px] text-[#0069FF] "
-                      />
-                    </div>
-                    <div>
-                      <Button
-                        text="9:30am"
-                        className="w-[90%] pt-2 pb-5 border border-solid border-[#0069FF] rounded-[6px] font-[700] text-[14px] leading-[22px] text-[#0069FF] "
-                      />
-                    </div>
-                    <div>
-                      <Button
-                        text="10:00am"
-                        className="w-[90%] pt-2 pb-5 border border-solid border-[#0069FF] rounded-[6px] font-[700] text-[14px] leading-[22px] text-[#0069FF] "
-                      />
-                    </div>
-                    <div>
-                      <Button
-                        text="10:30am"
-                        className="w-[90%] pt-2 pb-5 border border-solid border-[#0069FF] rounded-[6px] font-[700] text-[14px] leading-[22px] text-[#0069FF] "
-                      />
-                    </div>
-                    <div>
-                      <Button
-                        text="11:00am"
-                        className="w-[90%] pt-2 pb-5 border border-solid border-[#0069FF] rounded-[6px] font-[700] text-[14px] leading-[22px] text-[#0069FF] "
-                      />
-                    </div>
+                  <div className="space-y-[10px] overflow-auto h-[50%]">
+                    {timeSlots?.map((time) =>
+                      selectedTime !== time ? (
+                        <div key={time}>
+                          <Button
+                            text={time}
+                            className="w-[90%] pt-2 pb-5 border border-solid border-[#0069FF] rounded-[6px] font-[700] text-[14px] leading-[22px] text-[#0069FF] "
+                            onClick={() => handleTimeSlotClick(time)}
+                          />
+                        </div>
+                      ) : (
+                        <div className="flex flex-row space-x-2" key={time}>
+                          <Button
+                            text={selectedTime}
+                            className=" px-[18.5px] py-[14px] rounded-[6px] font-[700] text-[14px] leading-[22px] text-white bg-gray-500"
+                          />
+                          <Link
+                            href={{
+                              pathname: "/scheduledEvent",
+                              query: paramData,
+                            }}
+                            className=" px-[18.5px] py-[14px] rounded-[6px] font-[700] text-[14px] leading-[22px] text-white bg-[#0069FF]"
+                          >
+                            Next
+                          </Link>
+                        </div>
+                      )
+                    )}
                   </div>
                 </div>
               </div>

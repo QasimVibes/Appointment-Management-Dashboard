@@ -17,7 +17,7 @@ export const setAvailability = createAsyncThunk(
     { rejectWithValue }
   ) => {
     try {
-      const response = await AxiosInstance.post("/availability", {
+      const response = await AxiosInstance.put("/availability", {
         startHour,
         endHour,
         days,

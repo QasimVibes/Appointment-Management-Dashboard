@@ -1,3 +1,4 @@
+"use client";
 import Navbar from "@/(components)/Navbar";
 import Button from "@/(components)/Button";
 import Input from "@/(components)/Input";
@@ -9,8 +10,28 @@ import {
   briefcase,
   globe,
 } from "@/constants/images";
+import {
+  useScheduledEvent,
+  useSubmitScheduledEvent,
+} from "./useScheduledEvent";
 
 export default function ScheduledEvent() {
+  const { detials, setDetials, hostData } = useScheduledEvent();
+
+  const { handleSubmit } = useSubmitScheduledEvent();
+  const handleButtonClick = () => {
+    const submitData = {
+      schedulerEmail: detials.email,
+      schedulerName: detials.name,
+      description: detials.message,
+      selectedTime: `${hostData.startingTime} - ${hostData.endingTime}`,
+      selectedDate: hostData.day,
+      hostName: hostData.host,
+      userId: hostData.id,
+    };
+    handleSubmit(submitData);
+  };
+
   return (
     <>
       <Navbar />
@@ -26,7 +47,7 @@ export default function ScheduledEvent() {
                 </div>
                 <div className="space-y-[6px]">
                   <p className="font-[400] text-[16px] leading-[22px] text-[#1A1A1A]">
-                    Muhammad Qasim
+                    {hostData.host}
                   </p>
                   <h1 className="font-[700] text-[28px] leading-[28px] text-[#1A1A1A]">
                     30 Minute Meeting
@@ -42,7 +63,8 @@ export default function ScheduledEvent() {
                   <div className="flex space-x-2">
                     <Image src={briefcase} alt="briefcase" />
                     <p className="font-[400] text-[14px] leading-[22px] text-[#1A1A1A]">
-                      10:00am - 11:00am, Monday, July 12 2022
+                      {hostData.startingTime} - {hostData.endingTime},{" "}
+                      {hostData.day}
                     </p>
                   </div>
                   <div className="flex space-x-2">
@@ -52,7 +74,7 @@ export default function ScheduledEvent() {
                       className="w-[24px] h-[24px]"
                     />
                     <p className="font-[400] text-[14px] leading-[22px] text-[#1A1A1A]">
-                      Pakistan, Maldives Time
+                      {hostData.location}
                     </p>
                   </div>
                 </div>
@@ -65,54 +87,72 @@ export default function ScheduledEvent() {
                     Enter Detials
                   </h2>
                 </div>
-                <form>
-                  <div className="w-[374px] h-full space-y-3">
-                    <Input
-                      name="name"
-                      label="Name *"
-                      type="text"
-                      className="h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
-                      labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px]"
-                    />
-                    <Input
-                      name="email"
-                      label="Email *"
-                      type="email"
-                      className=" h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
-                      labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px]"
-                    />
-                    <div className="mb-[12px]">
-                      <label
-                        htmlFor="message"
-                        className="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px] block"
-                      >
-                        Please share anything that will help prepare for our
-                        meeting
-                      </label>
-                      <textarea
-                        name="message"
-                        id="message"
-                        rows={2}
-                        className="w-full rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
-                      ></textarea>
-                    </div>
-                    <p className="font-[400] text-[14px] leading-[20px] text-[#1A1A1A]">
-                      By proceeding, you confirm that you have read and agree to{" "}
-                      <span className="text-[#0069FF] font-[600]">
-                        Calendly's Term of Use
-                      </span>{" "}
-                      and{" "}
-                      <span className="text-[#0069FF] font-[600]">
-                        Privacy Policy
-                      </span>
-                      .
-                    </p>
-                    <Button
-                      text="Schedule Event"
-                      className="rounded-[28px] border border-solid px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] bg-blue-700 text-white"
-                    />
+
+                <div className="w-[374px] h-full space-y-3">
+                  <Input
+                    name="name"
+                    label="Name *"
+                    type="text"
+                    onChange={(e: any) =>
+                      setDetials({
+                        ...detials,
+                        [e.target.name]: e.target.value,
+                      })
+                    }
+                    className="h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
+                    labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px]"
+                  />
+                  <Input
+                    name="email"
+                    label="Email *"
+                    type="email"
+                    onChange={(e: any) =>
+                      setDetials({
+                        ...detials,
+                        [e.target.name]: e.target.value,
+                      })
+                    }
+                    className=" h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
+                    labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px]"
+                  />
+                  <div className="mb-[12px]">
+                    <label
+                      htmlFor="message"
+                      className="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px] block"
+                    >
+                      Please share anything that will help prepare for our
+                      meeting
+                    </label>
+                    <textarea
+                      name="message"
+                      id="message"
+                      onChange={(e: any) =>
+                        setDetials({
+                          ...detials,
+                          [e.target.name]: e.target.value,
+                        })
+                      }
+                      rows={2}
+                      className="w-full rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
+                    ></textarea>
                   </div>
-                </form>
+                  <p className="font-[400] text-[14px] leading-[20px] text-[#1A1A1A]">
+                    By proceeding, you confirm that you have read and agree to{" "}
+                    <span className="text-[#0069FF] font-[600]">
+                      Calendly's Term of Use
+                    </span>{" "}
+                    and{" "}
+                    <span className="text-[#0069FF] font-[600]">
+                      Privacy Policy
+                    </span>
+                    .
+                  </p>
+                  <Button
+                    text="Schedule Event"
+                    onClick={handleButtonClick}
+                    className="rounded-[28px] border border-solid px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] bg-blue-700 text-white"
+                  />
+                </div>
               </div>
             </div>
           </div>
