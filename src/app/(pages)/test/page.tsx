@@ -9,7 +9,7 @@ import {
   topCornerImage,
 } from "@/constants/images";
 
-export default function Scheduled() {
+export default function Test() {
   return (
     <>
       <Navbar />

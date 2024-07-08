@@ -1,7 +1,7 @@
 "use client";
 import Navbar from "@/(components)/Navbar";
 import { topCornerImage, Image, clock, globe } from "@/constants/images";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./customCalendar.css";
@@ -22,6 +22,12 @@ export default function EventBooking() {
 
   const [selectedTime, setSelectedTime] = useState("");
   const [selectedTimezone, setSelectedTimezone] = useState("");
+
+  useEffect(() => {
+    if (locations.length > 0) {
+      setSelectedTimezone(locations[0]);
+    }
+  }, [locations]);
 
   const handleTimeSlotClick = (time: any) => {
     setSelectedTime(time);

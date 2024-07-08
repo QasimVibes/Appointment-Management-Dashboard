@@ -18,6 +18,7 @@ import {
   personButton,
 } from "@/constants/images";
 import Button from "@/(components)/Button";
+import DropDown from "@/(components)/dropDown/DropDown";
 export default function Profile() {
   const handleLogout = async () => {
     try {
@@ -28,6 +29,11 @@ export default function Profile() {
       toast.error("Failed to logout");
     }
   };
+
+  const menuItems = [
+    { text: "Dashboard", link: "/dashboard" },
+    { text: "Sign out", link: "/signout" },
+  ];
 
   return (
     <>
@@ -132,11 +138,7 @@ export default function Profile() {
                   className="w-[33.67px] h-[32.5px] bg-[#CCCCCC] rounded-[16px] font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A]"
                   text="Q"
                 />
-                <Image
-                  src={dropDown}
-                  alt="dropDown"
-                  className="w-[16px] h-[16px]"
-                />
+                <DropDown items={menuItems}/>
               </div>
             </div>
           </div>
@@ -170,15 +172,15 @@ export default function Profile() {
               <div className="max-w-[70%]">
                 <form>
                   <label
-                    htmlFor="firstName"
+                    htmlFor="name"
                     className="block font-inter font-[700] text-[14px] leading-[21px] text-[#1A1A1A] mb-2"
                   >
-                    First Name
+                    Name
                   </label>
                   <input
                     type="text"
-                    name="firstName"
-                    id="firstName"
+                    name="name"
+                    id="name"
                     className="w-[60%] border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
                   />
                   <label

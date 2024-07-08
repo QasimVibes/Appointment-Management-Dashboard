@@ -27,7 +27,7 @@ export const useEventBooking = () => {
       user: {
         fullname: "",
         email: "",
-        id:""
+        id: "",
       },
     },
   });
@@ -53,21 +53,7 @@ export const useEventBooking = () => {
                 user: {
                   fullname: filteredData.user.fullname,
                   email: filteredData.user.email,
-                  id:filteredData.user.id
-                },
-              },
-            });
-          } else {
-            setEventData({
-              data: {
-              
-                startHour: "",
-                endHour: "",
-                days: [],
-                user: {
-                  fullname: "",
-                  email: "",
-                  id: "",
+                  id: filteredData.user.id,
                 },
               },
             });
@@ -80,7 +66,11 @@ export const useEventBooking = () => {
       }
     };
 
-    fetchEventData();
+    if (userId) {
+      fetchEventData();
+    } else {
+      setLoading(false);
+    }
   }, [userId]);
 
   return { eventData, loading, error };

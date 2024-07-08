@@ -5,10 +5,11 @@ export type SetAvailabilityProps = {
   userId: string;
 };
 
+
+
 export type AvailabilityState = {
   isLoading: boolean;
   isError: boolean;
-  data: string[] | null;
 };
 
 export type SignupState = {

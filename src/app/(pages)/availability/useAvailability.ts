@@ -1,10 +1,10 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
-import {
-  getAvailability,
-  setAvailability,
-} from "@/store/slice/availabilitySlice";
+import { setAvailability } from "@/store/slice/availabilitySlice";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { AxiosInstance } from "@/utils/axiosInstance";
 
 export const useAvailability = () => {
   const days = [
@@ -22,64 +22,44 @@ export const useAvailability = () => {
     "11:00 AM",
     "12:00 PM",
     "1:00 PM",
-    "2:00 PM",
-    "3:00 PM",
-    "4:00 PM",
-    "5:00 PM",
-    "6:00 PM",
   ];
-  return { days, startingHours };
+  const endingHours = ["2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM"];
+  return { days, startingHours, endingHours };
 };
 
 export const useSelectAvailability = () => {
-  const { startingHours } = useAvailability();
-  const [selectTime, setSelectTime] = useState("");
-  const [nextSelectTime, setNextSelectTime] = useState("");
-  const [nextSelectOptions, setNextSelectOptions] = useState<string[]>([]);
   const [selectedDays, setSelectedDays] = useState<string[]>([]);
-
-  const handleFirstSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedTime = e.target.value;
-    setSelectTime(selectedTime);
-    const index = startingHours.indexOf(selectedTime);
-    const hours = startingHours.slice(index + 1);
-    setNextSelectOptions(hours);
-  };
+  const [startHour, setStartHour] = useState("");
+  const [endHour, setEndHour] = useState("");
 
   return {
-    selectTime,
-    nextSelectTime,
-    nextSelectOptions,
     selectedDays,
     setSelectedDays,
-    setNextSelectTime,
-    handleFirstSelectChange,
-    setSelectTime,
+    setStartHour,
+    setEndHour,
+    startHour,
+    endHour,
   };
 };
-
-
 
 export const useSubmitAvailability = () => {
   const dispatch = useAppDispatch();
   const { data: session } = useSession();
+  const router = useRouter();
 
   const handleSubmit = useCallback(
-    async (
-      selectTime: string,
-      nextSelectTime: string,
-      selectedDays: string[]
-    ) => {
+    async (startHour: string, endHour: string, selectedDays: string[]) => {
       try {
         if (session?.user?.id) {
           await dispatch(
             setAvailability({
-              startHour: selectTime,
-              endHour: nextSelectTime,
+              startHour: startHour,
+              endHour: endHour,
               days: selectedDays,
               userId: session?.user.id,
             })
           ).unwrap();
+          router.push("/eventBooking");
         }
       } catch (error) {
         console.error(error);
@@ -92,29 +72,47 @@ export const useSubmitAvailability = () => {
 };
 
 export const useFetchAvailability = (
-  setSelectTime: (value: string) => void,
-  nextSelectOptions: (value: string) => void,
+  setStartHour: (value: string) => void,
+  setEndHour: (value: string) => void,
   setSelectedDays: (value: string[]) => void
 ) => {
-  const dispatch = useAppDispatch();
   const { data: session } = useSession();
-  const { data, isLoading, isError } = useAppSelector(
-    (state) => state.availability
-  );
- 
-  useEffect(() => {
-    if (session?.user?.id) {
-      dispatch(getAvailability(session.user.id));
-    }
-  }, [dispatch, session]);
-  
-  useEffect(() => {
-    if (data) {
-      setSelectTime(data.availability?.startHour);
-      nextSelectOptions(data.availability?.endHour);
-      setSelectedDays(data.availability?.days);
-    }
-  }, [data, setSelectTime, nextSelectOptions, setSelectedDays]);
+  const userId = session?.user?.id;
 
-  return { data, isLoading, isError };
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(null);
+
+  useEffect(() => {
+    if (userId) {
+      const fetchAvailabilityData = async () => {
+        try {
+          const response = await AxiosInstance.get(`/availability`);
+          if (response.data) {
+            const filteredData = response.data.availability?.find(
+              (data: any) => data.userId === userId
+            );
+            if (filteredData) {
+              setStartHour(filteredData.startHour);
+              setEndHour(filteredData.endHour);
+              setSelectedDays(filteredData.days);
+              toast.success("Availability set successfully");
+            }
+          }
+        } catch (error: any) {
+          setIsError(error);
+          console.error(error);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      if (userId) {
+        fetchAvailabilityData();
+      }else{
+        setIsLoading(false);
+      }
+    }
+  }, [userId, setStartHour, setEndHour, setSelectedDays]);
+
+  return { isLoading, isError };
 };

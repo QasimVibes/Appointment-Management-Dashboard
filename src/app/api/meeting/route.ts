@@ -13,9 +13,7 @@ export async function POST(request: NextRequest) {
       hostName,
       userId,
     } = body;
-console.log(body);
 
-    
     if (
       !schedulerEmail ||
       !schedulerName ||
@@ -66,6 +64,8 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const userId = searchParams.get("userId");
+    console.log("searchParams",userId);
+    
     if (!userId) {
       return NextResponse.json(
         { message: "Please provide all the fields" },

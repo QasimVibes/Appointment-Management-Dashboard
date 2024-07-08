@@ -1,3 +1,4 @@
+"use client";
 import {
   logo,
   Image,
@@ -9,11 +10,22 @@ import {
   dropDown,
   exportIcon,
   filter,
-  circle,
-  details,
 } from "@/constants/images";
 import Button from "@/(components)/Button";
+import Link from "next/link";
+import { useState } from "react";
+import { useEventsTabs } from "./useDashboard";
+import EventList from "@/(components)/eventList/EventList";
+import DropDown from "@/(components)/dropDown/DropDown";
 export default function Dashboard() {
+  const [activeTab, setActiveTab] = useState("Upcoming");
+  const { upcomingEvents, pastEvents, loading, error } = useEventsTabs();
+
+  const menuItems = [
+    { text: "Settings", link: "/profile" },
+    { text: "Sign out", link: "/signout" },
+  ];
+
   return (
     <>
       <div className="grid grid-cols-[260px_1fr] h-[100vh]">
@@ -38,7 +50,7 @@ export default function Dashboard() {
                   alt="scheduledEvent"
                   className="mr-[20px] w-[16px] h-[16px]"
                 />
-                <p>Scheduled events</p>
+                <p className="text-[#0069FF]">Scheduled events</p>
               </div>
               <div className="flex items-center py-[10px] px-[16px] ">
                 <Image
@@ -46,7 +58,7 @@ export default function Dashboard() {
                   alt="analytics"
                   className="mr-[20px] w-[16px] h-[16px]"
                 />
-                <p>Analytics</p>
+                <p className="hover:text-[#0069FF]">Analytics</p>
               </div>
             </div>
             <div className="self-start py-[4px] px-[8px] space-y-[4px]">
@@ -56,7 +68,9 @@ export default function Dashboard() {
                   alt="clock"
                   className="mr-[20px] w-[16px] h-[16px]"
                 />
-                <p>Availability</p>
+                <Link href="/availability" className="hover:text-[#0069FF]">
+                  Availability
+                </Link>
               </div>
               <div className="flex items-center py-[10px] px-[16px] ">
                 <Image
@@ -64,7 +78,7 @@ export default function Dashboard() {
                   alt="adminCenter"
                   className="mr-[20px] w-[16px] h-[16px]"
                 />
-                <p>Admin center</p>
+                <p className="hover:text-[#0069FF]">Admin center</p>
               </div>
             </div>
           </div>
@@ -76,13 +90,9 @@ export default function Dashboard() {
               <div className="mr-[32px] flex flex-row items-center space-x-[6px] py-[4px]">
                 <Button
                   className="w-[33.67px] h-[32.5px] bg-[#CCCCCC] rounded-[16px] font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A]"
-                  text="Q"
+                  text={"Q"}
                 />
-                <Image
-                  src={dropDown}
-                  alt="dropDown"
-                  className="w-[16px] h-[16px]"
-                />
+                <DropDown items={menuItems} />
               </div>
             </div>
             <div className="px-[32px]">
@@ -120,17 +130,40 @@ export default function Dashboard() {
                       <div className="pt-[16px] px-[24px]">
                         <div className="flex font-inter font-[400] text-[15px] leading-[24px] text-[#1A1A1A9C]">
                           <div className="pr-[16px]">
-                            <button className="text-[#1A1A1A] pt-[7px] pb-[17px] border-b-[2px] border-solid border-[#0069FF]">
+                            <button
+                              className={`pt-[7px] pb-[17px] ${
+                                activeTab === "Upcoming"
+                                  ? "text-[#1A1A1A] border-b-[2px] border-solid border-[#0069FF]"
+                                  : ""
+                              }`}
+                              onClick={() => setActiveTab("Upcoming")}
+                            >
                               Upcoming
                             </button>
                           </div>
                           <div className="px-[16px]">
-                            <button className="pt-[7px] pb-[17px]">
+                            <button
+                              className={`pt-[7px] pb-[17px] ${
+                                activeTab === "Pending"
+                                  ? "text-[#1A1A1A] border-b-[2px] border-solid border-[#0069FF]"
+                                  : ""
+                              }`}
+                              onClick={() => setActiveTab("Pending")}
+                            >
                               Pending
                             </button>
                           </div>
                           <div className="px-[16px]">
-                            <button className="pt-[7px] pb-[17px]">Past</button>
+                            <button
+                              className={`pt-[7px] pb-[17px] ${
+                                activeTab === "Past"
+                                  ? "text-[#1A1A1A] border-b-[2px] border-solid border-[#0069FF]"
+                                  : ""
+                              }`}
+                              onClick={() => setActiveTab("Past")}
+                            >
+                              Past
+                            </button>
                           </div>
                           <div className="pl-[16px]">
                             <button className="pt-[7px] pb-[17px]">
@@ -163,35 +196,18 @@ export default function Dashboard() {
                       </div>
                     </div>
                     <div>
-                      <div className="px-[24px] py-[17px] border-b-[1px] border-solid border-[#CCCCCC]">
-                        <h2 className="font-inter font-[700] text-[14.88px] leading-[24px] text-[#1A1A1A]">
-                          Wednesday, 27 March 2024
-                        </h2>
+                      <div className="mt-4 max-h-[313px] overflow-y-auto">
+                        {activeTab === "Upcoming" && (
+                          <EventList events={upcomingEvents} title="Upcoming" />
+                        )}
+                        {/* {activeTab === "Pending" && (
+                        <EventList events={pendingEvents} title="Pending" />
+                      )} */}
+                        {activeTab === "Past" && (
+                          <EventList events={pastEvents} title="Past" />
+                        )}
                       </div>
-                      <div className="flex flex-row justify-between px-[24px] py-[24px] font-inter font-[400] leading-[24px] text-[#1A1A1A] border-b-[1px] border-solid border-[#CCCCCC]">
-                        <div className="flex flex-row space-x-[11px] items-center">
-                          <Image src={circle} alt="circle" />
-                          <p className="text-[13.88px] ">10:00am - 11:30am</p>
-                        </div>
-                        <div className="">
-                          <h3 className="font-[700] text-[14.13px]">Test</h3>
-                          <p className="text-[14.75px]">
-                            Event type{" "}
-                            <span className="font-[700]">
-                              30 Minute Meeting
-                            </span>
-                          </p>
-                        </div>
-                        <div className="">
-                          <p className="text-[14.5px]">1 host | 0 non-hosts</p>
-                        </div>
-                        <div className="flex flex-row items-center space-x-[4.94px]">
-                          <Image src={details} alt="details" />
-                          <p className="text-[14.88px] leading-[22.4px] text-[#1A1A1A9C]">
-                            Details
-                          </p>
-                        </div>
-                      </div>
+
                       <div className="py-[17px]">
                         <p className="font-inter font-[400] text-[14.88px] leading-[24px] text-[#1A1A1A9C] text-center">
                           You've reached the end of the list

@@ -7,29 +7,28 @@ import {
   useSubmitAvailability,
   useFetchAvailability,
 } from "./useAvailability";
+import Link from "next/link";
 
 export default function Availability() {
-  const { days, startingHours } = useAvailability();
+  const { days, startingHours, endingHours } = useAvailability();
   const {
-    selectTime,
-    nextSelectTime,
-    nextSelectOptions,
     selectedDays,
-    setNextSelectTime,
     setSelectedDays,
-    setSelectTime,
-    handleFirstSelectChange,
+    setStartHour,
+    setEndHour,
+    startHour,
+    endHour,
   } = useSelectAvailability();
 
   const { handleSubmit } = useSubmitAvailability();
 
   const handleButtonClick = () => {
-    handleSubmit(selectTime, nextSelectTime, selectedDays);
+    handleSubmit(startHour, endHour, selectedDays);
   };
 
   const { isLoading, isError } = useFetchAvailability(
-    setSelectTime,
-    setNextSelectTime,
+    setStartHour,
+    setEndHour,
     setSelectedDays
   );
 
@@ -66,35 +65,31 @@ export default function Availability() {
                   <div>
                     <select
                       name="startHour"
-                      id="firstTimeSelect"
-                      value={selectTime}
-                      onChange={handleFirstSelectChange}
+                      id="startingHours"
+                      value={startHour}
+                      onChange={(e) => setStartHour(e.target.value)}
                       required
                       className="py-[13px] px-[17px]  w-[278px] rounded-[8px] border border-solid border-[#B2B2B2]"
                     >
                       <option value="">Select a time</option>
-                      {startingHours
-                        ?.slice(0, startingHours.length - 1)
-                        .map((time, index) => (
-                          <option value={time} key={index}>
-                            {time}
-                          </option>
-                        ))}
+                      {startingHours.map((time, index) => (
+                        <option value={time} key={index}>
+                          {time}
+                        </option>
+                      ))}
                     </select>
                   </div>
                   <div>
                     <select
                       name="endHour"
-                      id="secondTimeSelect"
-                      value={nextSelectTime}
-                      onChange={(e) => setNextSelectTime(e.target.value)}
+                      id="endingHours"
+                      value={endHour}
+                      onChange={(e) => setEndHour(e.target.value)}
                       required
                       className="py-[13px] w-[278px] px-[17px] rounded-[8px] border border-solid border-[#B2B2B2]"
                     >
-                      {!nextSelectOptions.length && (
-                        <option value="">{nextSelectTime}</option>
-                      )}
-                      {nextSelectOptions.map((time, index) => (
+                      <option value="">Select a time</option>
+                      {endingHours?.map((time, index) => (
                         <option value={time} key={index}>
                           {time}
                         </option>
@@ -156,10 +151,12 @@ export default function Availability() {
         <div className="w-[645px] flex flex-row justify-between space-x-2 ">
           <Image src={progressbar} alt="progressbar" />
           <div className="space-x-2">
-            <Button
-              text="Set up later"
+            <Link
+              href="/dashboard"
               className="px-[17px] py-[11px] rounded-[40px] border border-solid hover:border-[grey]  text-[##1A1A1A] font-inter font-[700] text-[12.91px] leading-[22px]"
-            />
+            >
+              Set up later
+            </Link>
             <Button
               text="Continue"
               onClick={handleButtonClick}

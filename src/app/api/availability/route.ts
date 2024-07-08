@@ -25,7 +25,7 @@ export async function PUT(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { message: "Availability updated", availability: upsertAvailability },
+      { message: "Availability updated"},
       { status: 200 }
     );
   } catch (error) {
