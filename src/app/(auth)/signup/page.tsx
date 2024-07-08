@@ -1,9 +1,10 @@
 "use client";
-import { Image, logo } from "@/constants/images";
-import Input from "@/(components)/Input";
-import Button from "@/(components)/Button";
+import { logo } from "../../../../public";
+import Input from "@/(components)/input/Input";
+import Button from "@/(components)/button/Button";
 import Link from "next/link";
 import { useSignup, inputFields } from "./useSignup";
+import Image from "next/image";
 
 export default function Register() {
   const { onChangeHandler, onHandleSubmit, signupState } = useSignup();

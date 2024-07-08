@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
-import Button from "@/(components)/Button";
-import Input from "@/(components)/Input";
+import Button from "@/(components)/button/Button";
+import Input from "@/(components)/input/Input";
 
 export default function ConfirmPassword() {
   const handleSubmit = (event: React.FormEvent) => {

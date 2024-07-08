@@ -1,4 +1,5 @@
-import { vector, Image } from "../constants/images";
+import Image from "next/image";
+import { vector } from "../../../public";
 
 export default function Navbar() {
   return (

@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
-import { Image, logo, google } from "@/constants/images";
-import Input from "@/(components)/Input";
+import {  logo, google } from "../../../../public";
+import Input from "@/(components)/input/Input";
 import Link from "next/link";
-import Button from "@/(components)/Button";
+import Button from "@/(components)/button/Button";
 import { useLogin, inputFields } from "./useLogin";
+import Image from "next/image";
 
 export default function Login() {
   const { onChangeHandler, handleEmailSignIn, handleGoogleSignIn } = useLogin();

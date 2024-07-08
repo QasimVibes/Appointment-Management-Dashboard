@@ -1,8 +1,5 @@
 "use client";
-import { signOut } from "next-auth/react";
-import { toast } from "react-hot-toast";
 import {
-  Image,
   logo,
   leftArrow,
   profilePerson,
@@ -13,27 +10,17 @@ import {
   calender,
   helpIcon,
   logoutIcon,
-  dropDown,
   personAdd,
   personButton,
-} from "@/constants/images";
-import Button from "@/(components)/Button";
-import DropDown from "@/(components)/dropDown/DropDown";
-export default function Profile() {
-  const handleLogout = async () => {
-    try {
-      await signOut({ redirect: false, callbackUrl: "/" });
-      toast.success("Logged out successfully");
-    } catch (error) {
-      console.error("Logout error:", error);
-      toast.error("Failed to logout");
-    }
-  };
+} from "../../../../public";
 
-  const menuItems = [
-    { text: "Dashboard", link: "/dashboard" },
-    { text: "Sign out", link: "/signout" },
-  ];
+import Button from "@/(components)/button/Button";
+import DropDown from "@/(components)/dropDown/DropDown";
+import Link from "next/link";
+import LogoutBtn from "@/(components)/logoutBtn/LogoutBtn";
+import Image from "next/image";
+export default function Profile() {
+  const menuItems = [{ text: "Dashboard", link: "/dashboard" }];
 
   return (
     <>
@@ -44,14 +31,14 @@ export default function Profile() {
           </div>
 
           <div className="font-inter font-[700] text-[14.75px] leading-[24px] text-[#0069FF] py-[4px] px-[14px]">
-            <button className="flex items-center">
+            <Link href="/dashboard" className="flex items-center">
               <Image
                 src={leftArrow}
                 alt="leftArrow"
                 className="w-[16px] h-[16px] mr-2"
               />
               Back to home
-            </button>
+            </Link>
           </div>
           <div className="font-inter font-[700] text-[18px] leading-[24px] text-[#1A1A1A] py-[4px] px-[22px]">
             <h2>Account Settings</h2>
@@ -116,7 +103,7 @@ export default function Profile() {
                 alt="logoutIcon"
                 className="w-[20px] h-[20px]"
               />
-              <button onClick={handleLogout}>Logout</button>
+              <LogoutBtn />
             </div>
           </div>
         </div>
@@ -138,7 +125,7 @@ export default function Profile() {
                   className="w-[33.67px] h-[32.5px] bg-[#CCCCCC] rounded-[16px] font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A]"
                   text="Q"
                 />
-                <DropDown items={menuItems}/>
+                <DropDown items={menuItems} />
               </div>
             </div>
           </div>

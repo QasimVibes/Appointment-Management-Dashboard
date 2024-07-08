@@ -2,7 +2,7 @@
 import { signOut } from "next-auth/react";
 import { toast } from "react-hot-toast";
 import { useUser } from "@/hooks/userHook";
-import Navbar from "@/(components)/Navbar";
+import Navbar from "@/(components)/navbar/Navbar";
 
 const LogoutButton = () => {
   const { user, isLoading, isError } = useUser();
@@ -18,7 +18,7 @@ const LogoutButton = () => {
 
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <button onClick={handleLogout}>Logout</button>
       <div>
         <h1>{user?.email}</h1>

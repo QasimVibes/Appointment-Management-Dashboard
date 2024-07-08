@@ -1,6 +1,6 @@
 "use client";
-import { Image, logo, availability, progressbar } from "@/constants/images";
-import Button from "@/(components)/Button";
+import { logo, availability, progressbar } from "../../../../public";
+import Button from "@/(components)/button/Button";
 import {
   useAvailability,
   useSelectAvailability,
@@ -8,6 +8,7 @@ import {
   useFetchAvailability,
 } from "./useAvailability";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Availability() {
   const { days, startingHours, endingHours } = useAvailability();

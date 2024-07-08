@@ -15,6 +15,8 @@ model User {
   password     String
   availability Availability @relation(fields: [id], references: [userId])
   meeting      Meeting[]
+  otp          String?
+  otpExpires   DateTime?
   createdAt    DateTime     @default(now())
   updateAt     DateTime     @updatedAt
 }

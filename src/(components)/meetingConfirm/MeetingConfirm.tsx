@@ -1,12 +1,13 @@
+import Image from "next/image";
 import {
   checkmark,
-  Image,
   newWindow,
   person,
   briefcase,
   globe,
   topCornerImage,
-} from "@/constants/images";
+} from "../../../public";
+
 
 export default function MeetingConfirm({
   hostName,

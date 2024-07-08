@@ -1,30 +1,30 @@
 "use client";
 import {
   logo,
-  Image,
   closer,
   scheduledEvent,
   analytics,
-  clock,
+
   adminCenter,
-  dropDown,
   exportIcon,
   filter,
-} from "@/constants/images";
-import Button from "@/(components)/Button";
+} from "../../../../public";
+import clock from "../../../../public/asset/clockDashboard.svg";
+import Button from "@/(components)/button/Button";
 import Link from "next/link";
 import { useState } from "react";
 import { useEventsTabs } from "./useDashboard";
 import EventList from "@/(components)/eventList/EventList";
 import DropDown from "@/(components)/dropDown/DropDown";
+import Image from "next/image";
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("Upcoming");
   const { upcomingEvents, pastEvents, loading, error } = useEventsTabs();
 
   const menuItems = [
     { text: "Settings", link: "/profile" },
-    { text: "Sign out", link: "/signout" },
   ];
+
 
   return (
     <>
@@ -196,7 +196,7 @@ export default function Dashboard() {
                       </div>
                     </div>
                     <div>
-                      <div className="mt-4 max-h-[313px] overflow-y-auto">
+                      <div className="max-h-[313px] overflow-y-auto">
                         {activeTab === "Upcoming" && (
                           <EventList events={upcomingEvents} title="Upcoming" />
                         )}

@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { circle, details } from "@/constants/images";
+import { circle, details } from "../../../public";
 
 const EventList = ({
   events,
@@ -22,7 +22,7 @@ const EventList = ({
             <div className="flex flex-row justify-between px-[24px] py-[24px] font-inter font-[400] leading-[24px] text-[#1A1A1A] border-b-[1px] border-solid border-[#CCCCCC]">
               <div className="flex flex-row space-x-[11px] items-center">
                 <Image src={circle} alt="circle" />
-                <p className="text-[13.88px] ">{event.selectedTime}</p>
+                <p className="text-[13.88px]">{event.selectedTime}</p>
               </div>
               <div>
                 <h3 className="font-[700] text-[14.13px]">

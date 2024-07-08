@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { dropDown } from "@/constants/images";
+import { dropDown } from "../../../public";
+import { signOut } from "next-auth/react";
+import toast from "react-hot-toast";
+import LogoutBtn from "../logoutBtn/LogoutBtn";
 
 interface DropDownProps {
-  items: { text: string, link: string }[];
+  items: { text: string; link: string }[];
 }
 
-export default function DropDown({ items }: DropDownProps) {
+export default function DropDown({ items, ...props }: DropDownProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -36,11 +39,14 @@ export default function DropDown({ items }: DropDownProps) {
           >
             {items.map((item, index) => (
               <li key={index}>
-                <Link href={item.link} className="block px-4 py-2">
+                <Link href={item.link} className="block px-4 py-2" {...props}>
                   {item.text}
                 </Link>
               </li>
             ))}
+            <li>
+              <LogoutBtn className="block px-4 py-2"/>
+            </li>
           </ul>
         </div>
       )}

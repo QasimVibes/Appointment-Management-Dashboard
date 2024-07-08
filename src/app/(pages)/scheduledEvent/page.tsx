@@ -1,20 +1,20 @@
 "use client";
-import Navbar from "@/(components)/Navbar";
-import Button from "@/(components)/Button";
-import Input from "@/(components)/Input";
+import Navbar from "@/(components)/navbar/Navbar";
+import Button from "@/(components)/button/Button";
+import Input from "@/(components)/input/Input";
 import {
   topCornerImage,
-  Image,
   arrowLeft,
   clock,
   briefcase,
   globe,
-} from "@/constants/images";
+} from "../../../../public";
 import {
   useScheduledEvent,
   useSubmitScheduledEvent,
 } from "./useScheduledEvent";
 import MeetingConfirm from "@/(components)/meetingConfirm/MeetingConfirm";
+import Image from "next/image";
 
 export default function ScheduledEvent() {
   const { details, setDetails, hostData } = useScheduledEvent();
