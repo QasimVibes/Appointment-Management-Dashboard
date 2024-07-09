@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "../../../../libs/prisma";
+import prisma from "@/libs/prisma";
 import bcrypt from "bcrypt";
 
 export const POST = async (request: NextRequest) => {
   try {
     const body = await request.json();
-    const { email, otp, password } = body;
+    const { email, newPassword, otp } = body;
 
-    if (!email || !otp || !password) {
+    if (!email || !newPassword || !otp) {
       return NextResponse.json(
         { message: "Please provide all the fields" },
         { status: 400 }
@@ -26,10 +26,13 @@ export const POST = async (request: NextRequest) => {
       !user.otpExpires ||
       user.otpExpires < new Date()
     ) {
-      return NextResponse.json({ message: "Invalid OTP" }, { status: 400 });
+      return NextResponse.json(
+        { message: "Invalid or expired Token" },
+        { status: 400 }
+      );
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
 
     const updatedUser = await prisma.user.update({
       where: {

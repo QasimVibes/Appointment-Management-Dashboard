@@ -1,4 +1,4 @@
-import logo from "./asset/logo.png";
+import logo from "./asset/logo.svg";
 import passwordVisible from "./asset/passwordVisible.png";
 import google from "./asset/google.svg";
 import availability from "./asset/availability.png";

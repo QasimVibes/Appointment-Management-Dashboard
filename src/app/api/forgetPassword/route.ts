@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "../../../../libs/prisma";
+import prisma from "@/libs/prisma";
+import { SendResetPasswordEmail } from "@/helpers/sendResetPasswordEmail";
 
 export const POST = async (request: NextRequest) => {
   try {
@@ -22,8 +23,8 @@ export const POST = async (request: NextRequest) => {
     }
 
     user.otp = String(Math.floor(1000 + Math.random() * 9000)); // Generate OTP (4 digits);
-    // Send OTP to user's email
     user.otpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 minutes from now
+
     await prisma.user.update({
       where: {
         id: user.id,
@@ -33,6 +34,15 @@ export const POST = async (request: NextRequest) => {
         otpExpires: user.otpExpires,
       },
     });
+
+    const emailResponse = await SendResetPasswordEmail(user.email, user.otp);
+    
+    if (!emailResponse.success) {
+      return NextResponse.json(
+        { message: emailResponse.message },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json(
       { message: "OTP sent successfully to your email" },

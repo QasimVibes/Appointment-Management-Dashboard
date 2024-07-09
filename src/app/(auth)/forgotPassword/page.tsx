@@ -1,8 +1,25 @@
+"use client";
 import Button from "@/(components)/button/Button";
 import Input from "@/(components)/input/Input";
 import Link from "next/link";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
+import { forgetPassword } from "@/store/slice/forgetPasswordSlice";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function ForgetPassword() {
+  const router = useRouter();
+  const [email, setEmail] = useState<string>("");
+  const dispatch = useAppDispatch();
+  const forgetPasswordState = useAppSelector((state) => state.forgetPassword);
+
+  const onHandleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const resultAction = await dispatch(forgetPassword({ email }));
+    if (forgetPassword.fulfilled.match(resultAction)) {
+      router.push(`/otpVerification?email=${encodeURIComponent(email)}`);
+    }
+  };
   return (
     <div className="w-full  max-w-lg mx-auto pt-[66px] ">
       <div className=" bg-[#F9F9F9]  rounded-xl shadow-lg border-2 border-[#DADADA]">
@@ -23,32 +40,35 @@ export default function ForgetPassword() {
           </div>
 
           <div className="mt-5">
-            <form>
-              <div className="space-y-2">
-                <Input
-                  name="email"
-                  type="email"
-                  placeholder="example@ex.com"
-                  label="Email"
-                  className="py-3 px-4 block w-full border-2 border-[#DADADA] rounded-md text-sm focus:border-[#0069FF] focus:ring-[#0069FF] shadow-sm font-inter text-[#1A1A1A]"
-                  labelClassName="text-sm font-bold ml-1 mb-2"
-                  aria-describedby="email-error"
-                  required
-                />
-                <p
-                  className="hidden text-xs text-[#FF0000] mt-2"
-                  id="email-error"
-                >
-                  Please include a valid email address so we can get back to you
-                </p>
-              </div>
-              <div className="mt-5">
-                <Button
-                  text="Reset password"
-                  className="py-3 w-full px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent bg-[#0069FF] text-white hover:bg-[#0069FF] focus:outline-none focus:ring-2 focus:ring-[#0069FF] focus:ring-offset-2 transition-all text-[16px] leading-[22px] font-[500]"
-                />
-              </div>
-            </form>
+            <div className="space-y-2">
+              <Input
+                name="email"
+                type="email"
+                placeholder="example@ex.com"
+                label="Email"
+                value={email}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setEmail(e.target.value)
+                }
+                className="py-3 px-4 block w-full border-2 border-[#DADADA] rounded-md text-sm focus:border-[#0069FF] focus:ring-[#0069FF] shadow-sm font-inter text-[#1A1A1A]"
+                labelClassName="text-sm font-bold ml-1 mb-2"
+                aria-describedby="email-error"
+                required
+              />
+              <p
+                className="hidden text-xs text-[#FF0000] mt-2"
+                id="email-error"
+              >
+                Please include a valid email address so we can get back to you
+              </p>
+            </div>
+            <div className="mt-5">
+              <Button
+                text="Reset password"
+                onClick={onHandleSubmit}
+                className="py-3 w-full px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent bg-[#0069FF] text-white hover:bg-[#0069FF] focus:outline-none focus:ring-2 focus:ring-[#0069FF] focus:ring-offset-2 transition-all text-[16px] leading-[22px] font-[500]"
+              />
+            </div>
           </div>
         </div>
       </div>

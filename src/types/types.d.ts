@@ -39,3 +39,37 @@ export type UserState = {
     fullname: null;
   };
 };
+
+
+export type ForgetPasswordProps = {
+  email: string
+}
+export type ForgetPasswordState = {
+  isLoading: boolean
+  isError: string | null
+  forgetPasswordStatus: "idle" | "loading" | "succeeded" | "failed"
+}
+
+export type VerifyOtpProps ={
+  email: string;
+  otp: string;
+}
+
+export type VerifyOtpState= {
+  isLoading: boolean;
+  isError: string | null;
+  verifyOtpStatus: 'idle' | 'loading' | 'succeeded' | 'failed';
+}
+
+
+export type ResetPasswordProps ={
+  email: string;
+  otp: string;
+  newPassword: string;
+}
+
+export type ResetPasswordState= {
+  isLoading: boolean;
+  isError: string | null;
+  resetPasswordStatus: 'idle' | 'loading' | 'succeeded' | 'failed';
+}
