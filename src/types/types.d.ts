@@ -34,20 +34,23 @@ export type SignupProps = {
 export type UserState = {
   isLoading: boolean;
   isError: boolean;
-  user: {
-    email: null;
-    fullname: null;
-  };
+  userDetails: string[] | null
 };
 
 
-export type ForgetPasswordProps = {
+export type ScheduledEventState = {
+  isLoading: boolean;
+  isError: boolean;
+  scheduledEventStatus: "idle" | "loading" | "succeeded" | "failed";
+};
+
+export type ForgotPasswordProps = {
   email: string
 }
-export type ForgetPasswordState = {
+export type ForgotPasswordState = {
   isLoading: boolean
   isError: string | null
-  forgetPasswordStatus: "idle" | "loading" | "succeeded" | "failed"
+  forgotPasswordStatus: "idle" | "loading" | "succeeded" | "failed"
 }
 
 export type VerifyOtpProps ={

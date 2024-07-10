@@ -17,7 +17,6 @@ export async function POST(request: NextRequest) {
     if (
       !schedulerEmail ||
       !schedulerName ||
-      !description ||
       !selectedTime ||
       !selectedDate ||
       !hostName ||
@@ -25,6 +24,23 @@ export async function POST(request: NextRequest) {
     ) {
       return NextResponse.json(
         { message: "Please provide all the fields" },
+        { status: 400 }
+      );
+    }
+    
+    const existingMeeting = await prisma.meeting.findFirst({
+      where: {
+        AND: [
+          { schedulerEmail },
+          { selectedTime },
+          { selectedDate },
+        ],
+      },
+    });
+    
+    if (existingMeeting) {
+      return NextResponse.json(
+        { message: "Meeting already scheduled" },
         { status: 400 }
       );
     }

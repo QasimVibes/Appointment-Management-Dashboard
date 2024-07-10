@@ -19,7 +19,7 @@ import Image from "next/image";
 export default function ScheduledEvent() {
   const { details, setDetails, hostData } = useScheduledEvent();
 
-  const { handleButtonClick, data, isLoading, isError, isConfirmed } =
+  const { handleButtonClick,  isLoading, isError, isConfirmed } =
     useSubmitScheduledEvent(details, hostData);
 
   return (

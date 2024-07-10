@@ -3,6 +3,9 @@ import { useRouter } from "next/navigation";
 import { clearSignupDetails, signupUser } from "@/store/slice/signupSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { SignupProps } from "@/types/types";
+import { z } from "zod";
+import { signupSchema } from "@/types/ValidationSchema/FormSchema";
+import toast from "react-hot-toast";
 
 export const inputFields = [
   {
@@ -52,7 +55,18 @@ export const useSignup = () => {
 
   const onHandleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-   dispatch(signupUser(data));
+    try {
+      signupSchema.parse(data);
+      dispatch(signupUser(data));
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        error.errors.forEach((err) => {
+          toast.error(err.message);
+        });
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
+    }
   };
 
   useEffect(() => {

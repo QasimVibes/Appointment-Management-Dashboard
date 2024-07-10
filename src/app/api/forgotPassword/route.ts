@@ -45,7 +45,7 @@ export const POST = async (request: NextRequest) => {
     }
 
     return NextResponse.json(
-      { message: "OTP sent successfully to your email" },
+      { message: "OTP sent to your email" },
       { status: 200 }
     );
   } catch (error) {

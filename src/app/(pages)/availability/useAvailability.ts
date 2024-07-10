@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { AxiosInstance } from "@/utils/axiosInstance";
+import { availabilitySchema } from "@/types/ValidationSchema/FormSchema";
+import { z } from "zod";
 
 export const useAvailability = () => {
   const days = [
@@ -17,13 +19,13 @@ export const useAvailability = () => {
     "Saturday",
   ];
   const startingHours = [
-    "9:00 AM",
+    "09:00 AM",
     "10:00 AM",
     "11:00 AM",
     "12:00 PM",
-    "1:00 PM",
+    "01:00 PM",
   ];
-  const endingHours = ["2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM"];
+  const endingHours = ["02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM"];
   return { days, startingHours, endingHours };
 };
 
@@ -50,6 +52,7 @@ export const useSubmitAvailability = () => {
   const handleSubmit = useCallback(
     async (startHour: string, endHour: string, selectedDays: string[]) => {
       try {
+        availabilitySchema.parse({ startHour, endHour, selectedDays });
         if (session?.user?.id) {
           await dispatch(
             setAvailability({
@@ -62,7 +65,13 @@ export const useSubmitAvailability = () => {
           router.push("/eventBooking");
         }
       } catch (error) {
-        console.error(error);
+        if (error instanceof z.ZodError) {
+          error.errors.forEach((err) => {
+            toast.error(err.message);
+          });
+        } else {
+          toast.error("An unexpected error occurred. Please try again.");
+        }
       }
     },
     [dispatch, session]
@@ -108,7 +117,7 @@ export const useFetchAvailability = (
 
       if (userId) {
         fetchAvailabilityData();
-      }else{
+      } else {
         setIsLoading(false);
       }
     }

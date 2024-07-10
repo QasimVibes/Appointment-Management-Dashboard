@@ -4,7 +4,7 @@ import signupSlice from "./slice/signupSlice";
 import loginSlice from "./slice/loginSlice";
 import userSlice from "./slice/userSlice";
 import scheduledEventSlice from "./slice/scheduledEventSlice";
-import forgetPasswordSlice from "./slice/forgetPasswordSlice";
+import forgotPasswordSlice from "./slice/forgotPasswordSlice";
 import verifyOtpSlice from "./slice/verifyOtpSlice";
 import resetPasswordSlice from "./slice/resetPasswordSlice";
 
@@ -15,7 +15,7 @@ const store = configureStore({
     login: loginSlice,
     user: userSlice,
     scheduledEvent: scheduledEventSlice,
-    forgetPassword: forgetPasswordSlice,
+    forgotPassword: forgotPasswordSlice,
     verifyOtp: verifyOtpSlice,
     resetPassword: resetPasswordSlice,
   },

@@ -8,17 +8,23 @@ datasource db {
 }
 
 model User {
-  id           String       @id @default(auto()) @map("_id") @db.ObjectId
-  email        String       @unique
-  fullname     String
-  username     String       @unique
-  password     String
-  availability Availability @relation(fields: [id], references: [userId])
-  meeting      Meeting[]
-  otp          String?
-  otpExpires   DateTime?
-  createdAt    DateTime     @default(now())
-  updateAt     DateTime     @updatedAt
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
+  email           String       @unique
+  fullname        String
+  username        String       @unique
+  password        String
+  availability    Availability @relation(fields: [id], references: [userId])
+  meeting         Meeting[]
+  otp             String?
+  otpExpires      DateTime?
+  welcomeMessage  String?
+  language        String?
+  dateFormat      String?
+  timeFormat      String? 
+  country         String?
+  timezone        String?
+  createdAt       DateTime     @default(now())
+  updateAt        DateTime     @updatedAt
 }
 
 model Availability {

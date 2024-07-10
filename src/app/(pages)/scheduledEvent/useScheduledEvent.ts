@@ -2,6 +2,9 @@ import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { setScheduledEvent } from "@/store/slice/scheduledEventSlice";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
+import { scheduledEventSchema } from "@/types/ValidationSchema/FormSchema";
+import { z } from "zod";
+import toast from "react-hot-toast";
 
 export const useScheduledEvent = () => {
   const searchParams = useSearchParams();
@@ -35,7 +38,7 @@ export const useScheduledEvent = () => {
 export const useSubmitScheduledEvent = (details: any, hostData: any) => {
   const dispatch = useAppDispatch();
   const [isConfirmed, setIsConfirmed] = useState(false);
-  const { data, isLoading, isError } = useAppSelector(
+  const { isLoading, isError } = useAppSelector(
     (state) => state.scheduledEvent
   );
 
@@ -52,15 +55,25 @@ export const useSubmitScheduledEvent = (details: any, hostData: any) => {
 
     const submitEvent = async () => {
       try {
-        await dispatch(setScheduledEvent(submitData));
-        setIsConfirmed(true);
+        scheduledEventSchema.parse(submitData);
+        const resultAction = await dispatch(setScheduledEvent(submitData));
+        if (setScheduledEvent.fulfilled.match(resultAction)) {
+          setIsConfirmed(true);
+        }
       } catch (error) {
-        console.error(error);
+        setIsConfirmed(false);
+        if (error instanceof z.ZodError) {
+          error.errors.forEach((err) => {
+            toast.error(err.message);
+          });
+        } else {
+          toast.error("An unexpected error occurred. Please try again.");
+        }
       }
     };
 
     submitEvent();
   }, [details, hostData, dispatch]);
 
-  return { handleButtonClick, data, isLoading, isError, isConfirmed };
+  return { handleButtonClick, isLoading, isError, isConfirmed };
 };

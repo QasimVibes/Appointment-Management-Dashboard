@@ -2,24 +2,10 @@
 import Button from "@/(components)/button/Button";
 import Input from "@/(components)/input/Input";
 import Link from "next/link";
-import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
-import { forgetPassword } from "@/store/slice/forgetPasswordSlice";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useForgotPassword } from "./useForgotPassword";
 
-export default function ForgetPassword() {
-  const router = useRouter();
-  const [email, setEmail] = useState<string>("");
-  const dispatch = useAppDispatch();
-  const forgetPasswordState = useAppSelector((state) => state.forgetPassword);
-
-  const onHandleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const resultAction = await dispatch(forgetPassword({ email }));
-    if (forgetPassword.fulfilled.match(resultAction)) {
-      router.push(`/otpVerification?email=${encodeURIComponent(email)}`);
-    }
-  };
+export default function forgotPassword() {
+  const { email, setEmail, onHandleSubmit } = useForgotPassword();;
   return (
     <div className="w-full  max-w-lg mx-auto pt-[66px] ">
       <div className=" bg-[#F9F9F9]  rounded-xl shadow-lg border-2 border-[#DADADA]">

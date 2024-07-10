@@ -19,7 +19,9 @@ import DropDown from "@/(components)/dropDown/DropDown";
 import Link from "next/link";
 import LogoutBtn from "@/(components)/logoutBtn/LogoutBtn";
 import Image from "next/image";
+import { useUserProfile } from "./useUserProfile";
 export default function Profile() {
+  const { data, handleChange, saveChangesHandler } = useUserProfile();
   const menuItems = [{ text: "Dashboard", link: "/dashboard" }];
 
   return (
@@ -157,17 +159,19 @@ export default function Profile() {
                 </div>
               </div>
               <div className="max-w-[70%]">
-                <form>
+                <div>
                   <label
-                    htmlFor="name"
+                    htmlFor="fullname"
                     className="block font-inter font-[700] text-[14px] leading-[21px] text-[#1A1A1A] mb-2"
                   >
                     Name
                   </label>
                   <input
                     type="text"
-                    name="name"
-                    id="name"
+                    name="fullname"
+                    id="fullname"
+                    value={data.fullname}
+                    onChange={handleChange}
                     className="w-[60%] border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
                   />
                   <label
@@ -180,9 +184,10 @@ export default function Profile() {
                     rows={4}
                     name="welcomeMessage"
                     id="welcomeMessage"
-                    className="w-[60%]  border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
+                    value={data.welcomeMessage || ""}
+                    onChange={handleChange}
+                    className="w-[60%] border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
                   ></textarea>
-
                   <label
                     htmlFor="language"
                     className="block font-inter font-[700] text-[14px] leading-[21px] text-[#1A1A1A] mb-2"
@@ -190,10 +195,11 @@ export default function Profile() {
                     Language
                   </label>
                   <select
-                    defaultValue="English"
                     name="language"
                     id="language"
-                    className="w-[60%]  border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
+                    value={data.language || "English"}
+                    onChange={handleChange}
+                    className="w-[60%] border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
                   >
                     <option value="English">English</option>
                     <option value="Arabic">Arabic</option>
@@ -202,15 +208,16 @@ export default function Profile() {
                   <div className="flex flex-row justify-between w-[60%]">
                     <div>
                       <label
-                        htmlFor="date"
+                        htmlFor="dateFormat"
                         className="block font-inter font-[700] text-[14px] leading-[21px] text-[#1A1A1A] mb-2"
                       >
                         Date Format
                       </label>
                       <select
-                        name="date"
-                        id="date"
-                        defaultValue={"DD/MM/YYYY"}
+                        name="dateFormat"
+                        id="dateFormat"
+                        value={data.dateFormat || "DD/MM/YYYY"}
+                        onChange={handleChange}
                         className="w-full border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
                       >
                         <option value="DD/MM/YYYY">DD/MM/YYYY</option>
@@ -219,15 +226,16 @@ export default function Profile() {
                     </div>
                     <div>
                       <label
-                        htmlFor="time"
+                        htmlFor="timeFormat"
                         className="block font-inter font-[700] text-[14px] leading-[21px] text-[#1A1A1A] mb-2"
                       >
-                        Date Format
+                        Time Format
                       </label>
                       <select
-                        name="time"
-                        id="time"
-                        defaultValue={"12h (am/pm)"}
+                        name="timeFormat"
+                        id="timeFormat"
+                        value={data.timeFormat || "12h (am/pm)"}
+                        onChange={handleChange}
                         className="w-full border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
                       >
                         <option value="12h (am/pm)">12h (am/pm)</option>
@@ -244,7 +252,8 @@ export default function Profile() {
                   <select
                     name="country"
                     id="country"
-                    defaultValue={"Pakistan"}
+                    value={data.country || "Pakistan"}
+                    onChange={handleChange }
                     className="w-[60%] border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
                   >
                     <option value="Pakistan">Pakistan</option>
@@ -269,7 +278,9 @@ export default function Profile() {
                   <select
                     name="timezone"
                     id="timezone"
-                    className="w-[60%]  border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
+                    value={data.timezone || "Pakistan, Maldives Time"}
+                    onChange={handleChange}
+                    className="w-[60%] border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
                   >
                     <option value="Pakistan, Maldives Time">
                       Pakistan, Maldives Time
@@ -280,6 +291,7 @@ export default function Profile() {
                     <div className="space-x-3">
                       <Button
                         text="Save Changes"
+                        onClick={saveChangesHandler}
                         className="py-3 px-[14px] font-inter font-[600] text-[14px] leading-[21px] bg-[#0069FF] text-white rounded-[40px]"
                       />
                       <Button
@@ -292,7 +304,7 @@ export default function Profile() {
                       className="py-3 px-[14px] font-inter font-[600] text-[14px] leading-[21px] bg-[#FF0000] text-white rounded-[40px]"
                     />
                   </div>
-                </form>
+                </div>
               </div>
             </div>
           </div>

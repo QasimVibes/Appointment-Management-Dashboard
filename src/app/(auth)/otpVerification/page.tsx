@@ -2,50 +2,11 @@
 import Button from "@/(components)/button/Button";
 import Input from "@/(components)/input/Input";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/hooks/reduxHook";
-import { verifyOtp } from "@/store/slice/verifyOtpSlice";
+import { useOtpVerification } from "./useOtpVerification";
 
 export default function OtpVerification() {
-  const [otp, setOtp] = useState(["", "", "", ""]);
-  const [email, setEmail] = useState<string>("");
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    const emailParam = searchParams.get("email");
-    if (emailParam) {
-      setEmail(emailParam);
-    } else {
-      router.push("/login");
-    }
-  }, [searchParams]);
-
-  const handleChange = (index: number, value: string) => {
-    if (value.match(/^[0-9]$/)) {
-      const newOtp = [...otp];
-      newOtp[index] = value;
-      setOtp(newOtp);
-
-      if (index < otp.length - 1 && value) {
-        const nextSibling = document.getElementById(`otp-input-${index + 1}`);
-        if (nextSibling) {
-          nextSibling.focus();
-        }
-      }
-    }
-  };
-
-  const handleVerifyOtp = async () => {
-    const otpCode = otp.join("");
-    const resultAction = await dispatch(verifyOtp({ email, otp: otpCode }));
-
-    if (verifyOtp.fulfilled.match(resultAction)) {
-      router.push(`/resetPassword?email=${encodeURIComponent(email)}&otp=${otpCode}`);
-    }
-  };
+  const { otp, handleChange, handleVerifyOtp, resendOtp, isResending } =
+    useOtpVerification();
 
   return (
     <>
@@ -94,12 +55,14 @@ export default function OtpVerification() {
                     onClick={handleVerifyOtp}
                     className="bg-[#0069FF] font-inter text-white font-[500] text-[14px] leading-[22px] py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   />
-                  <Link
+
+                  <button
                     className="inline-block align-baseline text-[#0069FF] ml-4 font-[500] text-[14px] leading-[22px]"
-                    href="#"
+                    onClick={resendOtp}
+                    disabled={isResending}
                   >
-                    Resend OTP
-                  </Link>
+                    {isResending ? "Resending..." : "Resend OTP"}
+                  </button>
                 </div>
               </div>
             </div>

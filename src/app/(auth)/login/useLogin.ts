@@ -1,6 +1,8 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
+import { loginSchema } from "@/types/ValidationSchema/FormSchema";
+import { z } from "zod";
 import {
   clearLoginDetails,
   loginWithEmail,
@@ -43,7 +45,18 @@ export const useLogin = () => {
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
-    await dispatch(loginWithEmail(data));
+    try {
+      loginSchema.parse(data);
+      await dispatch(loginWithEmail(data));
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        error.errors.forEach((err) => {
+          toast.error(err.message);
+        });
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
+      }
+    }
   };
 
   const handleGoogleSignIn = async () => {

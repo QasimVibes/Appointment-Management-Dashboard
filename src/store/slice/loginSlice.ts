@@ -19,7 +19,7 @@ export const loginWithEmail = createAsyncThunk(
       if (response?.ok) {
         return response;
       } else {
-        return thunkAPI.rejectWithValue("Login failed");
+        return thunkAPI.rejectWithValue(response?.error);
       }
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error.message || "Login failed");

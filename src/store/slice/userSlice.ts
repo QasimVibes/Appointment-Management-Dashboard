@@ -1,33 +1,28 @@
 import { UserState } from "@/types/types";
 import { AxiosInstance } from "@/utils/axiosInstance";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import toast from "react-hot-toast";
 
 const initialState: UserState = {
   isLoading: false,
   isError: false,
-  user: {
-    email: null,
-    fullname: null,
-  },
+  userDetails: null,
 };
 
-export const getUser = createAsyncThunk(
-  "user/getUser",
-  async (userId: string, { rejectWithValue }) => {
+export const updateUser = createAsyncThunk(
+  "user/updateUser",
+  async (data: any, { rejectWithValue }) => {
     try {
-      const response = await AxiosInstance.get("/user", {
-        params: { userId },
-      });
-      if (response?.data) {
-        const user = {
-          email: response.data.user.email,
-          fullname: response.data.user.fullname,
-        };
-        return user;
+      const response = await AxiosInstance.put('/user', data);
+      if (response.data) {
+        toast.success(response.data.message);
+        return response.data;
       } else {
-        throw new Error("User data not found");
+        toast.error(response.data.message); 
+        return rejectWithValue(response.data);
       }
     } catch (error: any) {
+      toast.error(error.response.data.message);
       return rejectWithValue(error.response.data);
     }
   }
@@ -39,15 +34,15 @@ export const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getUser.pending, (state) => {
+      .addCase(updateUser.pending, (state) => {
         state.isError = false;
         state.isLoading = true;
       })
-      .addCase(getUser.fulfilled, (state, action) => {
+      .addCase(updateUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.user = action.payload;
+        state.userDetails = action.payload;
       })
-      .addCase(getUser.rejected, (state) => {
+      .addCase(updateUser.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
       });

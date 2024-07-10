@@ -1,13 +1,12 @@
 import { AxiosInstance } from "@/utils/axiosInstance";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
+import { ScheduledEventState } from "@/types/types";
 
-
-// Later on correct for pending ideal 
-const initialState = {
+const initialState:ScheduledEventState = {
   isLoading: false,
   isError: false,
-  data: null,
+  scheduledEventStatus: "idle",
 };
 
 export const setScheduledEvent = createAsyncThunk(
@@ -37,15 +36,17 @@ export const scheduledEventSlice = createSlice({
       .addCase(setScheduledEvent.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
+        state.scheduledEventStatus = "loading";
       })
       .addCase(setScheduledEvent.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
-        state.data = action.payload;
+        state.scheduledEventStatus = "succeeded";
       })
       .addCase(setScheduledEvent.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
+        state.scheduledEventStatus = "failed";
       });
   },
 });
