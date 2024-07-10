@@ -4,7 +4,6 @@ import {
   closer,
   scheduledEvent,
   analytics,
-
   adminCenter,
   exportIcon,
   filter,
@@ -13,18 +12,21 @@ import clock from "../../../../public/asset/clockDashboard.svg";
 import Button from "@/(components)/button/Button";
 import Link from "next/link";
 import { useState } from "react";
-import { useEventsTabs } from "./useDashboard";
+import {
+  useCategorizeEvents,
+  useFetchEvents,
+  useGenerateICS,
+} from "./useDashboard";
 import EventList from "@/(components)/eventList/EventList";
 import DropDown from "@/(components)/dropDown/DropDown";
 import Image from "next/image";
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("Upcoming");
-  const { upcomingEvents, pastEvents, loading, error } = useEventsTabs();
+  const { events, loading, error } = useFetchEvents();
+  const { upcomingEvents, pastEvents } = useCategorizeEvents(events);
+  const { generateICSFile } = useGenerateICS();
 
-  const menuItems = [
-    { text: "Settings", link: "/profile" },
-  ];
-
+  const menuItems = [{ text: "Settings", link: "/profile" }];
 
   return (
     <>
@@ -174,7 +176,10 @@ export default function Dashboard() {
                       </div>
                       <div className="flex flex-row justify-center items-center pr-[24px] space-x-2">
                         <div>
-                          <button className="font-inter font-[500] text-[12.69px] leading-[20px] text-[#1A1A1A] flex border border-solid border-[#1A1A1A] rounded-[40px] px-[13px] py-[6px] ">
+                          <button
+                            onClick={generateICSFile}
+                            className="font-inter font-[500] text-[12.69px] leading-[20px] text-[#1A1A1A] flex border border-solid border-[#1A1A1A] rounded-[40px] px-[13px] py-[6px] "
+                          >
                             <Image
                               src={exportIcon}
                               alt="exportIcon"

@@ -5,8 +5,6 @@ export type SetAvailabilityProps = {
   userId: string;
 };
 
-
-
 export type AvailabilityState = {
   isLoading: boolean;
   isError: boolean;
@@ -34,9 +32,8 @@ export type SignupProps = {
 export type UserState = {
   isLoading: boolean;
   isError: boolean;
-  userDetails: string[] | null
+  userDetails: string[] | null;
 };
-
 
 export type ScheduledEventState = {
   isLoading: boolean;
@@ -45,34 +42,42 @@ export type ScheduledEventState = {
 };
 
 export type ForgotPasswordProps = {
-  email: string
-}
-export type ForgotPasswordState = {
-  isLoading: boolean
-  isError: string | null
-  forgotPasswordStatus: "idle" | "loading" | "succeeded" | "failed"
-}
-
-export type VerifyOtpProps ={
   email: string;
-  otp: string;
-}
-
-export type VerifyOtpState= {
+};
+export type ForgotPasswordState = {
   isLoading: boolean;
   isError: string | null;
-  verifyOtpStatus: 'idle' | 'loading' | 'succeeded' | 'failed';
-}
+  forgotPasswordStatus: "idle" | "loading" | "succeeded" | "failed";
+};
 
+export type VerifyOtpProps = {
+  email: string;
+  otp: string;
+};
 
-export type ResetPasswordProps ={
+export type VerifyOtpState = {
+  isLoading: boolean;
+  isError: string | null;
+  verifyOtpStatus: "idle" | "loading" | "succeeded" | "failed";
+};
+
+export type ResetPasswordProps = {
   email: string;
   otp: string;
   newPassword: string;
-}
+};
 
-export type ResetPasswordState= {
+export type ResetPasswordState = {
   isLoading: boolean;
   isError: string | null;
-  resetPasswordStatus: 'idle' | 'loading' | 'succeeded' | 'failed';
-}
+  resetPasswordStatus: "idle" | "loading" | "succeeded" | "failed";
+};
+
+export type Appointment = {
+  name: string;
+  email: string;
+  description: string;
+  hostName: string;
+  start: Date;
+  end: Date;
+};
