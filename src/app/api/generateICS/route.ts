@@ -65,10 +65,10 @@ export const POST = async (request: NextRequest) => {
     const meetings = await prisma.meeting.findMany({
       where: { userId: userId },
     });
-
+    
     if (!meetings || meetings.length === 0) {
       return NextResponse.json(
-        { message: "No meetings found for the userId" },
+        { message: "No meetings found" },
         { status: 404 }
       );
     }

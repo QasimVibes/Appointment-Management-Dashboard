@@ -22,7 +22,7 @@ import DropDown from "@/(components)/dropDown/DropDown";
 import Image from "next/image";
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("Upcoming");
-  const { events, loading, error } = useFetchEvents();
+  const { userName, events, loading, error } = useFetchEvents();
   const { upcomingEvents, pastEvents } = useCategorizeEvents(events);
   const { generateICSFile } = useGenerateICS();
 
@@ -38,10 +38,12 @@ export default function Dashboard() {
               <Image src={closer} alt="closer" className="w-[16px] h-[16px]" />
             </div>
             <div className="flex justify-center p-[10px]">
-              <Button
-                text="+ Create"
+              <Link
+                href={"/eventBooking"}
                 className="px-[80px] py-[12px] bg-[#0069FF] rounded-[40px] font-inter font-[700] text-[14.75px] leading-[22px] text-[#FFFFFF]"
-              />
+              >
+                + Create
+              </Link>
             </div>
           </div>
           <div className="flex flex-col justify-between flex-grow font-inter font-[700] text-[14.75] leading-[24px]">
@@ -92,7 +94,7 @@ export default function Dashboard() {
               <div className="mr-[32px] flex flex-row items-center space-x-[6px] py-[4px]">
                 <Button
                   className="w-[33.67px] h-[32.5px] bg-[#CCCCCC] rounded-[16px] font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A]"
-                  text={"Q"}
+                  text={userName || "T"}
                 />
                 <DropDown items={menuItems} />
               </div>
@@ -205,9 +207,9 @@ export default function Dashboard() {
                         {activeTab === "Upcoming" && (
                           <EventList events={upcomingEvents} title="Upcoming" />
                         )}
-                        {/* {activeTab === "Pending" && (
-                        <EventList events={pendingEvents} title="Pending" />
-                      )} */}
+                        {activeTab === "Pending" && (
+                          <EventList events={[]} title="Pending" />
+                        )}
                         {activeTab === "Past" && (
                           <EventList events={pastEvents} title="Past" />
                         )}

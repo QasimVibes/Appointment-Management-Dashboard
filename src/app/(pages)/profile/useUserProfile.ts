@@ -6,8 +6,9 @@ import { updateUser } from "@/store/slice/userSlice";
 import { toast } from "react-hot-toast";
 
 export const useUserProfile = () => {
-  const { data: session } = useSession();
   const dispatch = useAppDispatch();
+  const { data: session } = useSession();
+  const username=session?.user?.username?.slice(0, 1).toUpperCase();
   const [data, setData] = useState<any>({
     fullname: "",
     welcomeMessage: "",
@@ -56,5 +57,5 @@ export const useUserProfile = () => {
     }
   }, [session?.user?.id]);
 
-  return { data, handleChange, saveChangesHandler };
+  return {username ,data, handleChange, saveChangesHandler };
 };

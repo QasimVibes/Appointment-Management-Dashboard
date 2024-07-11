@@ -2,7 +2,7 @@ import logo from "./asset/logo.svg";
 import passwordVisible from "./asset/passwordVisible.png";
 import google from "./asset/google.svg";
 import availability from "./asset/availability.png";
-import vector from "./asset/vector.png";
+import vector from "./asset/Vector.svg";
 import checkmark from "./asset/checkmark.svg";
 import newWindow from "./asset/newWindow.svg";
 import person from "./asset/person.svg";

@@ -2,10 +2,13 @@ import { AxiosInstance } from "@/utils/axiosInstance";
 import { useState, useEffect, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 export const useFetchEvents = () => {
   const { data: session } = useSession();
   const userId = session?.user?.id;
+  const userName = session?.user?.username?.slice(0, 1).toUpperCase();
+
   const [events, setEvents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -28,7 +31,7 @@ export const useFetchEvents = () => {
     fetchEvents();
   }, [userId]);
 
-  return { events, loading, error };
+  return { userName, events, loading, error };
 };
 
 export const useCategorizeEvents = (events: any[]) => {
@@ -87,11 +90,15 @@ export const useGenerateICS = () => {
         window.URL.revokeObjectURL(url);
       } else {
         toast.error("Failed to generate ICS file");
-        console.error("Failed to generate ICS file");
       }
-    } catch (error: any) {
-      toast.error(error.response.data.message);
-      console.error("Error:", error);
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          toast.error(`Failed to generate ICS file: ${error.response.status}`);
+        }
+      } else {
+        toast.error("Failed to generate ICS file");
+      }
     }
   }, [userId]);
 

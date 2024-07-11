@@ -4,7 +4,7 @@ import { circle, details } from "../../../public";
 
 const EventList = ({
   events,
-  title,
+  title ,
 }: {
   events: any;
   title: string;

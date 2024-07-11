@@ -21,7 +21,7 @@ import LogoutBtn from "@/(components)/logoutBtn/LogoutBtn";
 import Image from "next/image";
 import { useUserProfile } from "./useUserProfile";
 export default function Profile() {
-  const { data, handleChange, saveChangesHandler } = useUserProfile();
+  const { username, data, handleChange, saveChangesHandler } = useUserProfile();
   const menuItems = [{ text: "Dashboard", link: "/dashboard" }];
 
   return (
@@ -125,7 +125,7 @@ export default function Profile() {
                 </button>
                 <Button
                   className="w-[33.67px] h-[32.5px] bg-[#CCCCCC] rounded-[16px] font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A]"
-                  text="Q"
+                  text={username || "T"}
                 />
                 <DropDown items={menuItems} />
               </div>
@@ -253,7 +253,7 @@ export default function Profile() {
                     name="country"
                     id="country"
                     value={data.country || "Pakistan"}
-                    onChange={handleChange }
+                    onChange={handleChange}
                     className="w-[60%] border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
                   >
                     <option value="Pakistan">Pakistan</option>

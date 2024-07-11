@@ -135,7 +135,7 @@ export default function EventBooking() {
                       {value?.toString().slice(0, 16)}
                     </h2>
                   </div>
-                  <div className="space-y-[10px] overflow-auto h-[50%]">
+                  <div className="space-y-[10px] overflow-auto h-[60vh]">
                     {timeSlots?.map((time) =>
                       selectedTime !== time ? (
                         <div key={time}>
