@@ -39,6 +39,7 @@ export const useEventBooking = () => {
   useEffect(() => {
     const fetchEventData = async () => {
       try {
+        // get request to slice
         const response = await AxiosInstance.get("/availability");
         if (response.data) {
           const filteredData = response.data.availability?.find(

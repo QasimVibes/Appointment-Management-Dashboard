@@ -7,6 +7,7 @@ import scheduledEventSlice from "./slice/scheduledEventSlice";
 import forgotPasswordSlice from "./slice/forgotPasswordSlice";
 import verifyOtpSlice from "./slice/verifyOtpSlice";
 import resetPasswordSlice from "./slice/resetPasswordSlice";
+import icsSlice from "./slice/generateIcsFileSlice";
 
 const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
     forgotPassword: forgotPasswordSlice,
     verifyOtp: verifyOtpSlice,
     resetPassword: resetPasswordSlice,
+    ics: icsSlice,
   },
 });
 

@@ -6,6 +6,7 @@ import { SetAvailabilityProps, AvailabilityState } from "@/types/types";
 const initialState: AvailabilityState = {
   isLoading: false,
   isError: false,
+  availabilityData: null,
 };
 
 export const setAvailability = createAsyncThunk(
@@ -22,11 +23,48 @@ export const setAvailability = createAsyncThunk(
         userId,
       });
 
-      toast.success(response.data.message);
-      return response.data;
+      if (response.data) {
+        toast.success(response.data.message);
+        return response.data;
+      } else {
+        toast.error(response.data.message);
+      }
+      return rejectWithValue(response.data);
     } catch (error: any) {
       toast.error(error.response.data.message);
       return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const fetchAvailabilityData = createAsyncThunk(
+  "availability/fetchAvailabilityData",
+  async (userId: string, { rejectWithValue }) => {
+    try {
+      const response = await AxiosInstance.get(`/availability`);
+
+      if (response.status === 200) {
+        const filteredData = response.data?.availability?.find(
+          (data: any) => data.userId === userId
+        );
+
+        if (filteredData) {
+          return filteredData;
+        } else {
+          return rejectWithValue("No availability data found for the user.");
+        }
+      } else {
+        return rejectWithValue(
+          `Request failed with status: ${response.status}`
+        );
+      }
+    } catch (error: any) {
+      let errorMessage =
+        error.response?.data?.message ||
+        error.message ||
+        "Failed to fetch availability data.";
+      toast.error(errorMessage);
+      return rejectWithValue(errorMessage);
     }
   }
 );
@@ -46,6 +84,21 @@ const availabilitySlice = createSlice({
         state.isError = false;
       })
       .addCase(setAvailability.rejected, (state) => {
+        state.isLoading = false;
+        state.isError = true;
+      });
+
+    builder
+      .addCase(fetchAvailabilityData.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+      })
+      .addCase(fetchAvailabilityData.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.availabilityData = action.payload;
+      })
+      .addCase(fetchAvailabilityData.rejected, (state) => {
         state.isLoading = false;
         state.isError = true;
       });

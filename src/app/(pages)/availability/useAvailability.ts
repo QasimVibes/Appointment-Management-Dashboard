@@ -1,10 +1,12 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
-import { setAvailability } from "@/store/slice/availabilitySlice";
+import {
+  setAvailability,
+  fetchAvailabilityData,
+} from "@/store/slice/availabilitySlice";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { AxiosInstance } from "@/utils/axiosInstance";
 import { availabilitySchema } from "@/types/ValidationSchema/FormSchema";
 import { z } from "zod";
 
@@ -25,7 +27,13 @@ export const useAvailability = () => {
     "12:00 PM",
     "01:00 PM",
   ];
-  const endingHours = ["02:00 PM", "03:00 PM", "04:00 PM", "05:00 PM", "06:00 PM"];
+  const endingHours = [
+    "02:00 PM",
+    "03:00 PM",
+    "04:00 PM",
+    "05:00 PM",
+    "06:00 PM",
+  ];
   return { days, startingHours, endingHours };
 };
 
@@ -88,40 +96,25 @@ export const useFetchAvailability = (
   const { data: session } = useSession();
   const userId = session?.user?.id;
 
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(null);
+  const dispatch = useAppDispatch();
+  const { isLoading, isError, availabilityData } = useAppSelector(
+    (state) => state.availability
+  );
 
   useEffect(() => {
     if (userId) {
-      const fetchAvailabilityData = async () => {
-        try {
-          const response = await AxiosInstance.get(`/availability`);
-          if (response.data) {
-            const filteredData = response.data.availability?.find(
-              (data: any) => data.userId === userId
-            );
-            if (filteredData) {
-              setStartHour(filteredData.startHour);
-              setEndHour(filteredData.endHour);
-              setSelectedDays(filteredData.days);
-              toast.success("Availability set successfully");
-            }
-          }
-        } catch (error: any) {
-          setIsError(error);
-          console.error(error);
-        } finally {
-          setIsLoading(false);
-        }
-      };
-
-      if (userId) {
-        fetchAvailabilityData();
-      } else {
-        setIsLoading(false);
-      }
+      dispatch(fetchAvailabilityData(userId));
     }
-  }, [userId, setStartHour, setEndHour, setSelectedDays]);
+  }, [userId, dispatch]);
+
+  useEffect(() => {
+    if (availabilityData) {
+      setStartHour(availabilityData.startHour);
+      setEndHour(availabilityData.endHour);
+      setSelectedDays(availabilityData.days);
+      toast.success("Availability set successfully");
+    }
+  }, [availabilityData]);
 
   return { isLoading, isError };
 };

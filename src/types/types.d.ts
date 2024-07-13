@@ -5,9 +5,15 @@ export type SetAvailabilityProps = {
   userId: string;
 };
 
+export type availabilityData = {
+  startHour: string;
+  endHour: string;
+  days: string[];
+}
 export type AvailabilityState = {
   isLoading: boolean;
   isError: boolean;
+  availabilityData:  availabilityData | null;
 };
 
 export type SignupState = {
@@ -73,11 +79,22 @@ export type ResetPasswordState = {
   resetPasswordStatus: "idle" | "loading" | "succeeded" | "failed";
 };
 
-export type Appointment = {
-  name: string;
-  email: string;
-  description: string;
-  hostName: string;
-  start: Date;
-  end: Date;
-};
+export type GenerateICSState = {
+  isLoading: boolean;
+  isSuccess: boolean;
+  isError: boolean;
+}
+
+
+// export type Appointment = {
+//   name: string;
+//   email: string;
+//   description: string;
+//   hostName: string;
+//   start: Date;
+//   end: Date;
+// };
+
+
+
+

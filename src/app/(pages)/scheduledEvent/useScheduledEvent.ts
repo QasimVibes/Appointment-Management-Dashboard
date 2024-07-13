@@ -37,12 +37,12 @@ export const useScheduledEvent = () => {
 
 export const useSubmitScheduledEvent = (details: any, hostData: any) => {
   const dispatch = useAppDispatch();
-  const [isConfirmed, setIsConfirmed] = useState(false);
+  const router = useRouter();
   const { isLoading, isError } = useAppSelector(
     (state) => state.scheduledEvent
   );
 
-  const handleButtonClick = useCallback(() => {
+  const handleButtonClick = useCallback(async () => {
     const submitData = {
       schedulerEmail: details.email,
       schedulerName: details.name,
@@ -50,30 +50,27 @@ export const useSubmitScheduledEvent = (details: any, hostData: any) => {
       selectedTime: `${hostData.startingTime} - ${hostData.endingTime}`,
       selectedDate: hostData.day,
       hostName: hostData.host,
+      timezone: hostData.location,
       userId: hostData.id,
     };
 
-    const submitEvent = async () => {
-      try {
-        scheduledEventSchema.parse(submitData);
-        const resultAction = await dispatch(setScheduledEvent(submitData));
-        if (setScheduledEvent.fulfilled.match(resultAction)) {
-          setIsConfirmed(true);
-        }
-      } catch (error) {
-        setIsConfirmed(false);
-        if (error instanceof z.ZodError) {
-          error.errors.forEach((err) => {
-            toast.error(err.message);
-          });
-        } else {
-          toast.error("An unexpected error occurred. Please try again.");
-        }
+    try {
+      scheduledEventSchema.parse(submitData);
+      //  update here
+      const resultAction = await dispatch(setScheduledEvent(submitData));
+      if (setScheduledEvent.fulfilled.match(resultAction)) {
+        router.push(`/scheduled/${resultAction.payload.url}`);
       }
-    };
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        error.errors.forEach((err) => {
+          toast.error(err.message);
+        });
+      } else {
+        toast.error('An unexpected error occurred. Please try again.');
+      }
+    }
+  }, [details, hostData, dispatch, router]);
 
-    submitEvent();
-  }, [details, hostData, dispatch]);
-
-  return { handleButtonClick, isLoading, isError, isConfirmed };
+  return { handleButtonClick, isLoading, isError };
 };

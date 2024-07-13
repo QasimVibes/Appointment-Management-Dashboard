@@ -62,7 +62,8 @@ export async function GET() {
       };
     });
     return NextResponse.json(
-      { availability: availabilityWithPasswordNull },
+
+      { message: "Availability found", availability: availabilityWithPasswordNull },
       { status: 200 }
     );
   } catch (error) {

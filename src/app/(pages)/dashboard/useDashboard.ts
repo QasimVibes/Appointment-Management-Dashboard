@@ -1,61 +1,62 @@
-import { AxiosInstance } from "@/utils/axiosInstance";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import toast from "react-hot-toast";
-import axios from "axios";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
+import { fetchMeeting } from "@/store/slice/scheduledEventSlice";
+import { generateICSFile as generateICSFileAsync } from "@/store/slice/generateIcsFileSlice";
 
 export const useFetchEvents = () => {
   const { data: session } = useSession();
+  const dispatch = useAppDispatch();
   const userId = session?.user?.id;
   const userName = session?.user?.username?.slice(0, 1).toUpperCase();
+  const { isLoading, isError } = useAppSelector(
+    (state) => state.scheduledEvent
+  );
 
-  const [events, setEvents] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [events, setEvents] = useState<string[]>([]);
+
+  const fetchEvents = async () => {
+    try {
+      const fetchedData = await dispatch(fetchMeeting({ userId })).unwrap();
+      setEvents(fetchedData?.meetings);
+    } catch (error: any) {
+      console.log("Error fetching events:", error.message);
+    }
+  };
 
   useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await AxiosInstance.get("/meeting", {
-          params: { userId },
-        });
-        if (response.data) {
-          setEvents(response.data.meetings);
-          setLoading(false);
-        }
-      } catch (error: any) {
-        setLoading(false);
-        setError(error);
-      }
-    };
-    fetchEvents();
+    if (userId) {
+      fetchEvents();
+    }
   }, [userId]);
 
-  return { userName, events, loading, error };
+  return { userName, events, isLoading, isError };
 };
 
 export const useCategorizeEvents = (events: any[]) => {
-  const [upcomingEvents, setUpcomingEvents] = useState<any[]>([]);
-  const [pastEvents, setPastEvents] = useState<any[]>([]);
+  const [upcomingEvents, setUpcomingEvents] = useState<string[]>([]);
+  const [pastEvents, setPastEvents] = useState<string[]>([]);
 
   useEffect(() => {
-    const currentDate = new Date();
+    if (events.length > 0) {
+      const currentDate = new Date();
+      const upcoming = events.filter(
+        (event) =>
+          new Date(
+            event.selectedDate + " " + event.selectedTime.split(" - ")[0]
+          ) > currentDate
+      );
 
-    const upcoming = events.filter(
-      (event) =>
-        new Date(
-          event.selectedDate + " " + event.selectedTime.split(" - ")[0]
-        ) > currentDate
-    );
-    const past = events.filter(
-      (event) =>
-        new Date(
-          event.selectedDate + " " + event.selectedTime.split(" - ")[0]
-        ) <= currentDate
-    );
+      const past = events.filter(
+        (event) =>
+          new Date(
+            event.selectedDate + " " + event.selectedTime.split(" - ")[0]
+          ) <= currentDate
+      );
 
-    setUpcomingEvents(upcoming);
-    setPastEvents(past);
+      setUpcomingEvents(upcoming);
+      setPastEvents(past);
+    }
   }, [events]);
 
   return { upcomingEvents, pastEvents };
@@ -64,43 +65,15 @@ export const useCategorizeEvents = (events: any[]) => {
 export const useGenerateICS = () => {
   const { data: session } = useSession();
   const userId = session?.user?.id;
+  const dispatch = useAppDispatch();
 
-  const generateICSFile = useCallback(async () => {
+  const generateICSFile = async () => {
     try {
-      const response = await AxiosInstance.post(
-        "/generateICS",
-        {
-          userId,
-        },
-        {
-          responseType: "blob",
-        }
-      );
-
-      if (response.status === 200) {
-        toast.success("ICS file generated successfully");
-        const blob = new Blob([response.data], { type: "text/calendar" });
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "appointment.ics";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-      } else {
-        toast.error("Failed to generate ICS file");
-      }
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        if (error.response) {
-          toast.error(`Failed to generate ICS file: ${error.response.status}`);
-        }
-      } else {
-        toast.error("Failed to generate ICS file");
-      }
+      await dispatch(generateICSFileAsync(userId)).unwrap();
+    } catch (error: any) {
+      console.error("Error generating ICS file:", error.message);
     }
-  }, [userId]);
+  };
 
   return { generateICSFile };
 };

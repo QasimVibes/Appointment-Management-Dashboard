@@ -23,7 +23,7 @@ import Image from "next/image";
 import Analytics from "@/(components)/chart/Chart";
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("Upcoming");
-  const { userName, events, loading, error } = useFetchEvents();
+  const { userName, events, isLoading, isError } = useFetchEvents();
   const { upcomingEvents, pastEvents } = useCategorizeEvents(events);
   const { generateICSFile } = useGenerateICS();
 
@@ -202,7 +202,10 @@ export default function Dashboard() {
                           <div>
                             <button
                               onClick={generateICSFile}
-                              className="font-inter font-[500] text-[12.69px] leading-[20px] text-[#1A1A1A] flex border border-solid border-[#1A1A1A] rounded-[40px] px-[13px] py-[6px] "
+                              className={`font-inter font-[500] text-[12.69px] leading-[20px] text-[#1A1A1A] flex border border-solid border-[#1A1A1A] rounded-[40px] px-[13px] py-[6px] ${
+                                events.length > 0 ? "" : "cursor-not-allowed"
+                              }`}
+                              disabled={events.length === 0}
                             >
                               <Image
                                 src={exportIcon}
