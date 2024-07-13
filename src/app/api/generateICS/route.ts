@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { generateICS } from "../../../helpers/icsGenerator";
+import { generateICS } from "../../../libs/icsGenerator";
 import prisma from "../../../libs/prisma";
 
 const parseSelectedDateTime = (selectedDate: string, selectedTime: string) => {

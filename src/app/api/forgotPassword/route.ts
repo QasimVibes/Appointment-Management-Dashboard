@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/libs/prisma";
-import { SendResetPasswordEmail } from "@/helpers/sendResetPasswordEmail";
+import { generateResetPasswordEmail } from "@/libs/email/emailTemplates";
+import { sendMail } from '@/libs/email/nodemailer';
 
 export const POST = async (request: NextRequest) => {
   try {
@@ -35,14 +36,8 @@ export const POST = async (request: NextRequest) => {
       },
     });
 
-    const emailResponse = await SendResetPasswordEmail(user.email, user.otp);
-    
-    if (!emailResponse.success) {
-      return NextResponse.json(
-        { message: emailResponse.message },
-        { status: 500 }
-      );
-    }
+    const html=generateResetPasswordEmail(user.otp)
+    await sendMail({ to: user.email,  subject: "Reset Password", html,  })
 
     return NextResponse.json(
       { message: "OTP sent to your email" },
