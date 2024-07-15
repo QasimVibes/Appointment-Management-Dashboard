@@ -8,7 +8,7 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET || "randomsecretkey",
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60 * 24 * 7, // 1 week
+    maxAge: 60 * 60 * 24 * 7,
   },
   pages: {
     signIn: "/login",
@@ -17,6 +17,12 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      authorization: {
+        params: {
+          scope:
+            "openid profile email https://www.googleapis.com/auth/calendar",
+        },
+      },
     }),
     CredentialsProvider({
       name: "Credentials",
@@ -33,42 +39,37 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
-        try {
-          if (credentials?.email && credentials?.password) {
-            const user = await prisma.user.findUnique({
-              where: {
-                email: credentials.email,
-              },
-            });
-
-            if (!user || !user.password) {
-              throw new Error("Invalid credentials");
-            }
-            const isPasswordCorrect = await bcrypt.compare(
-              credentials.password,
-              user.password
-            );
-
-            if (!isPasswordCorrect) {
-              throw new Error("Incorrect password");
-            }
-            return user;
-          } else {
-            return null;
-          }
-        } catch (error: any) {
-          throw new Error(error.message);
+        if (!credentials?.email || !credentials?.password) {
+          return null;
         }
+        const user = await prisma.user.findUnique({
+          where: { email: credentials?.email },
+        });
+        if (!user) {
+          return null;
+        }
+        const passwordMatch = await bcrypt.compare(
+          credentials.password,
+          user.password
+        );
+        if (!passwordMatch) {
+          return null;
+        }
+        return {
+          id: user.id,
+          email: user.email,
+          username: user.username,
+        };
       },
     }),
   ],
-
   callbacks: {
     async signIn({ user, account, profile }: any) {
       if (account?.provider === "google") {
         const existingUser = await prisma.user.findUnique({
           where: { email: profile.email },
         });
+
         if (existingUser) {
           console.log("User already exists:", existingUser);
           profile.id = existingUser.id;
@@ -97,17 +98,24 @@ export const authOptions: NextAuthOptions = {
       return true;
     },
 
-    async session({ session, token }) {
-      if (token) {
-        (session.user.id = token.id), (session.user.username = token.username);
-      }
-      return session;
-    },
-    async jwt({ token, user }) {
+    async jwt({ token, account, user }) {
       if (user) {
-        (token.id = user.id?.toString()), (token.username = user.username);
+        token.id = user.id?.toString();
+        token.username = user.username;
+      }
+      if (account?.provider === "google") {
+        token.accessToken = account.access_token;
       }
       return token;
+    },
+    async session({ session, token }) {
+      if (token) {
+        session.user.accessToken = token.accessToken;
+        session.user.id = token.id;
+        session.user.username = token.username;
+      }
+
+      return session;
     },
   },
 };

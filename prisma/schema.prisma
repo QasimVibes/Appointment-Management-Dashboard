@@ -23,6 +23,7 @@ model User {
   timeFormat      String? 
   country         String?
   timezone        String?
+  accessToken     String?
   createdAt       DateTime     @default(now())
   updateAt        DateTime     @updatedAt
 }
