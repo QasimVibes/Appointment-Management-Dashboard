@@ -19,8 +19,7 @@ import Link from "next/link";
 export default function ScheduledEvent() {
   const { details, setDetails, hostData } = useScheduledEvent();
 
-  const { handleButtonClick, isLoading, isError } =
-    useSubmitScheduledEvent(details, hostData);
+  const { handleButtonClick } = useSubmitScheduledEvent(details, hostData);
 
   return (
     <>
@@ -33,7 +32,7 @@ export default function ScheduledEvent() {
               <div className="px-[24px] py-[24px] h-full border-[0.5px] border-solid border-[#DADADA] space-y-[28px]">
                 <div>
                   <Link href="/eventBooking" className="p-1 rounded-[50%] bg-[#f1eeee]">
-                    <Image src={arrowLeft} alt="arrowLeft" />
+                    <Image src={arrowLeft} alt="arrowLeft" width={24} height={24} />
                   </Link>
                 </div>
                 <div className="space-y-[6px]">
@@ -46,13 +45,13 @@ export default function ScheduledEvent() {
                 </div>
                 <div className="space-y-[12px]">
                   <div className="flex space-x-2">
-                    <Image src={clock} alt="clock" />
+                    <Image src={clock} alt="clock"  width={24} height={24} />
                     <p className="font-[400] text-[14px] leading-[22px] text-[#1A1A1A]">
                       30 min
                     </p>
                   </div>
                   <div className="flex space-x-2">
-                    <Image src={briefcase} alt="briefcase" />
+                    <Image src={briefcase} alt="briefcase"  width={24} height={24} />
                     <p className="font-[400] text-[14px] leading-[22px] text-[#1A1A1A]">
                       {hostData.startingTime} - {hostData.endingTime},{" "}
                       {hostData.day}
@@ -62,7 +61,8 @@ export default function ScheduledEvent() {
                     <Image
                       src={globe}
                       alt="globe"
-                      className="w-[24px] h-[24px]"
+                      className="w-[24px] h-[24px]" 
+                      width={24} height={24}
                     />
                     <p className="font-[400] text-[14px] leading-[22px] text-[#1A1A1A]">
                       {hostData.location}
@@ -153,6 +153,8 @@ export default function ScheduledEvent() {
               src={topCornerImage}
               alt="topCornerImage"
               className="absolute top-0 right-0"
+              width={105}
+              height={105}
             />
           </div>
         </div>

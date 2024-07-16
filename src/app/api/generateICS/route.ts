@@ -1,54 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateICS } from "../../../libs/icsGenerator";
 import prisma from "../../../libs/prisma";
-
-const parseSelectedDateTime = (selectedDate: string, selectedTime: string) => {
-  const [startTime, endTime] = selectedTime.split(" - ");
-  const [startHours12, startMinutes, startPeriod] = startTime.split(/[: ]/);
-  const [endHours12, endMinutes, endPeriod] = endTime.split(/[: ]/);
-
-  let startHours = parseInt(startHours12, 10);
-  let endHours = parseInt(endHours12, 10);
-
-  if (startPeriod === "PM" && startHours !== 12) {
-    startHours += 12;
-  } else if (startPeriod === "AM" && startHours === 12) {
-    startHours = 0;
-  }
-
-  if (endPeriod === "PM" && endHours !== 12) {
-    endHours += 12;
-  } else if (endPeriod === "AM" && endHours === 12) {
-    endHours = 0;
-  }
-
-  const [weekday, month, day, year] = selectedDate.split(" ");
-  const monthIndex = new Date(`${month} 1, ${year}`).getMonth();
-
-  const startDateUTC = new Date(
-    Date.UTC(
-      parseInt(year, 10),
-      monthIndex,
-      parseInt(day, 10),
-      startHours,
-      parseInt(startMinutes, 10)
-    )
-  );
-  const endDateUTC = new Date(
-    Date.UTC(
-      parseInt(year, 10),
-      monthIndex,
-      parseInt(day, 10),
-      endHours,
-      parseInt(endMinutes, 10)
-    )
-  );
-  const fiveHoursInMilliseconds = 5 * 60 * 60 * 1000;
-  const startDate = new Date(startDateUTC.getTime() - fiveHoursInMilliseconds);
-  const endDate = new Date(endDateUTC.getTime() - fiveHoursInMilliseconds);
-
-  return { start: startDate, end: endDate };
-};
+import { parseSelectedDateTime } from "@/constants/parseSelectedDateTime";
 
 export const POST = async (request: NextRequest) => {
   try {
@@ -65,7 +18,7 @@ export const POST = async (request: NextRequest) => {
     const meetings = await prisma.meeting.findMany({
       where: { userId: userId },
     });
-    
+
     if (!meetings || meetings.length === 0) {
       return NextResponse.json(
         { message: "No meetings found" },
@@ -79,13 +32,14 @@ export const POST = async (request: NextRequest) => {
           meeting.selectedDate,
           meeting.selectedTime
         );
-
+        const dateOfStart = new Date(start);
+        const dateOfEnd = new Date(end);
         const appointment = {
           email: meeting?.schedulerEmail || "",
           name: meeting.schedulerName || "",
           description: meeting?.description || "",
-          start: start,
-          end: end,
+          start: dateOfStart,
+          end: dateOfEnd,
           hostName: meeting?.hostName || "",
         };
         return await generateICS(appointment);

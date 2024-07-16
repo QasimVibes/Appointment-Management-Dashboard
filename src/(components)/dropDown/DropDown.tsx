@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { dropDown } from "../../../public";
-import { signOut } from "next-auth/react";
-import toast from "react-hot-toast";
 import LogoutBtn from "../logoutBtn/LogoutBtn";
 
 interface DropDownProps {
@@ -25,7 +23,7 @@ export default function DropDown({ items, ...props }: DropDownProps) {
         className=""
         type="button"
       >
-        <Image src={dropDown} alt="dropDown" className="w-[16px] h-[16px]" />
+        <Image src={dropDown} alt="dropDown" width={16} height={16}/>
       </button>
 
       {isOpen && (

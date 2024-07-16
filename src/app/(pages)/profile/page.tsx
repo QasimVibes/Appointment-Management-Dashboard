@@ -29,7 +29,7 @@ export default function Profile() {
       <div className="grid grid-cols-[260px_1fr] h-[100vh]">
         <div className="w-[260px] flex flex-col border border-solid border-[#DADADA] space-y-[16px]">
           <div className=" py-[20px] px-[20px]">
-            <Image src={logo} alt="logo" className="w-[132px] h-[32px]" />
+            <Image src={logo} alt="logo" width={132} height={32} />
           </div>
 
           <div className="font-inter font-[700] text-[14.75px] leading-[24px] text-[#0069FF] py-[4px] px-[14px]">
@@ -37,7 +37,9 @@ export default function Profile() {
               <Image
                 src={leftArrow}
                 alt="leftArrow"
-                className="w-[16px] h-[16px] mr-2"
+                className="mr-2"
+                width={16}
+                height={16}
               />
               Back to home
             </Link>
@@ -51,16 +53,19 @@ export default function Profile() {
                 <Image
                   src={profilePerson}
                   alt="profilePerson"
-                  className="w-[20px] h-[20px]"
+                  width={20}
+                  height={20}
                 />
                 <h3>Profile</h3>
               </div>
               <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-[#1A1A1A] py-[4px] px-[22px]">
-                <Image src={star} alt="star" className="w-[20px] h-[20px]" />
+                <Image src={star} alt="star" width={20}
+                  height={20} />
                 <h3>Branding</h3>
               </div>
               <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-[#1A1A1A] py-[4px] px-[22px]">
-                <Image src={link} alt="link" className="w-[20px] h-[20px]" />
+                <Image src={link} alt="link" width={20}
+                  height={20} />
                 <h3>My Link</h3>
               </div>
 
@@ -68,7 +73,8 @@ export default function Profile() {
                 <Image
                   src={preferences}
                   alt="preferences"
-                  className="w-[20px] h-[20px]"
+                  width={20}
+                  height={20}
                 />
                 <h3>Login Preferences</h3>
               </div>
@@ -76,7 +82,8 @@ export default function Profile() {
                 <Image
                   src={settingIcon}
                   alt="settingIcon"
-                  className="w-[20px] h-[20px]"
+                  width={20}
+                  height={20}
                 />
                 <h3>Cookie Settings</h3>
               </div>
@@ -84,7 +91,8 @@ export default function Profile() {
                 <Image
                   src={calender}
                   alt="calender"
-                  className="w-[20px] h-[20px]"
+                  width={20}
+                  height={20}
                 />
                 <h3>Calender sync</h3>
               </div>
@@ -95,7 +103,8 @@ export default function Profile() {
               <Image
                 src={helpIcon}
                 alt="helpIcon"
-                className="w-[20px] h-[20px]"
+                width={20}
+                  height={20}
               />
               <h3>Help</h3>
             </div>
@@ -103,7 +112,8 @@ export default function Profile() {
               <Image
                 src={logoutIcon}
                 alt="logoutIcon"
-                className="w-[20px] h-[20px]"
+                width={20}
+                  height={20}
               />
               <LogoutBtn />
             </div>
@@ -119,7 +129,9 @@ export default function Profile() {
                   <Image
                     src={personAdd}
                     alt="personAdd"
-                    className="w-[18px] h-[18px] mr-2"
+                    className="mr-2"
+                    width={18}
+                  height={18}
                   />
                   Invite user
                 </button>
@@ -146,7 +158,8 @@ export default function Profile() {
                 <Image
                   src={personButton}
                   alt="personButton"
-                  className="w-[70px] h-[70px]"
+                  width={70}
+                  height={70}
                 />
                 <div className="space-y-3">
                   <Button

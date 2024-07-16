@@ -1,6 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/libs/prisma";
 import { nanoid } from "nanoid";
+import {
+  generateEmailConfirmationHost,
+  generateEmailConfirmationParticipant,
+} from "@/libs/email/emailTemplates";
+import { sendMail } from "@/libs/email/nodemailer";
+import { getToken } from "next-auth/jwt";
+import { parseSelectedDateTime } from "@/constants/parseSelectedDateTime";
+import { createGoogleMeetEvent } from "@/libs/googleMeet";
+
+async function getSessionToken(req: NextRequest) {
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  return token;
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -12,9 +25,19 @@ export async function POST(request: NextRequest) {
       selectedTime,
       selectedDate,
       hostName,
+      hostEmail,
       timezone,
       userId,
     } = body;
+
+    console.log(request);
+    
+    const session = await getSessionToken(request);
+    if (!session || !session.accessToken) {
+      return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+    }
+
+    const accessToken = session.accessToken as string;
 
     if (
       !schedulerEmail ||
@@ -22,6 +45,7 @@ export async function POST(request: NextRequest) {
       !selectedTime ||
       !selectedDate ||
       !hostName ||
+      !hostEmail ||
       !timezone ||
       !userId
     ) {
@@ -66,6 +90,71 @@ export async function POST(request: NextRequest) {
         { status: 500 }
       );
     }
+
+    const { start, end } = parseSelectedDateTime(
+      newMeeting.selectedDate,
+      newMeeting.selectedTime
+    );
+
+    const eventDetails = {
+      summary: "Google Meet",
+      description: `${newMeeting.schedulerName}'s Meeting`,
+      start: {
+        dateTime: start,
+        timeZone: "Asia/Karachi",
+      },
+      end: {
+        dateTime: end,
+        timeZone: "Asia/Karachi",
+      },
+      conferenceRequestId: nanoid(),
+      attendees: [{ email: `${newMeeting.schedulerEmail}` }],
+      reminders: {
+        useDefault: true,
+      },
+    };
+
+    const response = await createGoogleMeetEvent(accessToken, eventDetails);
+
+    if (!response.htmlLink) {
+      return NextResponse.json(
+        { message: "Something went wrong" },
+        { status: 500 }
+      );
+    }
+
+    const { htmlLink } = response;
+
+    // add Google Calendar event
+
+    const htmlHost = generateEmailConfirmationHost(
+      newMeeting.hostName,
+      newMeeting.schedulerEmail,
+      newMeeting.selectedTime,
+      newMeeting.selectedDate,
+      newMeeting.timezone,
+      newMeeting.description,
+      htmlLink
+    );
+    const htmlParticipant = generateEmailConfirmationParticipant(
+      newMeeting.schedulerName,
+      newMeeting.hostName,
+      newMeeting.selectedTime,
+      newMeeting.selectedDate,
+      newMeeting.timezone,
+      newMeeting.description,
+      htmlLink
+    );
+    await sendMail({
+      to: hostEmail,
+      subject: `New Event:${newMeeting.schedulerName} - ${newMeeting.selectedTime} ${newMeeting.selectedDate} - 30 Minutes Meeting`,
+      html: htmlHost,
+    });
+    await sendMail({
+      to: newMeeting.schedulerEmail,
+      subject: `New Event:${newMeeting.hostName} - ${newMeeting.selectedTime} ${newMeeting.selectedDate} - 30 Minutes Meeting`,
+      html: htmlParticipant,
+    });
 
     return NextResponse.json(
       { message: "Meeting Scheduled successfully", meeting: newMeeting },

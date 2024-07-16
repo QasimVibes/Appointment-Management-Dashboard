@@ -38,7 +38,7 @@ export default function MeetingConfirm({
             <button className="font-inter py-[10px] px-[24px] border border-solid border-[#1A1A1A] rounded-[40px] font-[500] text-[14px] leading-[22px] text-[#1A1A1A] flex">
               Open invitation{" "}
               <span>
-                <Image src={newWindow} alt="newWindow" />
+                <Image src={newWindow} alt="newWindow"  width={24} height={24}/>
               </span>{" "}
             </button>
           </div>
@@ -50,7 +50,8 @@ export default function MeetingConfirm({
               <Image
                 src={person}
                 alt="person"
-                className="w-[24px] h-[24px] mr-[8px]"
+                className="mr-[8px]"
+                width={24} height={24}
               />
               {hostName}
             </div>
@@ -58,7 +59,8 @@ export default function MeetingConfirm({
               <Image
                 src={briefcase}
                 alt="briefcase"
-                className="w-[24px] h-[24px] mr-[8px]"
+                className=" mr-[8px]"
+                width={24} height={24}
               />
               {selectedTime}, {date}
             </div>
@@ -66,7 +68,8 @@ export default function MeetingConfirm({
               <Image
                 src={globe}
                 alt="globe"
-                className="w-[24px] h-[24px] mr-[8px]"
+                className=" mr-[8px]"
+                width={24} height={24}
               />
               {timezone}
             </div>
@@ -77,6 +80,7 @@ export default function MeetingConfirm({
             src={topCornerImage}
             alt="topCornerImage"
             className="absolute top-0 right-0"
+            width={105} height={105}
           />
         </div>
       </div>

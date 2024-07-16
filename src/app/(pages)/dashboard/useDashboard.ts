@@ -6,9 +6,12 @@ import { generateICSFile as generateICSFileAsync } from "@/store/slice/generateI
 
 export const useFetchEvents = () => {
   const { data: session } = useSession();
+
   const dispatch = useAppDispatch();
   const userId = session?.user?.id;
-  const userName = session?.user?.username?.slice(0, 1).toUpperCase();
+  const userName = session?.user?.username
+    ? session?.user?.username?.slice(0, 1).toUpperCase()
+    : session?.user?.name?.slice(0, 1).toUpperCase();
   const { isLoading, isError } = useAppSelector(
     (state) => state.scheduledEvent
   );

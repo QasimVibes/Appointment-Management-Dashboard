@@ -55,5 +55,7 @@ export const scheduledEventSchema = z.object({
   selectedTime: z.string().nonempty("Time is required"),
   selectedDate: z.string().nonempty("Date is required"),
   hostName: z.string().nonempty("Host name is required"),
+  hostEmail: z.string().email({ message: "Please enter a valid email address" }),
   userId: z.string().nonempty("User id is required"),
+  timezone: z.string().nonempty("Timezone is required"),
 });

@@ -32,6 +32,7 @@ export default function Dashboard() {
   const [dashboardActiveTab, setDashboardActiveTab] = useState<
     "ScheduledEvents" | "Analytics"
   >("ScheduledEvents");
+  
 
   return (
     <>
@@ -39,8 +40,8 @@ export default function Dashboard() {
         <div className="w-[260px] flex flex-col justify-between border border-solid border-[#DADADA]">
           <div className="space-y-[4px]">
             <div className="flex items-center justify-between p-[20px]">
-              <Image src={logo} alt="logo" className="w-[132px] h-[32px]" />
-              <Image src={closer} alt="closer" className="w-[16px] h-[16px]" />
+              <Image src={logo} alt="logo" width={132} height={32} />
+              <Image src={closer} alt="closer" width={16} height={16} />
             </div>
             <div className="flex justify-center p-[10px]">
               <Link
@@ -65,7 +66,9 @@ export default function Dashboard() {
                   <Image
                     src={scheduledEvent}
                     alt="scheduledEvent"
-                    className="mr-[20px] w-[16px] h-[16px]"
+                    className="mr-[20px]"
+                    width={16}
+                    height={16}
                   />
                   <p>Scheduled events</p>
                 </div>
@@ -80,7 +83,9 @@ export default function Dashboard() {
                   <Image
                     src={analytics}
                     alt="analytics"
-                    className="mr-[20px] w-[16px] h-[16px]"
+                    className="mr-[20px]"
+                    width={16}
+                    height={16}
                   />
                   <p>Analytics</p>
                 </div>
@@ -91,7 +96,9 @@ export default function Dashboard() {
                 <Image
                   src={clock}
                   alt="clock"
-                  className="mr-[20px] w-[16px] h-[16px]"
+                  className="mr-[20px]"
+                  height={16}
+                  width={16}
                 />
                 <Link href="/availability" className="hover:text-[#0069FF]">
                   Availability
@@ -101,7 +108,9 @@ export default function Dashboard() {
                 <Image
                   src={adminCenter}
                   alt="adminCenter"
-                  className="mr-[20px] w-[16px] h-[16px]"
+                  className="mr-[20px]"
+                  height={16}
+                  width={16}
                 />
                 <p className="hover:text-[#0069FF]">Admin center</p>
               </div>
@@ -210,7 +219,9 @@ export default function Dashboard() {
                               <Image
                                 src={exportIcon}
                                 alt="exportIcon"
-                                className="w-[16px] h-[16px] mr-1"
+                                className="mr-1"
+                                width={16}
+                                height={16}
                               />
                               Export
                             </button>
@@ -220,7 +231,9 @@ export default function Dashboard() {
                               <Image
                                 src={filter}
                                 alt="filter"
-                                className="w-[16px] h-[16px] mr-1"
+                                className="mr-1"
+                                width={16}
+                                height={16}
                               />
                               Filter
                             </button>

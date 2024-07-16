@@ -86,14 +86,14 @@ export type GenerateICSState = {
 }
 
 
-// export type Appointment = {
-//   name: string;
-//   email: string;
-//   description: string;
-//   hostName: string;
-//   start: Date;
-//   end: Date;
-// };
+export type Appointment = {
+  name: string;
+  email: string;
+  description: string;
+  hostName: string;
+  start: Date;
+  end: Date;
+};
 
 
 

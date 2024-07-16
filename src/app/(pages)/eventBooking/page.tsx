@@ -55,6 +55,7 @@ export default function EventBooking() {
     id: eventData?.data?.user?.id,
     email: eventData?.data?.user?.email,
     host: eventData?.data?.user?.fullname,
+    hostEmail: eventData?.data?.user?.email,
     startingTime: selectedTime,
     endingTime: nextTime,
     day: value?.toString().slice(0, 16),
@@ -78,7 +79,7 @@ export default function EventBooking() {
                   </h1>
                 </div>
                 <div className="flex space-x-2">
-                  <Image src={clock} alt="clock" />
+                  <Image src={clock} alt="clock" width={24} height={24}/>
                   <p className="font-[400] text-[14px] leading-[22px] text-[#1A1A1A]">
                     30 min
                   </p>
@@ -109,7 +110,8 @@ export default function EventBooking() {
                         <Image
                           src={globe}
                           alt="globe"
-                          className="w-[18px] h-[28px]"
+                          width={18}
+                          height={28}
                         />
                         <select
                           name="timezone"
@@ -173,6 +175,8 @@ export default function EventBooking() {
               src={topCornerImage}
               alt="topCornerImage"
               className="absolute top-0 right-0"
+              width={105}
+              height={105}
             />
           </div>
         </div>

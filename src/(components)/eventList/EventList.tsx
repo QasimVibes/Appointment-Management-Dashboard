@@ -21,7 +21,7 @@ const EventList = ({
             </div>
             <div className="flex flex-row justify-between px-[24px] py-[24px] font-inter font-[400] leading-[24px] text-[#1A1A1A] border-b-[1px] border-solid border-[#CCCCCC]">
               <div className="flex flex-row space-x-[11px] items-center">
-                <Image src={circle} alt="circle" />
+                <Image src={circle} alt="circle" width={30} height={30} />
                 <p className="text-[13.88px]">{event.selectedTime}</p>
               </div>
               <div>
@@ -37,7 +37,7 @@ const EventList = ({
                 <p className="text-[14.5px]">1 host | 0 non-hosts</p>
               </div>
               <div className="flex flex-row items-center space-x-[4.94px]">
-                <Image src={details} alt="details" />
+                <Image src={details} alt="details" width={10} height={14} />
                 <p className="text-[14.88px] leading-[22.4px] text-[#1A1A1A9C]">
                   Details
                 </p>

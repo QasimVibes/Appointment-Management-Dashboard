@@ -36,7 +36,7 @@ export default function Availability() {
   return (
     <div className="flex flex-col items-center space-y-[32px] mb-[48px]">
       <div className="flex items-center justify-center pt-[12px] pb-[8px]">
-        <Image src={logo} alt="logo" />
+        <Image src={logo} alt="logo"  width={180} height={42} />
       </div>
       <div className="space-y-[16px]">
         <div className="flex flex-col w-[645px] border border-solid border-[#DADADA]">
@@ -50,8 +50,8 @@ export default function Availability() {
                 meetings.
               </p>
             </div>
-            <div>
-              <Image src={availability} alt="availability logo" />
+            <div className="h-[100%]">
+              <Image src={availability} alt="availability logo" width={185} height={162} />
             </div>
           </div>
           <div className="px-[24px] pt-[32px] pb-[24px] border border-solid border-[#DADADA]  ">
@@ -150,7 +150,7 @@ export default function Availability() {
           </div>
         </div>
         <div className="w-[645px] flex flex-row justify-between space-x-2 ">
-          <Image src={progressbar} alt="progressbar" />
+          <Image src={progressbar} alt="progressbar" width={100} height={10} />
           <div className="space-x-2">
             <Link
               href="/dashboard"

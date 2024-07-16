@@ -9,9 +9,8 @@ async function getSessionToken(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  console.log(req);
   const session = await getSessionToken(req);
-  console.log(session);
-
   if (!session || !session.accessToken) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
   }
@@ -21,17 +20,17 @@ export async function POST(req: NextRequest) {
   try {
     const eventDetails = {
       summary: "Google Meet",
-      description: "This is a sample meeting",
+      description: "Appointment",
       start: {
-        dateTime: "2024-07-20T19:00:00",
+        dateTime: "2024-07-16T19:00:00",
         timeZone: "Asia/Karachi",
       },
       end: {
-        dateTime: "2024-07-20T20:00:00",
+        dateTime: "2024-07-16T20:00:00",
         timeZone: "Asia/Karachi",
       },
       conferenceRequestId: nanoid(),
-      attendees: [{ email: "qasimrazzaq500@gmail.com" }],
+      attendees: [{ email: "qasimrazzaq921@gmail.com" }],
       reminders: {
         useDefault: true,
       },

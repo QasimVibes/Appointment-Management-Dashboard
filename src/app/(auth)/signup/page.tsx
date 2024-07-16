@@ -11,7 +11,7 @@ export default function Register() {
   return (
     <div className="flex flex-col items-center pt-[51.28px] pb-[73.5px]">
       <div className="pb-[8.77px]">
-        <Image src={logo} alt="logo" />
+        <Image src={logo} alt="logo" width={182} height={45} />
       </div>
       <div className="w-[268.65px] mb-[9.3px]">
         <h1 className="text-[20px] font-bold font-inter leading-[28px] text-center">
