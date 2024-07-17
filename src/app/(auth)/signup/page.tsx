@@ -27,7 +27,8 @@ export default function Register() {
                 label={input.label}
                 type={input.type}
                 placeholder={input.placeholder}
-                name={input.name}
+                value={signupState[input.name as keyof typeof signupState] || ""}
+                id={input.name}
                 onChange={onChangeHandler}
                 className="mb-[12px] w-[374px] h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
                 labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A]  mb-[8px]"
@@ -41,7 +42,7 @@ export default function Register() {
           <div className="font-inter font-normal text-[12px] leading-[18px] text-center text-[#1A1A1A] pt-[15px] w-[374px] h-[44px] mb-[12px]">
             <p>
               By creating a Calendly account, you agree to{" "}
-              <span className="text-[#0069FF]">Calendly's Terms</span> and{" "}
+              <span className="text-[#0069FF]">Calendly&apos;s Terms</span> and{" "}
               <span className="text-[#0069FF]">Privacy Policy</span>
             </p>
           </div>

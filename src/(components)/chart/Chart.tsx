@@ -1,5 +1,6 @@
-import Chart from "react-apexcharts";
+import dynamic from "next/dynamic";
 import { ApexOptions } from "apexcharts";
+const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 const Analytics: React.FC = () => {
   const visitData = {
@@ -118,7 +119,7 @@ const Analytics: React.FC = () => {
 
   return (
     <div className="space-y-[24px] py-6">
-      <div className="">
+      <div>
         <Chart
           options={visitsOptions}
           series={visitData.series}
@@ -127,22 +128,22 @@ const Analytics: React.FC = () => {
           width="97%"
         />
       </div>
-      <div className="">
+      <div>
         <Chart
           options={appointmentsOptions}
           series={appointmentData.series}
           type="bar"
           height={350}
-           width="97%"
+          width="97%"
         />
       </div>
-      <div className="">
+      <div>
         <Chart
           options={peakHoursOptions}
           series={peakHoursData.series}
           type="bar"
           height={350}
-           width="97%"
+          width="97%"
         />
       </div>
     </div>

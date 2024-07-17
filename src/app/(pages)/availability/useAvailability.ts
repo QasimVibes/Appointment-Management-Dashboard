@@ -82,7 +82,7 @@ export const useSubmitAvailability = () => {
         }
       }
     },
-    [dispatch, session]
+    [dispatch, session, router]
   );
 
   return { handleSubmit };
@@ -112,9 +112,9 @@ export const useFetchAvailability = (
       setStartHour(availabilityData.startHour);
       setEndHour(availabilityData.endHour);
       setSelectedDays(availabilityData.days);
-      toast.success("Availability set successfully");
     }
-  }, [availabilityData]);
+  }, [availabilityData, setStartHour, setEndHour, setSelectedDays]);
+  
 
   return { isLoading, isError };
 };

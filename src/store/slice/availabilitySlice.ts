@@ -46,8 +46,7 @@ export const fetchAvailabilityData = createAsyncThunk(
       if (response.status === 200) {
         const filteredData = response.data?.availability?.find(
           (data: any) => data.userId === userId
-        );
-
+        );        
         if (filteredData) {
           return filteredData;
         } else {

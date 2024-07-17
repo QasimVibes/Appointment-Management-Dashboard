@@ -258,7 +258,7 @@ export default function Dashboard() {
 
                         <div className="py-[17px]">
                           <p className="font-inter font-[400] text-[14.88px] leading-[24px] text-[#1A1A1A9C] text-center">
-                            You've reached the end of the list
+                            You&apos;ve reached the end of the list
                           </p>
                         </div>
                       </div>

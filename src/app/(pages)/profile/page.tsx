@@ -21,7 +21,14 @@ import LogoutBtn from "@/(components)/logoutBtn/LogoutBtn";
 import Image from "next/image";
 import { useUserProfile } from "./useUserProfile";
 export default function Profile() {
-  const { username, data, handleChange, saveChangesHandler } = useUserProfile();
+  const {
+    userName,
+    data,
+    handleChange,
+    saveChangesHandler,
+    currentTime,
+    editMode,
+  } = useUserProfile();
   const menuItems = [{ text: "Dashboard", link: "/dashboard" }];
 
   return (
@@ -59,13 +66,11 @@ export default function Profile() {
                 <h3>Profile</h3>
               </div>
               <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-[#1A1A1A] py-[4px] px-[22px]">
-                <Image src={star} alt="star" width={20}
-                  height={20} />
+                <Image src={star} alt="star" width={20} height={20} />
                 <h3>Branding</h3>
               </div>
               <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-[#1A1A1A] py-[4px] px-[22px]">
-                <Image src={link} alt="link" width={20}
-                  height={20} />
+                <Image src={link} alt="link" width={20} height={20} />
                 <h3>My Link</h3>
               </div>
 
@@ -88,33 +93,18 @@ export default function Profile() {
                 <h3>Cookie Settings</h3>
               </div>
               <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-[#1A1A1A] py-[4px] px-[22px]">
-                <Image
-                  src={calender}
-                  alt="calender"
-                  width={20}
-                  height={20}
-                />
+                <Image src={calender} alt="calender" width={20} height={20} />
                 <h3>Calender sync</h3>
               </div>
             </div>
           </div>
           <div className="space-y-[12px] self-start pb-[16px]">
             <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-[#1A1A1A] py-[4px] px-[22px]">
-              <Image
-                src={helpIcon}
-                alt="helpIcon"
-                width={20}
-                  height={20}
-              />
+              <Image src={helpIcon} alt="helpIcon" width={20} height={20} />
               <h3>Help</h3>
             </div>
             <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-[#1A1A1A] py-[4px] px-[22px]">
-              <Image
-                src={logoutIcon}
-                alt="logoutIcon"
-                width={20}
-                  height={20}
-              />
+              <Image src={logoutIcon} alt="logoutIcon" width={20} height={20} />
               <LogoutBtn />
             </div>
           </div>
@@ -131,13 +121,13 @@ export default function Profile() {
                     alt="personAdd"
                     className="mr-2"
                     width={18}
-                  height={18}
+                    height={18}
                   />
                   Invite user
                 </button>
                 <Button
                   className="w-[33.67px] h-[32.5px] bg-[#CCCCCC] rounded-[16px] font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A]"
-                  text={username || "T"}
+                  text={userName || "T"}
                 />
                 <DropDown items={menuItems} />
               </div>
@@ -280,12 +270,7 @@ export default function Profile() {
                       Timezone
                     </label>
                     <p className="font-inter font-[500] text-[14px] leading-[21px] text-[#1A1A1A] mb-2">
-                      Current Time:{" "}
-                      {new Date()?.toLocaleString("en-US", {
-                        hour: "numeric",
-                        minute: "numeric",
-                        hour12: true,
-                      })}
+                      Current Time: {currentTime}
                     </p>
                   </div>
                   <select
@@ -305,7 +290,10 @@ export default function Profile() {
                       <Button
                         text="Save Changes"
                         onClick={saveChangesHandler}
-                        className="py-3 px-[14px] font-inter font-[600] text-[14px] leading-[21px] bg-[#0069FF] text-white rounded-[40px]"
+                        disabled={!editMode}
+                        className={`py-3 px-[14px] font-inter font-[600] text-[14px] leading-[21px] bg-[#0069FF] text-white rounded-[40px] ${
+                          !editMode && "cursor-not-allowed"
+                        }`}
                       />
                       <Button
                         text="Cancel"

@@ -81,9 +81,10 @@ export default function ScheduledEvent() {
 
                 <div className="w-[374px] h-full space-y-3">
                   <Input
-                    name="name"
+                    id="name"
                     label="Name *"
                     type="text"
+                    value={details.name}
                     onChange={(e: any) =>
                       setDetails({
                         ...details,
@@ -94,9 +95,10 @@ export default function ScheduledEvent() {
                     labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px]"
                   />
                   <Input
-                    name="email"
+                    id="email"
                     label="Email *"
                     type="email"
+                    value={details.email}
                     onChange={(e: any) =>
                       setDetails({
                         ...details,
@@ -130,7 +132,7 @@ export default function ScheduledEvent() {
                   <p className="font-[400] text-[14px] leading-[20px] text-[#1A1A1A]">
                     By proceeding, you confirm that you have read and agree to{" "}
                     <span className="text-[#0069FF] font-[600]">
-                      Calendly's Term of Use
+                      Calendly&apos;s Term of Use
                     </span>{" "}
                     and{" "}
                     <span className="text-[#0069FF] font-[600]">

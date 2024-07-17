@@ -1,6 +1,21 @@
+interface InputProps {
+  id?: string;
+  label: string;
+  type: string;
+  placeholder?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  className?: string;
+  labelClassName?: string;
+  maxLength?: number;
+  pattern?: string;
+  inputMode?: "search" | "email" | "tel" | "text" | "url" | "none" | "numeric" | "decimal";
+  autoComplete?: string;
+  required?: boolean;
+}
 
-export default function Input({
-  name,
+const Input: React.FC<InputProps> = ({
+  id, 
   label,
   type,
   placeholder,
@@ -8,23 +23,33 @@ export default function Input({
   onChange,
   className = "",
   labelClassName = "",
-  ...props
-}: any) {
+  maxLength,
+  pattern,
+  inputMode,
+  autoComplete,
+  required,
+}) => {
   return (
     <>
-      <label htmlFor={name} className={`block ${labelClassName}`}>
+      <label htmlFor={id} className={`block ${labelClassName}`}>
         {label}
       </label>
       <input
         type={type}
-        name={name}
-        id={name}
+        id={id} 
+        name={id}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
         className={className}
-        {...props}
+        maxLength={maxLength}
+        pattern={pattern}
+        inputMode={inputMode}
+        autoComplete={autoComplete}
+        required={required}
       />
     </>
   );
-}
+};
+
+export default Input;

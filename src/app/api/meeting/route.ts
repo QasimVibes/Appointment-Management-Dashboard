@@ -178,13 +178,9 @@ export async function GET(request: NextRequest) {
       const meetings = await prisma.meeting.findMany({
         where: { userId },
       });
-
-      if (!meetings || meetings.length === 0) {
-        return NextResponse.json(null);
-      }
-
+      
       return NextResponse.json(
-        { message: "Meetings found", meetings },
+        {  meetings },
         { status: 200 }
       );
     } else if (url) {
@@ -200,7 +196,7 @@ export async function GET(request: NextRequest) {
       }
 
       return NextResponse.json(
-        { message: "Meeting found", meeting },
+        { meeting },
         { status: 200 }
       );
     } else {

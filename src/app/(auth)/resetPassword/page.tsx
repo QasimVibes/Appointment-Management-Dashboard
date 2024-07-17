@@ -37,7 +37,7 @@ export default function ResetPassword() {
               <div className="space-y-2">
                 <Input
                   type="password"
-                  name="new-password"
+                  id="new-password"
                   label="New password"
                   value={newPassword}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -49,7 +49,7 @@ export default function ResetPassword() {
 
                 <Input
                   type="password"
-                  name="confirm-password"
+                  id="confirm-password"
                   label="Confirm password"
                   value={confirmPassword}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

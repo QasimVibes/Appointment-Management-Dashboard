@@ -8,11 +8,12 @@ import { useLogin, inputFields } from "./useLogin";
 import Image from "next/image";
 
 export default function Login() {
-  const { onChangeHandler, handleEmailSignIn, handleGoogleSignIn } = useLogin();
+  const { onChangeHandler, handleEmailSignIn, handleGoogleSignIn, data } =
+    useLogin();
   return (
     <div className="flex flex-col items-center pt-[51.28px] pb-[73.5px]">
       <div className="mb-[8.77px]">
-        <Image src={logo} alt="logo"  width={182} height={45}/>
+        <Image src={logo} alt="logo" width={182} height={45} />
       </div>
       <div className="w-[268.65px] mb-[9.3px]">
         <h1 className="text-[20px] font-bold font-inter leading-[28px] text-center">
@@ -27,7 +28,8 @@ export default function Login() {
               label={input.label}
               type={input.type}
               placeholder={input.placeholder}
-              name={input.name}
+              id={input.name}
+              value={data[input.name as keyof typeof data]}
               onChange={onChangeHandler}
               className="mb-[12px] w-[374px] h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
               labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px]"
@@ -70,7 +72,7 @@ export default function Login() {
 
         <div className="font-inter font-normal text-[14px] leading-[18px] text-center text-[#1A1A1A] pt-[15px]">
           <p>
-            Don't have an account?{" "}
+            Don&apos;t have an account?{" "}
             <Link href="/signup" className="text-[#0069FF]">
               Sign Up
             </Link>

@@ -1,11 +1,36 @@
-import * as handlebars from "handlebars";
-import { resetPasswordEmail } from "@/templates/resetPasswordEmail";
-import { emailConfirmationHost } from "@/templates/emailConfirmationHost";
-import { emailConfirmationParticipant } from "@/templates/emailConfirmationParticipant";
+import Handlebars from 'handlebars';
+import { resetPasswordEmail } from '@/templates/resetPasswordEmail';
+import { emailConfirmationHost } from '@/templates/emailConfirmationHost';
+import { emailConfirmationParticipant } from '@/templates/emailConfirmationParticipant';
+
+interface ResetPasswordEmailData {
+  otpCode: string;
+}
+
+interface EmailConfirmationHostData {
+  name: string;
+  email: string;
+  time: string;
+  date: string;
+  timeZone: string;
+  message: string;
+  googleBtnLink: string;
+}
+
+interface EmailConfirmationParticipantData {
+  name: string;
+  hostName: string;
+  time: string;
+  date: string;
+  timezone: string;
+  message: string;
+  buttonLink: string;
+}
 
 export function generateResetPasswordEmail(otp: string): string {
-  const template = handlebars.compile(resetPasswordEmail);
-  return template({ otpCode: otp });
+  const template = Handlebars.compile(resetPasswordEmail);
+  const data: ResetPasswordEmailData = { otpCode: otp };
+  return template(data);
 }
 
 export function generateEmailConfirmationHost(
@@ -17,8 +42,8 @@ export function generateEmailConfirmationHost(
   message: string,
   googleBtnLink: string
 ): string {
-  const template = handlebars.compile(emailConfirmationHost);
-  return template({
+  const template = Handlebars.compile(emailConfirmationHost);
+  const data: EmailConfirmationHostData = {
     name,
     email,
     time,
@@ -26,7 +51,8 @@ export function generateEmailConfirmationHost(
     timeZone,
     message,
     googleBtnLink,
-  });
+  };
+  return template(data);
 }
 
 export function generateEmailConfirmationParticipant(
@@ -38,8 +64,8 @@ export function generateEmailConfirmationParticipant(
   message: string,
   buttonLink: string
 ): string {
-  const template = handlebars.compile(emailConfirmationParticipant);
-  return template({
+  const template = Handlebars.compile(emailConfirmationParticipant);
+  const data: EmailConfirmationParticipantData = {
     name,
     hostName,
     time,
@@ -47,5 +73,6 @@ export function generateEmailConfirmationParticipant(
     timezone,
     message,
     buttonLink,
-  });
+  };
+  return template(data);
 }

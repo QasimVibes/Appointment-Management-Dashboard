@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { loginSchema } from "@/types/ValidationSchema/FormSchema";
 import { z } from "zod";
@@ -27,50 +27,51 @@ export const inputFields = [
 
 export const useLogin = () => {
   const dispatch = useAppDispatch();
-  const loginState = useAppSelector((state) => state.login);
+  const { loginStatus, error } = useAppSelector((state) => state.login);
   const router = useRouter();
 
-  const [data, setData] = useState({
+  const [data, setData] = useState<{ email: string; password: string }>({
     email: "",
     password: "",
   });
 
-  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  const onChangeHandler = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { name, value } = e.target;
+      setData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    },
+    []
+  );
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       loginSchema.parse(data);
-      await dispatch(loginWithEmail(data));
-    } catch (error) {
+      await dispatch(loginWithEmail(data)).unwrap();
+    } catch (error: any) {
       if (error instanceof z.ZodError) {
         error.errors.forEach((err) => {
           toast.error(err.message);
         });
-      } else {
-        toast.error("An unexpected error occurred. Please try again.");
       }
     }
   };
 
   const handleGoogleSignIn = async () => {
-    await dispatch(loginWithGoogle());
+    await dispatch(loginWithGoogle()).unwrap();
   };
 
   useEffect(() => {
-    if (loginState.loginStatus === "succeeded") {
+    if (loginStatus === "succeeded") {
       toast.success("Logged in successfully");
       router.push("/dashboard");
-    } else if (loginState.loginStatus === "failed") {
-      toast.error(loginState.error);
+    } else if (loginStatus === "failed") {
+      toast.error(error);
     }
-  }, [loginState.loginStatus, loginState.error, router]);
+  }, [loginStatus, error, router]);
 
   useEffect(() => {
     return () => {
@@ -82,5 +83,6 @@ export const useLogin = () => {
     onChangeHandler,
     handleEmailSignIn,
     handleGoogleSignIn,
+    data,
   };
 };

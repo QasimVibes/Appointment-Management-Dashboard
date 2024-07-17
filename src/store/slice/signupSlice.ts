@@ -2,12 +2,10 @@ import { AxiosInstance } from "@/utils/axiosInstance";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-hot-toast";
 import { SignupState, SignupProps } from "@/types/types";
-import { AxiosResponse } from "axios";
 
 const initialState: SignupState = {
   error: null,
   signupStatus: "idle",
-  userDetails: {},
 };
 
 export const signupUser = createAsyncThunk(
@@ -17,7 +15,7 @@ export const signupUser = createAsyncThunk(
       const response = await AxiosInstance.post("/signup", data);
       toast.success(response.data.message);
       return response.data;
-    } catch (error: AxiosResponse | any) {
+    } catch (error: any) {
       toast.error(error.response.data.message);
       return rejectWithValue(error.response.data);
     }
@@ -29,7 +27,6 @@ export const signupSlice = createSlice({
   initialState,
   reducers: {
     clearSignupDetails: (state) => {
-      state.userDetails = {};
       state.error = null;
       state.signupStatus = "idle";
     },
@@ -40,10 +37,9 @@ export const signupSlice = createSlice({
         state.error = null;
         state.signupStatus = "loading";
       })
-      .addCase(signupUser.fulfilled, (state, action) => {
+      .addCase(signupUser.fulfilled, (state) => {
         state.error = null;
         state.signupStatus = "succeeded";
-        state.userDetails = action.payload;
       })
       .addCase(signupUser.rejected, (state, action) => {
         state.signupStatus = "failed";

@@ -22,7 +22,7 @@ export const useOtpVerification = () => {
     } else {
       router.push("/login");
     }
-  }, [searchParams]);
+  }, [searchParams, router]);
 
   const handleChange = (index: number, value: string) => {
     if (value.match(/^[0-9]$/) || value === "") {
@@ -47,8 +47,8 @@ export const useOtpVerification = () => {
   const handleVerifyOtp = async () => {
     try {
       const otpCode = otp.join("");
-      const resultAction = await dispatch(verifyOtp({ email, otp: otpCode }));
       otpSchema.parse({ otp: otpCode });
+      const resultAction = await dispatch(verifyOtp({ email, otp: otpCode }));
       if (verifyOtp.fulfilled.match(resultAction)) {
         router.push(
           `/resetPassword?email=${encodeURIComponent(email)}&otp=${otpCode}`

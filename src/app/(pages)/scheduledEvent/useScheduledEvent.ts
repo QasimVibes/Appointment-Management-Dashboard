@@ -18,7 +18,6 @@ export const useScheduledEvent = () => {
   }, [searchParams, router]);
 
   const hostData = {
-    id: searchParams.get("id"),
     email: searchParams.get("email"),
     host: searchParams.get("host"),
     hostEmail: searchParams.get("hostEmail"),
@@ -48,25 +47,26 @@ export const useSubmitScheduledEvent = (details: any, hostData: any) => {
   );
 
   const handleButtonClick = useCallback(async () => {
-    if (!accessToken) {
-      signIn("google");
-      return;
-    }
-
-    const submitData = {
-      schedulerEmail: details.email,
-      schedulerName: details.name,
-      description: details.message,
-      selectedTime: `${hostData.startingTime} - ${hostData.endingTime}`,
-      selectedDate: hostData.day,
-      hostName: hostData.host,
-      hostEmail: hostData.hostEmail,
-      timezone: hostData.location,
-      userId: hostData.id,
-    };
-
     try {
+      const submitData = {
+        schedulerEmail: details.email,
+        schedulerName: details.name,
+        description: details.message,
+        selectedTime: `${hostData.startingTime} - ${hostData.endingTime}`,
+        selectedDate: hostData.day,
+        hostName: hostData.host,
+        hostEmail: hostData.hostEmail,
+        timezone: hostData.location,
+        userId: session?.user?.id,
+      };
+
       scheduledEventSchema.parse(submitData);
+      if (!accessToken) {
+        toast.error("Please log in with your Google account to proceed.");
+        signIn("google");
+        return;
+      }
+
       const resultAction = await dispatch(setScheduledEvent(submitData));
       if (setScheduledEvent.fulfilled.match(resultAction)) {
         router.push(`/scheduled/${resultAction.payload.url}`);

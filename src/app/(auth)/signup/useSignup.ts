@@ -57,7 +57,8 @@ export const useSignup = () => {
     e.preventDefault();
     try {
       signupSchema.parse(data);
-      dispatch(signupUser(data));
+      await dispatch(signupUser(data)).unwrap();
+      router.push("/login");
     } catch (error) {
       if (error instanceof z.ZodError) {
         error.errors.forEach((err) => {
@@ -68,12 +69,6 @@ export const useSignup = () => {
       }
     }
   };
-
-  useEffect(() => {
-    if (signupState.signupStatus === "succeeded") {
-      router.push("/login");
-    }
-  }, [signupState.signupStatus, signupState.error, router]);
 
   useEffect(() => {
     dispatch(clearSignupDetails());

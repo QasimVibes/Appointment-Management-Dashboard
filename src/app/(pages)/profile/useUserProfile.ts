@@ -1,15 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSession } from "next-auth/react";
-import { useAppDispatch } from "@/hooks/reduxHook";
-import { AxiosInstance } from "@/utils/axiosInstance";
-import { updateUser } from "@/store/slice/userSlice";
-import { toast } from "react-hot-toast";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
+import { updateUser, getUserDetails } from "@/store/slice/userSlice";
+import { UserData } from "@/types/types";
 
 export const useUserProfile = () => {
   const dispatch = useAppDispatch();
   const { data: session } = useSession();
-  const username=session?.user?.username?.slice(0, 1).toUpperCase();
-  const [data, setData] = useState<any>({
+  const userId = session?.user?.id;
+  const userName =
+    session?.user?.username?.charAt(0)?.toUpperCase() ||
+    session?.user?.name?.charAt(0)?.toUpperCase() ||
+    "";
+
+  const [data, setData] = useState<UserData>({
     fullname: "",
     welcomeMessage: "",
     language: "",
@@ -17,45 +21,56 @@ export const useUserProfile = () => {
     timeFormat: "",
     country: "",
     timezone: "",
-    userId: "",
+    id: "",
   });
+  const [editMode, setEditMode] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
+    setEditMode(true);
     const { name, value } = e.target;
-    setData((prevData: any) => ({
+    setData((prevData) => ({
       ...prevData,
       [name]: value,
-      userId: session?.user?.id,
     }));
   };
 
   const saveChangesHandler = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();    
-    await dispatch(updateUser(data));
+    e.preventDefault();
+    await dispatch(updateUser(data)).unwrap();
+    setEditMode(false);
   };
 
-  const fetchDataHandler = async () => {
-    try {
-      const response = await AxiosInstance.get("/user", {
-        params: { userId: session?.user?.id },
-      });
-      setData(response.data.user);
-      toast.success("Data fetched successfully");
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      toast.error("Error fetching data");
+  const { isLoading, isError } = useAppSelector((state) => state.user);
+
+  const fetchDataHandler = useCallback(async () => {
+    if (userId) {
+      const response = await dispatch(getUserDetails(userId)).unwrap();
+      setData(response);
     }
-  };
+  }, [userId, dispatch]);
 
   useEffect(() => {
-    if (session?.user?.id) {
-      fetchDataHandler();
-    }
-  }, [session?.user?.id]);
+    fetchDataHandler();
+  }, [fetchDataHandler]);
 
-  return {username ,data, handleChange, saveChangesHandler };
+  const currentTime = new Date().toLocaleString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  });
+
+  return {
+    userName,
+    data,
+    handleChange,
+    saveChangesHandler,
+    currentTime,
+    editMode,
+    isLoading,
+    isError,
+  };
 };

@@ -36,7 +36,7 @@ export default function Availability() {
   return (
     <div className="flex flex-col items-center space-y-[32px] mb-[48px]">
       <div className="flex items-center justify-center pt-[12px] pb-[8px]">
-        <Image src={logo} alt="logo"  width={180} height={42} />
+        <Image src={logo} alt="logo" width={180} height={42} />
       </div>
       <div className="space-y-[16px]">
         <div className="flex flex-col w-[645px] border border-solid border-[#DADADA]">
@@ -51,7 +51,12 @@ export default function Availability() {
               </p>
             </div>
             <div className="h-[100%]">
-              <Image src={availability} alt="availability logo" width={185} height={162} />
+              <Image
+                src={availability}
+                alt="availability logo"
+                width={185}
+                height={162}
+              />
             </div>
           </div>
           <div className="px-[24px] pt-[32px] pb-[24px] border border-solid border-[#DADADA]  ">
@@ -141,8 +146,8 @@ export default function Availability() {
               <div className="pt-[36px]">
                 <div className="text-center">
                   <p>
-                    Don’t worry! You’ll be able to further customize your
-                    availability later on.
+                    Don&apos;t worry! You&apos;ll be able to further customize
+                    your availability later on.
                   </p>
                 </div>
               </div>
@@ -161,7 +166,13 @@ export default function Availability() {
             <Button
               text="Continue"
               onClick={handleButtonClick}
-              className="px-[17px] py-[11px] rounded-[40px] border border-solid bg-[#0069ff] border-[#0069ff] text-white font-inter font-[700] text-[12.91px] leading-[22px]"
+              disabled={!startHour || !endHour || !selectedDays.length}
+              className={`px-[17px] py-[11px] rounded-[40px] border border-solid bg-[#0069ff] border-[#0069ff] text-white font-inter font-[700] text-[12.91px] leading-[22px]
+               ${
+                 !(selectedDays.length && startHour && endHour) &&
+                 "cursor-not-allowed"
+               } 
+                `}
             />
           </div>
         </div>

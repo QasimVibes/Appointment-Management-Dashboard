@@ -36,7 +36,7 @@ export const POST = async (request: NextRequest) => {
         const dateOfEnd = new Date(end);
         const appointment = {
           email: meeting?.schedulerEmail || "",
-          name: meeting.schedulerName || "",
+          name: meeting?.schedulerName || "",
           description: meeting?.description || "",
           start: dateOfStart,
           end: dateOfEnd,

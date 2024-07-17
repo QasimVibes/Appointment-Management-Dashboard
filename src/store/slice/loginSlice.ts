@@ -5,7 +5,6 @@ import { LoginState } from "@/types/types";
 const initialState: LoginState = {
   loginStatus: "idle",
   error: null,
-  userDetails: null,
 };
 
 export const loginWithEmail = createAsyncThunk(
@@ -32,12 +31,10 @@ export const loginWithGoogle = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await signIn("google", { redirect: false });
-      if (!response?.ok) {
-        return thunkAPI.rejectWithValue("Login failed");
-      }
       return response;
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message || "Login failed");
+      console.error("Error during login with Google:", error);
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -49,7 +46,7 @@ const loginSlice = createSlice({
     clearLoginDetails: (state) => {
       state.loginStatus = "idle";
       state.error = null;
-      state.userDetails = null;
+    
     },
   },
   extraReducers: (builder) => {
@@ -58,22 +55,21 @@ const loginSlice = createSlice({
         state.loginStatus = "loading";
         state.error = null;
       })
-      .addCase(loginWithEmail.fulfilled, (state, action) => {
+      .addCase(loginWithEmail.fulfilled, (state) => {
         state.loginStatus = "succeeded";
-        state.userDetails = action.payload;
         state.error = null;
       })
       .addCase(loginWithEmail.rejected, (state, action) => {
         state.loginStatus = "failed";
         state.error = action.payload as string;
-      })
+      });
+    builder
       .addCase(loginWithGoogle.pending, (state) => {
         state.loginStatus = "loading";
         state.error = null;
       })
-      .addCase(loginWithGoogle.fulfilled, (state, action) => {
+      .addCase(loginWithGoogle.fulfilled, (state) => {
         state.loginStatus = "succeeded";
-        state.userDetails = action.payload;
         state.error = null;
       })
       .addCase(loginWithGoogle.rejected, (state, action) => {

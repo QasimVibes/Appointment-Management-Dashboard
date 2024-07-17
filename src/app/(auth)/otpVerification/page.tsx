@@ -34,6 +34,7 @@ export default function OtpVerification() {
                   {otp.map((digit, index) => (
                     <Input
                       key={index}
+                      label=""
                       id={`otp-input-${index}`}
                       type="text"
                       maxLength={1}
@@ -57,11 +58,13 @@ export default function OtpVerification() {
                   />
 
                   <button
-                    className="inline-block align-baseline text-[#0069FF] ml-4 font-[500] text-[14px] leading-[22px]"
+                    className={`inline-block align-baseline text-[#0069FF] ml-4 font-[500] text-[14px] leading-[22px] ${
+                      isResending ? "cursor-not-allowed text-[#B2B2B2] " : ""
+                    }`}
                     onClick={resendOtp}
                     disabled={isResending}
                   >
-                    {isResending ? "Resending..." : "Resend OTP"}
+                    Resend OTP
                   </button>
                 </div>
               </div>

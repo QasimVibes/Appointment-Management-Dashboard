@@ -44,7 +44,6 @@ export const fetchMeeting = createAsyncThunk(
       const response = await AxiosInstance.get(`/meeting${queryString}`);
 
       if (response?.data) {
-        toast.success(response.data.message);
         return response.data;
       } else {
         toast.error(response.data.message);

@@ -15,10 +15,10 @@ type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 export default function EventBooking() {
-  const { eventData, loading, error } = useEventBooking();
+  const {  isLoading, isError, availabilityData } = useEventBooking();
   const { timeSlots, getNextTimeSlot } = useTimeSlots(
-    eventData.data.startHour,
-    eventData.data.endHour
+    availabilityData?.startHour,
+    availabilityData?.endHour
   );
 
   const [selectedTime, setSelectedTime] = useState("");
@@ -28,34 +28,32 @@ export default function EventBooking() {
     if (locations.length > 0) {
       setSelectedTimezone(locations[0]);
     }
-  }, [locations]);
+  }, []);
 
   const handleTimeSlotClick = (time: any) => {
     setSelectedTime(time);
   };
 
-  const enabledDays: string[] = eventData.data.days;
+  const enabledDays: string[] | undefined = availabilityData?.days;
   const [value, onChange] = useState<Value>(new Date());
-  const tileDisabled: (props: { date: Date; view: string }) => boolean = ({
-    date,
-  }) => {
+  const tileDisabled: (props: { date: Date; view: string }) => boolean = ({date}) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     return (
       date < today ||
-      !enabledDays.includes(
+      !enabledDays?.includes(
         date.toLocaleDateString("en-US", { weekday: "long" })
       )
     );
   };
 
-  const nextTime = getNextTimeSlot(selectedTime);
 
+
+  const nextTime = getNextTimeSlot(selectedTime);
   const paramData = {
-    id: eventData?.data?.user?.id,
-    email: eventData?.data?.user?.email,
-    host: eventData?.data?.user?.fullname,
-    hostEmail: eventData?.data?.user?.email,
+    email: availabilityData?.user?.email,
+    host: availabilityData?.user?.fullname,
+    hostEmail: availabilityData?.user?.email,
     startingTime: selectedTime,
     endingTime: nextTime,
     day: value?.toString().slice(0, 16),
@@ -72,14 +70,14 @@ export default function EventBooking() {
               <div className="px-[26px] py-[34px] h-full border-[0.5px] border-solid border-[#DADADA] space-y-[28px]">
                 <div className="space-y-[6px]">
                   <p className="font-[400] text-[16px] leading-[22px] text-[#1A1A1A]">
-                    {eventData?.data?.user?.fullname}
+                    {availabilityData?.user?.fullname}
                   </p>
                   <h1 className="font-[700] text-[28px] leading-[28px] text-[#1A1A1A]">
                     30 Minute Meeting
                   </h1>
                 </div>
                 <div className="flex space-x-2">
-                  <Image src={clock} alt="clock" width={24} height={24}/>
+                  <Image src={clock} alt="clock" width={24} height={24} />
                   <p className="font-[400] text-[14px] leading-[22px] text-[#1A1A1A]">
                     30 min
                   </p>
@@ -107,12 +105,7 @@ export default function EventBooking() {
                         Time zone
                       </h2>
                       <div className="flex space-x-2">
-                        <Image
-                          src={globe}
-                          alt="globe"
-                          width={18}
-                          height={28}
-                        />
+                        <Image src={globe} alt="globe" width={18} height={28} />
                         <select
                           name="timezone"
                           id="timezone"

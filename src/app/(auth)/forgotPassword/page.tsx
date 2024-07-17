@@ -4,8 +4,8 @@ import Input from "@/(components)/input/Input";
 import Link from "next/link";
 import { useForgotPassword } from "./useForgotPassword";
 
-export default function forgotPassword() {
-  const { email, setEmail, onHandleSubmit } = useForgotPassword();;
+export default function ForgotPassword() {
+  const { email, setEmail, onHandleSubmit } = useForgotPassword();
   return (
     <div className="w-full  max-w-lg mx-auto pt-[66px] ">
       <div className=" bg-[#F9F9F9]  rounded-xl shadow-lg border-2 border-[#DADADA]">
@@ -28,18 +28,15 @@ export default function forgotPassword() {
           <div className="mt-5">
             <div className="space-y-2">
               <Input
-                name="email"
+                id="email"
                 type="email"
                 placeholder="example@ex.com"
                 label="Email"
                 value={email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setEmail(e.target.value)
-                }
+                onChange={(e) => setEmail(e.target.value)}
                 className="py-3 px-4 block w-full border-2 border-[#DADADA] rounded-md text-sm focus:border-[#0069FF] focus:ring-[#0069FF] shadow-sm font-inter text-[#1A1A1A]"
                 labelClassName="text-sm font-bold ml-1 mb-2"
                 aria-describedby="email-error"
-                required
               />
               <p
                 className="hidden text-xs text-[#FF0000] mt-2"

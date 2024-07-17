@@ -9,23 +9,26 @@ export type availabilityData = {
   startHour: string;
   endHour: string;
   days: string[];
-}
+  user: {
+    fullname: string;
+    email: string;
+  };
+};
+
 export type AvailabilityState = {
   isLoading: boolean;
   isError: boolean;
-  availabilityData:  availabilityData | null;
+  availabilityData: availabilityData | null;
 };
 
 export type SignupState = {
   error: null | string;
   signupStatus: "idle" | "loading" | "failed" | "succeeded";
-  userDetails: {};
 };
 
 export type LoginState = {
   loginStatus: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
-  userDetails: {} | null;
 };
 
 export type SignupProps = {
@@ -35,10 +38,20 @@ export type SignupProps = {
   password: string;
 };
 
+export type UserData = {
+  fullname: string;
+  welcomeMessage: string;
+  language: string;
+  dateFormat: string;
+  timeFormat: string;
+  country: string;
+  timezone: string;
+  id: string;
+};
 export type UserState = {
   isLoading: boolean;
   isError: boolean;
-  userDetails: string[] | null;
+  userDetails: UserData | null;
 };
 
 export type ScheduledEventState = {
@@ -83,8 +96,7 @@ export type GenerateICSState = {
   isLoading: boolean;
   isSuccess: boolean;
   isError: boolean;
-}
-
+};
 
 export type Appointment = {
   name: string;
@@ -95,6 +107,7 @@ export type Appointment = {
   end: Date;
 };
 
-
-
-
+export type Time = {
+  hours: number;
+  minutes: number;
+};

@@ -46,14 +46,14 @@ export const authOptions: NextAuthOptions = {
           where: { email: credentials?.email },
         });
         if (!user) {
-          return null;
+          throw new Error("No user found");
         }
         const passwordMatch = await bcrypt.compare(
           credentials.password,
           user.password
         );
         if (!passwordMatch) {
-          return null;
+          throw new Error("Incorrect password");
         }
         return {
           id: user.id,
@@ -71,7 +71,6 @@ export const authOptions: NextAuthOptions = {
         });
 
         if (existingUser) {
-          console.log("User already exists:", existingUser);
           profile.id = existingUser.id;
         } else {
           try {
@@ -83,10 +82,8 @@ export const authOptions: NextAuthOptions = {
                 password: "",
               },
             });
-            console.log("User created:", newUser);
             profile.id = newUser.id;
           } catch (error) {
-            console.error("Error creating user:", error);
             return false;
           }
         }

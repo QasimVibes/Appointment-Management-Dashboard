@@ -25,7 +25,7 @@ export const useResetPassword = () => {
       } else {
         router.push("/login");
       }
-    }, [searchParams]);
+    }, [searchParams, router]);
   
     const handleResetPassword = async (e: React.FormEvent<HTMLFormElement>) => {
       try {
