@@ -81,3 +81,22 @@ abbr[title] {
   text-decoration: none;
   color: #1A1A1A;
 }
+
+
+.react-calendar__navigation__label{
+  font: 400 14.88px Inter !important;
+  line-height: 24px !important;
+}
+
+.react-calendar__navigation{
+  margin-top: 6px !important;
+  margin-bottom: 15px !important;
+}
+.react-calendar{
+  width: 375px !important;
+  height: 372px !important;
+}
+.react-calendar__month-view__weekdays__weekday{
+  font:400 12px Inter !important;
+  line-height: 12px !important;
+}

@@ -3,6 +3,8 @@ import Button from "@/(components)/button/Button";
 import Input from "@/(components)/input/Input";
 import Link from "next/link";
 import { useOtpVerification } from "./useOtpVerification";
+import { logo } from "../../../../public";
+import Image from "next/image";
 
 export default function OtpVerification() {
   const { otp, handleChange, handleVerifyOtp, resendOtp, isResending } =
@@ -10,11 +12,20 @@ export default function OtpVerification() {
 
   return (
     <>
-      <div className="w-full  max-w-lg mx-auto pt-[66px] ">
-        <div className=" bg-[#F9F9F9]  rounded-xl shadow-lg border-2 border-[#DADADA]">
+      <div className="w-full max-w-xl mx-auto sm:pt-[66px] pt-[40px] flex flex-col items-center">
+        <div className="flex justify-center mb-6">
+          <Image
+            src={logo}
+            alt="logo"
+            width={150}
+            height={35}
+            className="sm:w-[182px] sm:h-[45px]"
+          />
+        </div>
+        <div className="bg-[#F9F9F9] rounded-xl shadow-lg border-2 border-[#DADADA] w-[90%] h-auto flex flex-col">
           <div className="p-4 sm:p-7">
             <div className="text-center">
-              <h1 className="block font-inter text-[26px] leading-[34px] font-bold text-[#1A1A1A] ">
+              <h1 className="block font-inter text-[22px] leading-[30px] font-bold text-[#1A1A1A] sm:text-[26px] sm:leading-[34px]">
                 Enter OTP
               </h1>
               <p className="mt-2 text-sm text-[#1A1A1A]">
@@ -30,7 +41,7 @@ export default function OtpVerification() {
 
             <div className="mt-5">
               <div className="px-4 py-6">
-                <div className="flex justify-center gap-2 mb-6">
+                <div className="flex justify-center gap-1 sm:gap-2 mb-6">
                   {otp.map((digit, index) => (
                     <Input
                       key={index}
@@ -41,7 +52,7 @@ export default function OtpVerification() {
                       pattern="[0-9]"
                       inputMode="numeric"
                       autoComplete="one-time-code"
-                      className="w-12 h-12 text-center border-2 border-[#DADADA] rounded-md shadow-sm"
+                      className="sm:w-12 sm:h-12 h-9 w-8 text-center border-2 border-[#DADADA] rounded-md shadow-sm"
                       value={digit}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         handleChange(index, e.target.value)
@@ -54,12 +65,12 @@ export default function OtpVerification() {
                   <Button
                     text="Verify"
                     onClick={handleVerifyOtp}
-                    className="bg-[#0069FF] font-inter text-white font-[500] text-[14px] leading-[22px] py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    className="bg-[#0069FF] font-inter text-white font-[500] sm:text-[14px] text-[12px] sm:leading-[22px] leading-[16px] py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   />
 
                   <button
-                    className={`inline-block align-baseline text-[#0069FF] ml-4 font-[500] text-[14px] leading-[22px] ${
-                      isResending ? "cursor-not-allowed text-[#B2B2B2] " : ""
+                    className={`inline-block align-baseline text-[#0069FF] ml-4 font-[500] sm:text-[14px] text-[12px] sm:leading-[22px] leading-[16px] ${
+                      isResending ? "cursor-not-allowed text-[#B2B2B2]" : ""
                     }`}
                     onClick={resendOtp}
                     disabled={isResending}

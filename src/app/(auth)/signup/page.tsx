@@ -9,16 +9,22 @@ import Image from "next/image";
 export default function Register() {
   const { onChangeHandler, onHandleSubmit, signupState } = useSignup();
   return (
-    <div className="flex flex-col items-center pt-[51.28px] pb-[73.5px]">
+    <div className="flex flex-col items-center pt-[25px] pb-[50px]  md:pt-[51.28px] md:pb-[73.5px]">
       <div className="pb-[8.77px]">
-        <Image src={logo} alt="logo" width={182} height={45} />
+        <Image
+          src={logo}
+          alt="logo"
+          width={150}
+          height={35}
+          className="md:w-[182px] md:h-[45px]"
+        />
       </div>
-      <div className="w-[268.65px] mb-[9.3px]">
-        <h1 className="text-[20px] font-bold font-inter leading-[28px] text-center">
+      <div className="w-[200px] mb-[9.3px] text-center md:w-[268.65px]">
+        <h1 className="text-[18px] font-bold font-inter leading-[24px] md:text-[20px] md:leading-[28px]">
           Sign up with Calendly for free
         </h1>
       </div>
-      <div className="w-[440px] h-[600px] rounded-[6px] border border-solid border-[#DADADA] py-[28px] px-[33px] flex flex-col shadow-[0px_1px_5px_0px_#004A7426]">
+      <div className="w-[90%] h-auto md:w-[440px] md:h-[600px] rounded-[6px] border border-solid border-[#DADADA] py-[28px] px-[15px] md:px-[33px] flex flex-col shadow-[0px_1px_5px_0px_#004A7426]">
         <form onSubmit={onHandleSubmit}>
           <div>
             {inputFields?.map((input) => (
@@ -27,11 +33,13 @@ export default function Register() {
                 label={input.label}
                 type={input.type}
                 placeholder={input.placeholder}
-                value={signupState[input.name as keyof typeof signupState] || ""}
+                value={
+                  signupState[input.name as keyof typeof signupState] || ""
+                }
                 id={input.name}
                 onChange={onChangeHandler}
-                className="mb-[12px] w-[374px] h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
-                labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A]  mb-[8px]"
+                className="mb-[12px] w-full h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
+                labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px]"
               />
             ))}
           </div>
@@ -39,7 +47,7 @@ export default function Register() {
             <p>Use a few words, avoid common phrases</p>
             <p>No need for symbols, digits, or uppercase letters</p>
           </div>
-          <div className="font-inter font-normal text-[12px] leading-[18px] text-center text-[#1A1A1A] pt-[15px] w-[374px] h-[44px] mb-[12px]">
+          <div className="font-inter font-normal text-[12px] leading-[18px] text-center text-[#1A1A1A] pt-[15px] w-full md:w-[374px] h-auto md:h-[44px] mb-[12px]">
             <p>
               By creating a Calendly account, you agree to{" "}
               <span className="text-[#0069FF]">Calendly&apos;s Terms</span> and{" "}
@@ -54,7 +62,7 @@ export default function Register() {
             />
           </div>
         </form>
-        <div className="flex justify-center font-inter font-normal text-[14px] leading-[21px] text-center text-[#1A1A1A] pt-[10px] w-[374px] h-[44px]">
+        <div className="flex justify-center font-inter font-normal text-[14px] leading-[21px] text-center text-[#1A1A1A] pt-[10px] w-full md:w-[374px] h-auto md:h-[44px]">
           <p>
             Already have an account?{" "}
             <Link href="/login" className="text-[#0069FF]">

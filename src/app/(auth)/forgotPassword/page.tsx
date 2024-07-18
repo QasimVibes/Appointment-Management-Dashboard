@@ -3,15 +3,26 @@ import Button from "@/(components)/button/Button";
 import Input from "@/(components)/input/Input";
 import Link from "next/link";
 import { useForgotPassword } from "./useForgotPassword";
+import { logo } from "../../../../public";
+import Image from "next/image";
 
 export default function ForgotPassword() {
   const { email, setEmail, onHandleSubmit } = useForgotPassword();
   return (
-    <div className="w-full  max-w-lg mx-auto pt-[66px] ">
-      <div className=" bg-[#F9F9F9]  rounded-xl shadow-lg border-2 border-[#DADADA]">
+    <div className="w-full max-w-xl mx-auto sm:pt-[66px] pt-[40px] flex flex-col items-center">
+      <div className="flex justify-center mb-6">
+        <Image
+          src={logo}
+          alt="logo"
+          width={150}
+          height={35}
+          className="sm:w-[182px] sm:h-[45px]"
+        />
+      </div>
+      <div className="bg-[#F9F9F9] rounded-xl shadow-lg border-2 border-[#DADADA] w-[90%] h-auto flex flex-col">
         <div className="p-4 sm:p-7">
           <div className="text-center">
-            <h1 className="block font-inter text-[26px] leading-[34px] font-bold text-[#1A1A1A] ">
+            <h1 className="block font-inter text-[22px] leading-[30px] font-bold text-[#1A1A1A] sm:text-[26px] sm:leading-[34px]">
               Forgot password?
             </h1>
             <p className="mt-2 text-sm text-[#1A1A1A]">
@@ -38,12 +49,6 @@ export default function ForgotPassword() {
                 labelClassName="text-sm font-bold ml-1 mb-2"
                 aria-describedby="email-error"
               />
-              <p
-                className="hidden text-xs text-[#FF0000] mt-2"
-                id="email-error"
-              >
-                Please include a valid email address so we can get back to you
-              </p>
             </div>
             <div className="mt-5">
               <Button
