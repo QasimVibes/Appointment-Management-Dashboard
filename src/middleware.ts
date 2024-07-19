@@ -4,14 +4,16 @@ import { getToken } from "next-auth/jwt";
 
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
-  const isPublicPath = path === "/login" || path === "/signup";
+  const isPublicPath =
+    path === "/login" ||
+    path === "/signup" ||
+    path === "/forgotPassword" ||
+    path === "/otpVerification" || path === "/resetPassword";
 
   const token = await getToken({
     req: request,
     secret: process.env.NEXTAUTH_SECRET,
   });
-
-  
 
   if (isPublicPath && token) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
@@ -19,7 +21,7 @@ export async function middleware(request: NextRequest) {
 
   if (!isPublicPath && !token) {
     return NextResponse.redirect(new URL("/login", request.url));
-  } 
+  }
   return NextResponse.next();
 }
 
@@ -30,9 +32,12 @@ export const config = {
     "/profile",
     "/availability",
     "/eventBooking",
-    "/scheduledEvents",
-    "/scheduled",
+    "/scheduledEvent",
+    "/scheduled/:path*",
     "/login",
     "/signup",
+    "/forgotPassword",
+    "/otpVerification",
+    "/resetPassword",
   ],
 };

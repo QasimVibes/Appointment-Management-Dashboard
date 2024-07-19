@@ -29,8 +29,6 @@ export async function POST(request: NextRequest) {
       timezone,
       userId,
     } = body;
-
-    console.log(request);
     
     const session = await getSessionToken(request);
     if (!session || !session.accessToken) {

@@ -4,7 +4,7 @@ import { circle, details } from "../../../public";
 
 const EventList = ({
   events,
-  title ,
+  title,
 }: {
   events: any;
   title: string;
@@ -19,26 +19,26 @@ const EventList = ({
                 {event.selectedDate}
               </h2>
             </div>
-            <div className="flex flex-row justify-between px-[24px] py-[24px] font-inter font-[400] leading-[24px] text-[#1A1A1A] border-b-[1px] border-solid border-[#CCCCCC]">
-              <div className="flex flex-row space-x-[11px] items-center">
+            <div className="flex flex-row justify-between items-center px-6 py-6 font-inter font-normal leading-[24px] text-gray-900 border-b-[1px] border-solid border-gray-300">
+              <div className="flex flex-row space-x-2 items-center">
                 <Image src={circle} alt="circle" width={30} height={30} />
                 <p className="text-[13.88px]">{event.selectedTime}</p>
               </div>
               <div>
-                <h3 className="font-[700] text-[14.13px]">
+                <h3 className="font-bold text-[14.13px]">
                   {event.schedulerName}
                 </h3>
                 <p className="text-[14.75px]">
                   Event type{" "}
-                  <span className="font-[700]">30 Minute Meeting</span>
+                  <span className="font-bold">30 Minute Meeting</span>
                 </p>
               </div>
               <div>
                 <p className="text-[14.5px]">1 host | 0 non-hosts</p>
               </div>
-              <div className="flex flex-row items-center space-x-[4.94px]">
+              <div className="flex flex-row items-center space-x-[6px]">
                 <Image src={details} alt="details" width={10} height={14} />
-                <p className="text-[14.88px] leading-[22.4px] text-[#1A1A1A9C]">
+                <p className="text-[14.88px] leading-[22.4px] text-gray-600">
                   Details
                 </p>
               </div>

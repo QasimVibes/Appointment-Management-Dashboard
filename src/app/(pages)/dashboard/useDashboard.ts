@@ -36,6 +36,7 @@ export const useFetchEvents = () => {
   return { userName, events, isLoading, isError };
 };
 export const useCategorizeEvents = (events: any[]) => {
+ 
   const [upcomingEvents, setUpcomingEvents] = useState<string[]>([]);
   const [pastEvents, setPastEvents] = useState<string[]>([]);
 

@@ -63,9 +63,9 @@ export default function EventBooking() {
   return (
     <>
       <Navbar />
-      <div className="pt-[46px] flex justify-center bg-[#F9F9F9]">
+      <div className="pt-[46px] flex justify-center bg-[#FBFCFD]">
         <div className="flex flex-col items-center h-screen rounded lg:w-auto w-[90%]">
-          <div className="flex flex-wrap h-[90%] w-full relative">
+          <div className="flex flex-wrap h-[90%] w-full relative bg-[#FFFFFF]">
             <div className="w-full lg:w-[337px]">
               <div className="px-[26px] py-[34px] h-full border-[0.5px] border-solid border-[#DADADA] space-y-[28px]">
                 <div className="space-y-[6px]">

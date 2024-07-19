@@ -25,8 +25,8 @@ export default function ScheduledEvent() {
     <>
       <Navbar />
 
-      <div className="pt-[46px] flex justify-center bg-[#F9F9F9] mb-[48px]">
-        <div className="relative flex flex-col items-center rounded w-[90%] lg:w-auto">
+      <div className="pt-[46px] flex justify-center bg-[#FBFCFD] mb-[48px]">
+        <div className="relative flex flex-col items-center rounded w-[90%] lg:w-auto bg-[#FFFFFF]">
           <div className="grid grid-cols-1 lg:grid-cols-3 w-full h-full">
             <div className="col-span-1">
               <div className="px-[24px] py-[24px] h-full border-[0.5px] border-solid border-[#DADADA] space-y-[16px] lg:space-y-[28px]">
@@ -80,81 +80,81 @@ export default function ScheduledEvent() {
               </div>
             </div>
             <div className="col-span-1 lg:col-span-2">
-  <div className="px-6 py-6 h-full border border-solid border-[#DADADA] space-y-2">
-    <div>
-      <h2 className="font-bold text-[20px] leading-[28px] text-[#1A1A1A]">
-        Enter Details
-      </h2>
-    </div>
-    <div className="w-full max-w-full lg:max-w-[374px] h-full space-y-3">
-      <Input
-        id="name"
-        label="Name *"
-        type="text"
-        value={details.name}
-        onChange={(e: any) =>
-          setDetails({
-            ...details,
-            [e.target.name]: e.target.value,
-          })
-        }
-        className="w-full h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
-        labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px]"
-      />
-      <Input
-        id="email"
-        label="Email *"
-        type="email"
-        value={details.email}
-        onChange={(e: any) =>
-          setDetails({
-            ...details,
-            [e.target.name]: e.target.value,
-          })
-        }
-        className="w-full h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
-        labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px]"
-      />
-      <div className="mb-[12px]">
-        <label
-          htmlFor="message"
-          className="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px] block"
-        >
-          Please share anything that will help prepare for our meeting
-        </label>
-        <textarea
-          name="message"
-          id="message"
-          onChange={(e: any) =>
-            setDetails({
-              ...details,
-              [e.target.name]: e.target.value,
-            })
-          }
-          rows={2}
-          className="w-full rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
-        ></textarea>
-      </div>
-      <p className="font-[400] text-[14px] leading-[20px] text-[#1A1A1A] text-center lg:text-left">
-        By proceeding, you confirm that you have read and agree to{" "}
-        <span className="text-[#0069FF] font-[600]">
-          Calendly's Term of Use
-        </span>{" "}
-        and{" "}
-        <span className="text-[#0069FF] font-[600]">
-          Privacy Policy
-        </span>
-        .
-      </p>
-      <Button
-        text="Schedule Event"
-        onClick={handleButtonClick}
-        className="w-full lg:w-auto rounded-[28px] border border-solid px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] bg-blue-700 text-white"
-      />
-    </div>
-  </div>
-</div>
-
+              <div className="px-6 py-6 h-full border border-solid border-[#DADADA] space-y-2">
+                <div>
+                  <h2 className="font-bold text-[20px] leading-[28px] text-[#1A1A1A]">
+                    Enter Details
+                  </h2>
+                </div>
+                <div className="w-full max-w-full lg:max-w-[374px] h-full space-y-3">
+                  <Input
+                    id="name"
+                    label="Name *"
+                    type="text"
+                    value={details.name}
+                    onChange={(e: any) =>
+                      setDetails({
+                        ...details,
+                        [e.target.name]: e.target.value,
+                      })
+                    }
+                    className="w-full h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
+                    labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px]"
+                  />
+                  <Input
+                    id="email"
+                    label="Email *"
+                    type="email"
+                    value={details.email}
+                    onChange={(e: any) =>
+                      setDetails({
+                        ...details,
+                        [e.target.name]: e.target.value,
+                      })
+                    }
+                    className="w-full h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
+                    labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px]"
+                  />
+                  <div className="mb-[12px]">
+                    <label
+                      htmlFor="message"
+                      className="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px] block"
+                    >
+                      Please share anything that will help prepare for our
+                      meeting
+                    </label>
+                    <textarea
+                      name="message"
+                      id="message"
+                      onChange={(e: any) =>
+                        setDetails({
+                          ...details,
+                          [e.target.name]: e.target.value,
+                        })
+                      }
+                      rows={2}
+                      className="w-full rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
+                    ></textarea>
+                  </div>
+                  <p className="font-[400] text-[14px] leading-[20px] text-[#1A1A1A] text-center lg:text-left">
+                    By proceeding, you confirm that you have read and agree to{" "}
+                    <span className="text-[#0069FF] font-[600]">
+                      Calendly&apos;s Term of Use
+                    </span>{" "}
+                    and{" "}
+                    <span className="text-[#0069FF] font-[600]">
+                      Privacy Policy
+                    </span>
+                    .
+                  </p>
+                  <Button
+                    text="Schedule Event"
+                    onClick={handleButtonClick}
+                    className="w-full lg:w-auto rounded-[28px] border border-solid px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] bg-blue-700 text-white"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
           <div>
             <Image

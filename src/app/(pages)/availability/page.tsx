@@ -1,5 +1,10 @@
 "use client";
-import { logo, availability, progressbar } from "../../../../public";
+import {
+  logo,
+  availability,
+  progressbar,
+  dropDownBtn,
+} from "../../../../public";
 import Button from "@/(components)/button/Button";
 import {
   useAvailability,
@@ -45,14 +50,14 @@ export default function Availability() {
         />
       </div>
       <div className="space-y-4 flex flex-col items-center">
-        <div className="flex flex-col  md:w-[645px] border border-solid border-[#DADADA] w-[90%]">
+        <div className="flex flex-col  md:w-[645px] border border-solid border-[#DADADA] rounded-lg w-[90%]">
           <div className="flex flex-col md:flex-row h-full">
             <div className="py-6 px-6  md:py-8 space-y-4 m:space-y-6 flex-grow">
               <h1 className="font-inter font-bold text-lg md:text-[18.44px] leading-7 md:leading-[28px]">
                 Set your availability
               </h1>
               <p className="font-inter font-normal text-sm md:text-[14.88px] leading-6 md:leading-[22.4px]">
-                Let Calendly know when you're typically available to accept
+                Let Calendly know when you&apos;re typically available to accept
                 meetings.
               </p>
             </div>
@@ -74,15 +79,15 @@ export default function Availability() {
                     Available hours
                   </h2>
                 </div>
-                <div className="flex flex-col md:flex-row gap-y-4 md:gap-x-8">
-                  <div>
+                <div className="relative flex flex-col md:flex-row gap-y-4 md:gap-x-8 items-center">
+                  <div className="relative w-full md:w-auto">
                     <select
                       name="startHour"
                       id="startingHours"
                       value={startHour}
                       onChange={(e) => setStartHour(e.target.value)}
                       required
-                      className="py-3.5 px-4 w-full md:w-[278px] rounded-lg border border-solid border-[#B2B2B2]"
+                      className="py-3.5 px-4 w-full md:w-[278px] rounded-lg border border-solid border-[#B2B2B2] appearance-none"
                     >
                       <option value="">Select a time</option>
                       {startingHours.map((time, index) => (
@@ -91,15 +96,23 @@ export default function Availability() {
                         </option>
                       ))}
                     </select>
+                    <div className="absolute inset-y-0 right-[21px] flex items-center pointer-events-none">
+                      <Image
+                        src={dropDownBtn}
+                        alt="dropDownBtn"
+                        width={9}
+                        height={6}
+                      />
+                    </div>
                   </div>
-                  <div>
+                  <div className="relative w-full md:w-auto">
                     <select
                       name="endHour"
                       id="endingHours"
                       value={endHour}
                       onChange={(e) => setEndHour(e.target.value)}
                       required
-                      className="py-3.5 px-4 w-full md:w-[278px] rounded-lg border border-solid border-[#B2B2B2]"
+                      className="py-3.5 px-4 w-full md:w-[278px] rounded-lg border border-solid border-[#B2B2B2] appearance-none"
                     >
                       <option value="">Select a time</option>
                       {endingHours?.map((time, index) => (
@@ -108,6 +121,14 @@ export default function Availability() {
                         </option>
                       ))}
                     </select>
+                    <div className="absolute inset-y-0 right-[21px] flex items-center pointer-events-none">
+                      <Image
+                        src={dropDownBtn}
+                        alt="dropDownBtn"
+                        width={9}
+                        height={6}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -117,10 +138,12 @@ export default function Availability() {
                     Available days
                   </h2>
                 </div>
-                <div className="flex flex-wrap md:justify-between  w-full">
+                <div className="flex flex-wrap md:justify-between w-full border-[1px] border-solid border-[#DADADA] rounded-lg overflow-hidden">
                   {days?.map((day, index) => (
                     <div
-                      className="flex flex-col items-center px-5 py-2 w-full md:w-auto"
+                      className={`flex border-solid border-[#DADADA] flex-col items-center px-5 py-2 w-full md:w-auto ${
+                        index !== 0 ? "md:border-l-[1px]" : ""
+                      }`}
                       key={index}
                     >
                       <input

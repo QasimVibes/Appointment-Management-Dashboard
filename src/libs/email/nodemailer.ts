@@ -24,7 +24,6 @@ export async function sendMail({ to, subject, html }: SendMailOptions): Promise<
 
   try {
     await transport.verify();
-    console.log("SMTP connection verified");
   } catch (error) {
     console.error("SMTP connection failed:", error);
     return;

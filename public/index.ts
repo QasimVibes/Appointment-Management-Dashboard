@@ -1,5 +1,4 @@
 import logo from "./asset/logo.svg";
-import passwordVisible from "./asset/passwordVisible.png";
 import google from "./asset/google.svg";
 import availability from "./asset/availability.svg";
 import vector from "./asset/Vector.svg";
@@ -11,7 +10,7 @@ import globe from "./asset/globe.svg";
 import topCornerImage from "./asset/Topcornerimage.svg";
 import arrowLeft from "./asset/arrowLeft.svg";
 import clock from "./asset/clock.svg";
-import closer from "./asset/closer.png";
+import closer from "./asset/closer.svg";
 import scheduledEvent from "./asset/scheduledEvent.svg";
 import analytics from "./asset/analytics.svg";
 import adminCenter from "./asset/adminCenter.svg";
@@ -32,10 +31,13 @@ import logoutIcon from "./asset/logoutIcon.svg";
 import personAdd from "./asset/personAdd.svg";
 import personButton from "./asset/personButton.svg";
 import progressbar from "./asset/progressbar.svg";
+import clockDashboard from "./asset/clockDashboard.svg"
+import plus from "./asset/plus.svg"
+import opner from "./asset/opner.svg"
+import dropDownBtn from "./asset/dropdownBtn.svg"
 
 export {
   logo,
-  passwordVisible,
   google,
   availability,
   vector,
@@ -68,4 +70,8 @@ export {
   logoutIcon,
   personButton,
   progressbar,
+  clockDashboard,
+  plus,
+  opner,
+  dropDownBtn
 };

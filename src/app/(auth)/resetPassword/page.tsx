@@ -42,6 +42,7 @@ export default function ResetPassword() {
               <div className="space-y-2">
                 {inputFields.map((field) => (
                   <Input
+                    key={field.id}
                     type={field.type}
                     id={field.id}
                     label={field.label}

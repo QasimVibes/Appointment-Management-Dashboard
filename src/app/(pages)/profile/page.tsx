@@ -12,6 +12,9 @@ import {
   logoutIcon,
   personAdd,
   personButton,
+  closer,
+  opner,
+  dropDownBtn,
 } from "../../../../public";
 
 import Button from "@/(components)/button/Button";
@@ -20,6 +23,7 @@ import Link from "next/link";
 import LogoutBtn from "@/(components)/logoutBtn/LogoutBtn";
 import Image from "next/image";
 import { useUserProfile } from "./useUserProfile";
+import { useState } from "react";
 export default function Profile() {
   const {
     userName,
@@ -30,13 +34,25 @@ export default function Profile() {
     editMode,
   } = useUserProfile();
   const menuItems = [{ text: "Dashboard", link: "/dashboard" }];
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   return (
     <>
-      <div className="grid grid-cols-[260px_1fr] h-[100vh]">
-        <div className="w-[260px] flex flex-col border border-solid border-[#DADADA] space-y-[16px]">
-          <div className=" py-[20px] px-[20px]">
+      <div className="relative h-[100vh] flex">
+        <div
+          className={`fixed top-0 left-0 transition-transform duration-300 ease-in-out ${
+            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          } lg:relative lg:flex flex-col justify-between border border-solid border-[#DADADA] bg-white lg:h-full h-full lg:w-[260px] lg:translate-x-0 w-[260px] z-40`}
+        >
+          <div className="flex items-center justify-between p-[20px]">
             <Image src={logo} alt="logo" width={132} height={32} />
+
+            <button
+              className="cursor-pointer"
+              onClick={() => setIsSidebarOpen(false)}
+            >
+              <Image src={closer} alt="closer" width={16} height={16} />
+            </button>
           </div>
 
           <div className="font-inter font-[700] text-[14.75px] leading-[24px] text-[#0069FF] py-[4px] px-[14px]">
@@ -98,7 +114,7 @@ export default function Profile() {
               </div>
             </div>
           </div>
-          <div className="space-y-[12px] self-start pb-[16px]">
+          <div className="space-y-[12px] self-start pb-[16px] mt-3 lg:mt-0">
             <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-[#1A1A1A] py-[4px] px-[22px]">
               <Image src={helpIcon} alt="helpIcon" width={20} height={20} />
               <h3>Help</h3>
@@ -111,11 +127,21 @@ export default function Profile() {
         </div>
 
         {/* Right Side */}
-        <div className="space-y-5">
+        <div className="flex-1 h-full overflow-auto space-y-5">
           <div className="py-3">
-            <div className="flex justify-end items-center">
-              <div className="mr-[32px] flex flex-row items-center space-x-[6px] py-[4px]">
-                <button className="flex items-center  border border-solid border-[#0069FF] rounded-[40px] py-[11px] px-[11px] font-inter font-[600] text-[14.75px] leading-[22px] text-[#0069FF] mr-3">
+            <div className="flex flex-row justify-between lg:justify-end items-center">
+              <div className="flex lg:hidden items-center pl-[25px]">
+                <Image
+                  src={opner}
+                  alt="opner"
+                  width={16}
+                  height={16}
+                  className="cursor-pointer"
+                  onClick={() => setIsSidebarOpen(true)}
+                />
+              </div>
+              <div className="mr-[25px] sm:mr-[32px] flex flex-row items-center space-x-[6px] py-[4px]">
+                <button className="flex items-center  border border-solid border-[#0069FF] rounded-[40px] py-[11px] px-[11px] font-inter font-[600] text-[12px] leading-[18px] sm:text-[14.75px] sm:leading-[22px] text-[#0069FF] mr-2 sm:mr-3">
                   <Image
                     src={personAdd}
                     alt="personAdd"
@@ -144,14 +170,14 @@ export default function Profile() {
               </h1>
             </div>
             <div className="py-3 space-y-5">
-              <div className="flex flex-row items-center space-x-5">
+              <div className="flex flex-col sm:flex-row items-center space-y-5 sm:space-y-0 sm:space-x-5">
                 <Image
                   src={personButton}
                   alt="personButton"
                   width={70}
                   height={70}
                 />
-                <div className="space-y-3">
+                <div className="space-y-3 text-center sm:text-left">
                   <Button
                     text="Upload picture"
                     className="rounded-[40px] font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] border border-solid border-[#1A1A1A] py-2 px-3"
@@ -161,7 +187,7 @@ export default function Profile() {
                   </p>
                 </div>
               </div>
-              <div className="max-w-[70%]">
+              <div className="w-full max-w-full sm:max-w-[90%] lg:max-w-[80%]">
                 <div>
                   <label
                     htmlFor="fullname"
@@ -175,7 +201,7 @@ export default function Profile() {
                     id="fullname"
                     value={data.fullname}
                     onChange={handleChange}
-                    className="w-[60%] border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
+                    className="w-full sm:w-[60%] border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
                   />
                   <label
                     htmlFor="welcomeMessage"
@@ -189,27 +215,38 @@ export default function Profile() {
                     id="welcomeMessage"
                     value={data.welcomeMessage || ""}
                     onChange={handleChange}
-                    className="w-[60%] border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
+                    className="w-full sm:w-[60%] border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
                   ></textarea>
-                  <label
-                    htmlFor="language"
-                    className="block font-inter font-[700] text-[14px] leading-[21px] text-[#1A1A1A] mb-2"
-                  >
-                    Language
-                  </label>
-                  <select
-                    name="language"
-                    id="language"
-                    value={data.language || "English"}
-                    onChange={handleChange}
-                    className="w-[60%] border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
-                  >
-                    <option value="English">English</option>
-                    <option value="Arabic">Arabic</option>
-                    <option value="French">French</option>
-                  </select>
-                  <div className="flex flex-row justify-between w-[60%]">
-                    <div>
+
+                  <div className="relative w-full sm:w-[60%] ">
+                    <label
+                      htmlFor="language"
+                      className="block font-inter font-[700] text-[14px] leading-[21px] text-[#1A1A1A] mb-2"
+                    >
+                      Language
+                    </label>
+                    <select
+                      name="language"
+                      id="language"
+                      value={data.language || "English"}
+                      onChange={handleChange}
+                      className="w-full border appearance-none border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
+                    >
+                      <option value="English">English</option>
+                      <option value="Arabic">Arabic</option>
+                      <option value="French">French</option>
+                    </select>
+                    <div className="absolute inset-y-0 right-[11px] md:right-[22.53px] flex items-center pointer-events-none">
+                      <Image
+                        src={dropDownBtn}
+                        alt="dropDownBtn"
+                        width={9}
+                        height={6}
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:space-x-5 w-full sm:w-[60%]">
+                    <div className="w-full relative">
                       <label
                         htmlFor="dateFormat"
                         className="block font-inter font-[700] text-[14px] leading-[21px] text-[#1A1A1A] mb-2"
@@ -221,13 +258,21 @@ export default function Profile() {
                         id="dateFormat"
                         value={data.dateFormat || "DD/MM/YYYY"}
                         onChange={handleChange}
-                        className="w-full border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
+                        className="w-full border appearance-none border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
                       >
                         <option value="DD/MM/YYYY">DD/MM/YYYY</option>
                         <option value="MM/DD/YYYY">MM/DD/YYYY</option>
                       </select>
+                      <div className="absolute inset-y-0 right-[11px] md:right-[22.53px] flex items-center pointer-events-none">
+                        <Image
+                          src={dropDownBtn}
+                          alt="dropDownBtn"
+                          width={9}
+                          height={6}
+                        />
+                      </div>
                     </div>
-                    <div>
+                    <div className="w-full relative">
                       <label
                         htmlFor="timeFormat"
                         className="block font-inter font-[700] text-[14px] leading-[21px] text-[#1A1A1A] mb-2"
@@ -239,65 +284,94 @@ export default function Profile() {
                         id="timeFormat"
                         value={data.timeFormat || "12h (am/pm)"}
                         onChange={handleChange}
-                        className="w-full border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
+                        className="w-full appearance-none border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
                       >
                         <option value="12h (am/pm)">12h (am/pm)</option>
                         <option value="24h (am/pm)">24h (am/pm)</option>
                       </select>
+                      <div className="absolute inset-y-0 right-[11px] md:right-[22.53px] flex items-center pointer-events-none">
+                        <Image
+                          src={dropDownBtn}
+                          alt="dropDownBtn"
+                          width={9}
+                          height={6}
+                        />
+                      </div>
                     </div>
                   </div>
-                  <label
-                    htmlFor="country"
-                    className="block font-inter font-[700] text-[14px] leading-[21px] text-[#1A1A1A] mb-2"
-                  >
-                    Country
-                  </label>
-                  <select
-                    name="country"
-                    id="country"
-                    value={data.country || "Pakistan"}
-                    onChange={handleChange}
-                    className="w-[60%] border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
-                  >
-                    <option value="Pakistan">Pakistan</option>
-                    <option value="United States">United States</option>
-                  </select>
-                  <div className="flex flex-row justify-between w-[60%]">
+                  <div className="relative w-full sm:w-[60%]">
                     <label
-                      htmlFor="timezone"
+                      htmlFor="country"
                       className="block font-inter font-[700] text-[14px] leading-[21px] text-[#1A1A1A] mb-2"
                     >
-                      Timezone
+                      Country
                     </label>
-                    <p className="font-inter font-[500] text-[14px] leading-[21px] text-[#1A1A1A] mb-2">
-                      Current Time: {currentTime}
-                    </p>
+                    <select
+                      name="country"
+                      id="country"
+                      value={data.country || "Pakistan"}
+                      onChange={handleChange}
+                      className="w-full border appearance-none border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
+                    >
+                      <option value="Pakistan">Pakistan</option>
+                      <option value="United States">United States</option>
+                    </select>
+                    <div className="absolute inset-y-0 right-[11px] md:right-[22.53px] flex items-center pointer-events-none">
+                      <Image
+                        src={dropDownBtn}
+                        alt="dropDownBtn"
+                        width={9}
+                        height={6}
+                      />
+                    </div>
                   </div>
-                  <select
-                    name="timezone"
-                    id="timezone"
-                    value={data.timezone || "Pakistan, Maldives Time"}
-                    onChange={handleChange}
-                    className="w-[60%] border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
-                  >
-                    <option value="Pakistan, Maldives Time">
-                      Pakistan, Maldives Time
-                    </option>
-                  </select>
 
-                  <div className="flex flex-row justify-between">
-                    <div className="space-x-3">
+                  <div className="relative w-full sm:w-[60%]">
+                    <div className="flex justify-between w-full mb-2">
+                      <label
+                        htmlFor="timezone"
+                        className="block font-inter font-[700] text-[14px] leading-[21px] text-[#1A1A1A]"
+                      >
+                        Timezone
+                      </label>
+                      <p className="font-inter font-[500] text-[14px] leading-[21px] text-[#1A1A1A]">
+                        Current Time: {currentTime}
+                      </p>
+                    </div>
+                    <select
+                      name="timezone"
+                      id="timezone"
+                      value={data.timezone || "Pakistan, Maldives Time"}
+                      onChange={handleChange}
+                      className="w-full border appearance-none border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
+                    >
+                      <option value="Pakistan, Maldives Time">
+                        Pakistan, Maldives Time
+                      </option>
+                    </select>
+                    <div className="absolute inset-y-0 right-[11px] md:right-[22.53px] flex items-center pointer-events-none">
+                      <Image
+                        src={dropDownBtn}
+                        alt="dropDownBtn"
+                        width={9}
+                        height={6}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row justify-between space-y-3 sm:space-y-0">
+                    <div className="space-y-3 sm:space-y-0 sm:space-x-3">
                       <Button
                         text="Save Changes"
                         onClick={saveChangesHandler}
                         disabled={!editMode}
-                        className={`py-3 px-[14px] font-inter font-[600] text-[14px] leading-[21px] bg-[#0069FF] text-white rounded-[40px] ${
+                        className={`py-3 w-full sm:w-auto px-[14px] font-inter font-[600] text-[14px] leading-[21px] bg-[#0069FF] text-white rounded-[40px] ${
                           !editMode && "cursor-not-allowed"
                         }`}
                       />
                       <Button
                         text="Cancel"
-                        className="py-3 px-[14px] font-inter font-[500] text-[14px] leading-[21px] text-black rounded-[40px] border border-solid border-[black]"
+                        className="py-3 w-full sm:w-auto px-[14px] font-inter font-[500] text-[14px] leading-[21px] text-black rounded-[40px] border border-solid border-[black]"
                       />
                     </div>
                     <Button

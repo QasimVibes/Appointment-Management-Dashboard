@@ -60,13 +60,13 @@ export const useSubmitScheduledEvent = (details: any, hostData: any) => {
         userId: session?.user?.id,
       };
 
-      scheduledEventSchema.parse(submitData);
       if (!accessToken) {
         toast.error("Please log in with your Google account to proceed.");
         signIn("google");
         return;
       }
 
+      scheduledEventSchema.parse(submitData);
       const resultAction = await dispatch(setScheduledEvent(submitData));
       if (setScheduledEvent.fulfilled.match(resultAction)) {
         router.push(`/scheduled/${resultAction.payload.url}`);
