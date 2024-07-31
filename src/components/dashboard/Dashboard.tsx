@@ -11,19 +11,19 @@ import {
   opner,
   dropDownBtn,
 } from "../../../public";
-import Button from "@/(components)/button/Button";
+import Button from "@/components/button/Button";
 import Link from "next/link";
 import {
   useCategorizeEvents,
   useDashboard,
   useFetchEvents,
 } from "./useDashboard";
-import EventList from "@/(components)/eventList/EventList";
-import DropDown from "@/(components)/dropDown/DropDown";
+import EventList from "@/components/eventList/EventList";
+import DropDown from "@/components/dropDown/DropDown";
 import Image from "next/image";
-import Analytics from "@/(components)/chart/Chart";
-import SideBar from "@/(components)/sidebar/SideBar";
-import GenerateICS from "@/(components)/generateICS/GenerateICS";
+import Analytics from "@/components/chart/Chart";
+import SideBar from "@/components/sidebar/SideBar";
+import GenerateICS from "@/components/generateICS/GenerateICS";
 
 export default function Dashboard() {
   const { userName, events, isLoading, isError } = useFetchEvents();
@@ -197,13 +197,11 @@ export default function Dashboard() {
                         <div className="flex font-inter font-[400] text-[15px] leading-[24px] text-secondary">
                           {tabs.map((tab) => (
                             <div
-                              key={tab.value}
-                              className={`md:${
-                                tab.value !== "Upcoming"
-                                  ? "px-[16px]"
-                                  : "pr-[16px] md:px-0"
-                              } cursor-pointer px-[8px]`}
-                            >
+                            key={tab.value}
+                            className={`cursor-pointer px-[8px] ${
+                              tab.value === "Upcoming" ? "md:pr-[16px] md:px-0" : "md:px-[16px]"
+                            }`}
+                          >
                               <Button
                                 className={`pt-[7px] pb-[17px] ${
                                   activeTab === tab.value

@@ -14,6 +14,7 @@ const Input = ({
   inputMode,
   autoComplete,
   required,
+  checked,
 }: InputProps) => {
   return (
     <>
@@ -33,6 +34,7 @@ const Input = ({
         inputMode={inputMode}
         autoComplete={autoComplete}
         required={required}
+        checked={checked}
       />
     </>
   );

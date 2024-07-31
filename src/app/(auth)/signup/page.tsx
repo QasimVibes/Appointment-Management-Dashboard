@@ -1,7 +1,7 @@
 "use client";
 import { logo } from "../../../../public";
-import Input from "@/(components)/input/Input";
-import Button from "@/(components)/button/Button";
+import Input from "@/components/input/Input";
+import Button from "@/components/button/Button";
 import Link from "next/link";
 import { useSignup, inputFields } from "./useSignup";
 import Image from "next/image";
@@ -34,7 +34,7 @@ export default function Register() {
                 type={input.type}
                 placeholder={input.placeholder}
                 value={
-                  signupState[input.name as keyof typeof signupState] || ""
+                  signupState[input.name as keyof typeof signupState] as string
                 }
                 id={input.name}
                 onChange={onChangeHandler}

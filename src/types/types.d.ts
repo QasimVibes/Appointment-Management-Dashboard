@@ -138,7 +138,7 @@ export type EventListProps = {
 
 export type InputProps = {
   id?: string;
-  label: string;
+  label?: string;
   type: string;
   placeholder?: string;
   value: string;
@@ -158,6 +158,7 @@ export type InputProps = {
     | "decimal";
   autoComplete?: string;
   required?: boolean;
+  checked?:boolean
 };
 
 export type MeetingConfirmProps = {
@@ -171,12 +172,17 @@ export type NavbarProps = {
   url?: string;
 };
 
-export type SelectProps = {
-  options: { value: string; label: string }[];
+export interface SelectOption {
   value: string;
-  onChange: (value: string) => void;
+  label: string;
+}
+
+export interface SelectProps {
+  options: SelectOption[];
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   className?: string;
-};
+}
 
 export type ScheduledEventDetails = {
   name: string;
@@ -201,8 +207,13 @@ export type ScheduledAppointmentData = {
   selectedDate: string;
 };
 
-
 export type SideBarProps = {
   isSidebarOpen: boolean;
-  children: React.ReactNode; 
+  children: React.ReactNode;
+};
+
+export type AvailabilityProps = {
+  days: string[];
+  startingHours: string[];
+  endingHours: string[];
 };

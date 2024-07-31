@@ -1,7 +1,7 @@
 "use client";
-import Navbar from "@/(components)/navbar/Navbar";
-import Button from "@/(components)/button/Button";
-import Input from "@/(components)/input/Input";
+import Navbar from "@/components/navbar/Navbar";
+import Button from "@/components/button/Button";
+import Input from "@/components/input/Input";
 import {
   topCornerImage,
   arrowLeft,

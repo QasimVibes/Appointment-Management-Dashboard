@@ -1,11 +1,11 @@
 "use client";
-import Navbar from "@/(components)/navbar/Navbar";
+import Navbar from "@/components/navbar/Navbar";
 import { topCornerImage, clock, globe } from "../../../../public";
 import { useEffect, useState } from "react";
 import Calendar from "react-calendar";
 import "react-calendar/dist/Calendar.css";
 import "./customCalendar.css";
-import Button from "@/(components)/button/Button";
+import Button from "@/components/button/Button";
 import { useEventBooking, locations, useTimeSlots } from "./useEventBooking";
 import Link from "next/link";
 import Image from "next/image";

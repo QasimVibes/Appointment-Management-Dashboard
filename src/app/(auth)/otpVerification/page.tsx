@@ -1,6 +1,6 @@
 "use client";
-import Button from "@/(components)/button/Button";
-import Input from "@/(components)/input/Input";
+import Button from "@/components/button/Button";
+import Input from "@/components/input/Input";
 import Link from "next/link";
 import { useOtpVerification } from "./useOtpVerification";
 import { logo } from "../../../../public";

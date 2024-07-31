@@ -17,14 +17,14 @@ import {
   dropDownBtn,
 } from "../../../../public";
 
-import Button from "@/(components)/button/Button";
-import DropDown from "@/(components)/dropDown/DropDown";
+import Button from "@/components/button/Button";
+import DropDown from "@/components/dropDown/DropDown";
 import Link from "next/link";
-import LogoutBtn from "@/(components)/logoutBtn/LogoutBtn";
+import LogoutBtn from "@/components/logoutBtn/LogoutBtn";
 import Image from "next/image";
 import { useUserProfile } from "./useUserProfile";
 import { useState } from "react";
-import SideBar from "@/(components)/sidebar/SideBar";
+import SideBar from "@/components/sidebar/SideBar";
 export default function Profile() {
   const {
     userName,

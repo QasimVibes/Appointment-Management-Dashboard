@@ -1,6 +1,6 @@
 // import { getServerSession } from "next-auth";
 // import { authOptions } from "../libs/authOptions";
-import Dashboard from "@/(components)/dashboard/Dashboard";
+import Dashboard from "@/components/dashboard/Dashboard";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     url: `${process.env.URL}/dashboard`,
   },
 };
-export default  function Home() {
+export default function Home() {
   // const session = await getServerSession(authOptions);
 
   // console.log("Log", session?.user);

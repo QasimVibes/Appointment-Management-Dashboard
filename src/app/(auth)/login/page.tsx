@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
 import { logo, google } from "../../../../public";
-import Input from "@/(components)/input/Input";
+import Input from "@/components/input/Input";
 import Link from "next/link";
-import Button from "@/(components)/button/Button";
+import Button from "@/components/button/Button";
 import { useLogin, inputFields } from "./useLogin";
 import Image from "next/image";
 
