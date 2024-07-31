@@ -21,19 +21,33 @@ export default function ScheduledEvent() {
 
   const { handleButtonClick } = useSubmitScheduledEvent(details, hostData);
 
+  const inputDetails = [
+    {
+      id: "name",
+      label: "Name *",
+      type: "text",
+      value: details.name,
+    },
+    {
+      id: "email",
+      label: "Email *",
+      type: "email",
+      value: details.email,
+    },
+  ];
+
   return (
     <>
       <Navbar />
-
-      <div className="pt-[46px] flex justify-center bg-[#FBFCFD] mb-[48px]">
-        <div className="relative flex flex-col items-center rounded w-[90%] lg:w-auto bg-[#FFFFFF]">
+      <div className="pt-[46px] flex justify-center bg-lightwhite mb-[48px]">
+        <div className="relative flex flex-col items-center rounded w-[90%] lg:w-auto bg-white">
           <div className="grid grid-cols-1 lg:grid-cols-3 w-full h-full">
             <div className="col-span-1">
-              <div className="px-[24px] py-[24px] h-full border-[0.5px] border-solid border-[#DADADA] space-y-[16px] lg:space-y-[28px]">
+              <div className="px-[24px] py-[24px] h-full border-[0.5px] border-solid border-lightgray space-y-[16px] lg:space-y-[28px]">
                 <div>
                   <Link
                     href="/eventBooking"
-                    className="p-1 rounded-[50%] bg-[#f1eeee]"
+                    className="p-1 rounded-[50%] bg-lightzinc"
                   >
                     <Image
                       src={arrowLeft}
@@ -44,17 +58,17 @@ export default function ScheduledEvent() {
                   </Link>
                 </div>
                 <div className="space-y-[6px]">
-                  <p className="font-[400] text-[16px] leading-[22px] text-[#1A1A1A]">
+                  <p className="font-[400] text-[16px] leading-[22px] text-primary">
                     {hostData.host}
                   </p>
-                  <h1 className="font-[700] text-[28px] leading-[28px] text-[#1A1A1A]">
+                  <h1 className="font-[700] text-[28px] leading-[28px] text-primary">
                     30 Minute Meeting
                   </h1>
                 </div>
                 <div className="space-y-[12px]">
                   <div className="flex space-x-2">
                     <Image src={clock} alt="clock" width={24} height={24} />
-                    <p className="font-[400] text-[14px] leading-[22px] text-[#1A1A1A]">
+                    <p className="font-[400] text-[14px] leading-[22px] text-primary">
                       30 min
                     </p>
                   </div>
@@ -65,14 +79,14 @@ export default function ScheduledEvent() {
                       width={24}
                       height={24}
                     />
-                    <p className="font-[400] text-[14px] leading-[22px] text-[#1A1A1A]">
+                    <p className="font-[400] text-[14px] leading-[22px] text-primary">
                       {hostData.startingTime} - {hostData.endingTime},{" "}
                       {hostData.day}
                     </p>
                   </div>
                   <div className="flex space-x-2">
                     <Image src={globe} alt="globe" width={24} height={24} />
-                    <p className="font-[400] text-[14px] leading-[22px] text-[#1A1A1A]">
+                    <p className="font-[400] text-[14px] leading-[22px] text-primary">
                       {hostData.location}
                     </p>
                   </div>
@@ -80,45 +94,35 @@ export default function ScheduledEvent() {
               </div>
             </div>
             <div className="col-span-1 lg:col-span-2">
-              <div className="px-6 py-6 h-full border border-solid border-[#DADADA] space-y-2">
+              <div className="px-6 py-6 h-full border border-solid border-lightgray space-y-2">
                 <div>
-                  <h2 className="font-bold text-[20px] leading-[28px] text-[#1A1A1A]">
+                  <h2 className="font-bold text-[20px] leading-[28px] text-primary">
                     Enter Details
                   </h2>
                 </div>
                 <div className="w-full max-w-full lg:max-w-[374px] h-full space-y-3">
-                  <Input
-                    id="name"
-                    label="Name *"
-                    type="text"
-                    value={details.name}
-                    onChange={(e: any) =>
-                      setDetails({
-                        ...details,
-                        [e.target.name]: e.target.value,
-                      })
-                    }
-                    className="w-full h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
-                    labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px]"
-                  />
-                  <Input
-                    id="email"
-                    label="Email *"
-                    type="email"
-                    value={details.email}
-                    onChange={(e: any) =>
-                      setDetails({
-                        ...details,
-                        [e.target.name]: e.target.value,
-                      })
-                    }
-                    className="w-full h-[46px] rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
-                    labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px]"
-                  />
+                  {inputDetails?.map((input) => (
+                    <Input
+                      key={input.id}
+                      id={input.id}
+                      label={input.label}
+                      type={input.type}
+                      value={input.value}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setDetails({
+                          ...details,
+                          [e.target.name]: e.target.value,
+                        })
+                      }
+                      className="w-full h-[46px] rounded-[8px] border border-solid border-darkgray px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-primary"
+                      labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-primary mb-[8px]"
+                    />
+                  ))}
+
                   <div className="mb-[12px]">
                     <label
                       htmlFor="message"
-                      className="text-[14.75px] font-bold font-inter leading-[22px] text-[#1A1A1A] mb-[8px] block"
+                      className="text-[14.75px] font-bold font-inter leading-[22px] text-primary mb-[8px] block"
                     >
                       Please share anything that will help prepare for our
                       meeting
@@ -126,23 +130,23 @@ export default function ScheduledEvent() {
                     <textarea
                       name="message"
                       id="message"
-                      onChange={(e: any) =>
+                      onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                         setDetails({
                           ...details,
                           [e.target.name]: e.target.value,
                         })
                       }
                       rows={2}
-                      className="w-full rounded-[8px] border border-solid border-[#B2B2B2] px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-[#1A1A1A]"
+                      className="w-full rounded-[8px] border border-solid border-darkgray px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-primary"
                     ></textarea>
                   </div>
-                  <p className="font-[400] text-[14px] leading-[20px] text-[#1A1A1A] text-center lg:text-left">
+                  <p className="font-[400] text-[14px] leading-[20px] text-primary text-center lg:text-left">
                     By proceeding, you confirm that you have read and agree to{" "}
-                    <span className="text-[#0069FF] font-[600]">
+                    <span className="text-quaternary font-[600]">
                       Calendly&apos;s Term of Use
                     </span>{" "}
                     and{" "}
-                    <span className="text-[#0069FF] font-[600]">
+                    <span className="text-quaternary font-[600]">
                       Privacy Policy
                     </span>
                     .

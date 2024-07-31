@@ -36,7 +36,7 @@ export const generateICSFile = createAsyncThunk(
         return rejectWithValue(response.data);
       }
     } catch (error: any) {
-      toast.error(error.response.data.message);
+      toast.error("Error generating ICS file");
       return rejectWithValue(error);
     }
   }

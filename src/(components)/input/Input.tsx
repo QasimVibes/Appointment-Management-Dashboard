@@ -1,21 +1,7 @@
-interface InputProps {
-  id?: string;
-  label: string;
-  type: string;
-  placeholder?: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  className?: string;
-  labelClassName?: string;
-  maxLength?: number;
-  pattern?: string;
-  inputMode?: "search" | "email" | "tel" | "text" | "url" | "none" | "numeric" | "decimal";
-  autoComplete?: string;
-  required?: boolean;
-}
+import { InputProps } from "@/types/types";
 
-const Input: React.FC<InputProps> = ({
-  id, 
+const Input = ({
+  id,
   label,
   type,
   placeholder,
@@ -28,7 +14,7 @@ const Input: React.FC<InputProps> = ({
   inputMode,
   autoComplete,
   required,
-}) => {
+}: InputProps) => {
   return (
     <>
       <label htmlFor={id} className={`block ${labelClassName}`}>
@@ -36,7 +22,7 @@ const Input: React.FC<InputProps> = ({
       </label>
       <input
         type={type}
-        id={id} 
+        id={id}
         name={id}
         placeholder={placeholder}
         value={value}

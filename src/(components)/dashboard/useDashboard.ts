@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useSession } from "next-auth/react";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { fetchMeeting } from "@/store/slice/scheduledEventSlice";
-import { generateICSFile as generateICSFileAsync } from "@/store/slice/generateIcsFileSlice";
+import { Event } from "@/types/types";
 
 export const useFetchEvents = () => {
   const { data: session } = useSession();
@@ -12,7 +12,7 @@ export const useFetchEvents = () => {
   const { isLoading, isError } = useAppSelector(
     (state) => state.scheduledEvent
   );
-  const [events, setEvents] = useState<string[]>([]);
+  const [events, setEvents] = useState<Event[]>([]);
   const userName =
     session?.user?.username?.slice(0, 1).toUpperCase() ||
     session?.user?.name?.slice(0, 1).toUpperCase();
@@ -35,10 +35,9 @@ export const useFetchEvents = () => {
 
   return { userName, events, isLoading, isError };
 };
-export const useCategorizeEvents = (events: any[]) => {
- 
-  const [upcomingEvents, setUpcomingEvents] = useState<string[]>([]);
-  const [pastEvents, setPastEvents] = useState<string[]>([]);
+export const useCategorizeEvents = (events: Event[]) => {
+  const [upcomingEvents, setUpcomingEvents] = useState<Event[]>([]);
+  const [pastEvents, setPastEvents] = useState<Event[]>([]);
 
   useEffect(() => {
     if (events.length > 0) {
@@ -92,18 +91,30 @@ export const useCategorizeEvents = (events: any[]) => {
   return { upcomingEvents, pastEvents };
 };
 
-export const useGenerateICS = () => {
-  const { data: session } = useSession();
-  const userId = session?.user?.id;
-  const dispatch = useAppDispatch();
+export const useDashboard = () => {
+  const [activeTab, setActiveTab] = useState("Upcoming");
+  const menuItems = [{ text: "Settings", link: "/profile" }];
 
-  const generateICSFile = async () => {
-    try {
-      await dispatch(generateICSFileAsync(userId)).unwrap();
-    } catch (error: any) {
-      console.error("Error generating ICS file:", error.message);
-    }
+  const [dashboardActiveTab, setDashboardActiveTab] = useState<
+    "ScheduledEvents" | "Analytics"
+  >("ScheduledEvents");
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const tabs = [
+    { label: "Upcoming", value: "Upcoming" },
+    { label: "Pending", value: "Pending" },
+    { label: "Past", value: "Past" },
+  ];
+
+  return {
+    activeTab,
+    setActiveTab,
+    menuItems,
+    dashboardActiveTab,
+    setDashboardActiveTab,
+    tabs,
+    isSidebarOpen,
+    setIsSidebarOpen,
   };
-
-  return { generateICSFile };
 };

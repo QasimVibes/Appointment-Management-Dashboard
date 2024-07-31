@@ -4,7 +4,7 @@ import MeetingConfirm from "@/(components)/meetingConfirm/MeetingConfirm";
 import Navbar from "@/(components)/navbar/Navbar";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { fetchMeeting } from "@/store/slice/scheduledEventSlice";
-import toast from "react-hot-toast";
+import { ScheduledAppointmentData } from "@/types/types";
 
 const Scheduled = ({ params }: { params: { url: string } }) => {
   const { url } = params;
@@ -12,8 +12,10 @@ const Scheduled = ({ params }: { params: { url: string } }) => {
     (state) => state.scheduledEvent
   );
   const dispatch = useAppDispatch();
-  const [appointment, setAppointment] = useState<any>(null);
-  
+  const [appointment, setAppointment] = useState<ScheduledAppointmentData>(
+    {} as ScheduledAppointmentData
+  );
+
   const fetchAppointment = async () => {
     try {
       const fetchedData = await dispatch(fetchMeeting({ url })).unwrap();

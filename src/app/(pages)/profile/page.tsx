@@ -24,6 +24,7 @@ import LogoutBtn from "@/(components)/logoutBtn/LogoutBtn";
 import Image from "next/image";
 import { useUserProfile } from "./useUserProfile";
 import { useState } from "react";
+import SideBar from "@/(components)/sidebar/SideBar";
 export default function Profile() {
   const {
     userName,
@@ -39,11 +40,8 @@ export default function Profile() {
   return (
     <>
       <div className="relative h-[100vh] flex">
-        <div
-          className={`fixed top-0 left-0 transition-transform duration-300 ease-in-out ${
-            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-          } lg:relative lg:flex flex-col justify-between border border-solid border-[#DADADA] bg-white lg:h-full h-full lg:w-[260px] lg:translate-x-0 w-[260px] z-40`}
-        >
+        {/* Left Side */}
+        <SideBar isSidebarOpen={isSidebarOpen}>
           <div className="flex items-center justify-between p-[20px]">
             <Image src={logo} alt="logo" width={132} height={32} />
 
@@ -55,7 +53,7 @@ export default function Profile() {
             </button>
           </div>
 
-          <div className="font-inter font-[700] text-[14.75px] leading-[24px] text-[#0069FF] py-[4px] px-[14px]">
+          <div className="font-inter font-[700] text-[14.75px] leading-[24px] text-quaternary py-[4px] px-[14px]">
             <Link href="/dashboard" className="flex items-center">
               <Image
                 src={leftArrow}
@@ -67,12 +65,12 @@ export default function Profile() {
               Back to home
             </Link>
           </div>
-          <div className="font-inter font-[700] text-[18px] leading-[24px] text-[#1A1A1A] py-[4px] px-[22px]">
+          <div className="font-inter font-[700] text-[18px] leading-[24px] text-primary py-[4px] px-[22px]">
             <h2>Account Settings</h2>
           </div>
           <div className="flex flex-col justify-between flex-grow">
             <div className="space-y-[12px] self-start">
-              <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-[#0069FF] py-[4px] px-[22px]">
+              <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-quaternary py-[4px] px-[22px]">
                 <Image
                   src={profilePerson}
                   alt="profilePerson"
@@ -81,16 +79,16 @@ export default function Profile() {
                 />
                 <h3>Profile</h3>
               </div>
-              <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-[#1A1A1A] py-[4px] px-[22px]">
+              <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-primary py-[4px] px-[22px]">
                 <Image src={star} alt="star" width={20} height={20} />
                 <h3>Branding</h3>
               </div>
-              <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-[#1A1A1A] py-[4px] px-[22px]">
+              <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-primary py-[4px] px-[22px]">
                 <Image src={link} alt="link" width={20} height={20} />
                 <h3>My Link</h3>
               </div>
 
-              <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-[#1A1A1A] py-[4px] px-[22px]">
+              <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-primary py-[4px] px-[22px]">
                 <Image
                   src={preferences}
                   alt="preferences"
@@ -99,7 +97,7 @@ export default function Profile() {
                 />
                 <h3>Login Preferences</h3>
               </div>
-              <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-[#1A1A1A] py-[4px] px-[22px]">
+              <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-primary py-[4px] px-[22px]">
                 <Image
                   src={settingIcon}
                   alt="settingIcon"
@@ -108,23 +106,23 @@ export default function Profile() {
                 />
                 <h3>Cookie Settings</h3>
               </div>
-              <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-[#1A1A1A] py-[4px] px-[22px]">
+              <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-primary py-[4px] px-[22px]">
                 <Image src={calender} alt="calender" width={20} height={20} />
                 <h3>Calender sync</h3>
               </div>
             </div>
           </div>
           <div className="space-y-[12px] self-start pb-[16px] mt-3 lg:mt-0">
-            <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-[#1A1A1A] py-[4px] px-[22px]">
+            <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-primary py-[4px] px-[22px]">
               <Image src={helpIcon} alt="helpIcon" width={20} height={20} />
               <h3>Help</h3>
             </div>
-            <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-[#1A1A1A] py-[4px] px-[22px]">
+            <div className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-primary py-[4px] px-[22px]">
               <Image src={logoutIcon} alt="logoutIcon" width={20} height={20} />
               <LogoutBtn />
             </div>
           </div>
-        </div>
+        </SideBar>
 
         {/* Right Side */}
         <div className="flex-1 h-full overflow-auto space-y-5">
@@ -141,7 +139,7 @@ export default function Profile() {
                 />
               </div>
               <div className="mr-[25px] sm:mr-[32px] flex flex-row items-center space-x-[6px] py-[4px]">
-                <button className="flex items-center  border border-solid border-[#0069FF] rounded-[40px] py-[11px] px-[11px] font-inter font-[600] text-[12px] leading-[18px] sm:text-[14.75px] sm:leading-[22px] text-[#0069FF] mr-2 sm:mr-3">
+                <button className="flex items-center  border border-solid border-quaternary rounded-[40px] py-[11px] px-[11px] font-inter font-[600] text-[12px] leading-[18px] sm:text-[14.75px] sm:leading-[22px] text-quaternary mr-2 sm:mr-3">
                   <Image
                     src={personAdd}
                     alt="personAdd"
@@ -152,7 +150,7 @@ export default function Profile() {
                   Invite user
                 </button>
                 <Button
-                  className="w-[33.67px] h-[32.5px] bg-[#CCCCCC] rounded-[16px] font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A]"
+                  className="w-[33.67px] h-[32.5px] bg-tertiary rounded-[16px] font-inter font-[400] text-[14px] leading-[21px] text-primary"
                   text={userName || "T"}
                 />
                 <DropDown items={menuItems} />
@@ -162,10 +160,10 @@ export default function Profile() {
 
           <div className="py-3 px-7 space-y-9">
             <div className="space-y-3">
-              <h3 className="font-inter font-[600] text-[15px] leading-[20px] text-[#1A1A1A9C]">
+              <h3 className="font-inter font-[600] text-[15px] leading-[20px] text-secondary">
                 Accounts Details
               </h3>
-              <h1 className="font-inter font-[700] text-[24px] leading-[28px] text-[#1A1A1A]">
+              <h1 className="font-inter font-[700] text-[24px] leading-[28px] text-primary">
                 Profile
               </h1>
             </div>
@@ -180,9 +178,9 @@ export default function Profile() {
                 <div className="space-y-3 text-center sm:text-left">
                   <Button
                     text="Upload picture"
-                    className="rounded-[40px] font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] border border-solid border-[#1A1A1A] py-2 px-3"
+                    className="rounded-[40px] font-inter font-[400] text-[14px] leading-[21px] text-primary border border-solid border-primary py-2 px-3"
                   />
-                  <p className="font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A9C] ">
+                  <p className="font-inter font-[400] text-[14px] leading-[21px] text-secondary ">
                     JPG, GIF or PNG. MAX Size of 5MB
                   </p>
                 </div>
@@ -191,7 +189,7 @@ export default function Profile() {
                 <div>
                   <label
                     htmlFor="fullname"
-                    className="block font-inter font-[700] text-[14px] leading-[21px] text-[#1A1A1A] mb-2"
+                    className="block font-inter font-[700] text-[14px] leading-[21px] text-primary mb-2"
                   >
                     Name
                   </label>
@@ -201,11 +199,11 @@ export default function Profile() {
                     id="fullname"
                     value={data.fullname}
                     onChange={handleChange}
-                    className="w-full sm:w-[60%] border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
+                    className="w-full sm:w-[60%] border border-solid border-lightgray rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-primary mb-7"
                   />
                   <label
                     htmlFor="welcomeMessage"
-                    className="block font-inter font-[700] text-[14px] leading-[21px] text-[#1A1A1A] mb-2"
+                    className="block font-inter font-[700] text-[14px] leading-[21px] text-primary mb-2"
                   >
                     Welcome Message
                   </label>
@@ -215,13 +213,13 @@ export default function Profile() {
                     id="welcomeMessage"
                     value={data.welcomeMessage || ""}
                     onChange={handleChange}
-                    className="w-full sm:w-[60%] border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
+                    className="w-full sm:w-[60%] border border-solid border-lightgray rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-primary mb-7"
                   ></textarea>
 
                   <div className="relative w-full sm:w-[60%] ">
                     <label
                       htmlFor="language"
-                      className="block font-inter font-[700] text-[14px] leading-[21px] text-[#1A1A1A] mb-2"
+                      className="block font-inter font-[700] text-[14px] leading-[21px] text-primary mb-2"
                     >
                       Language
                     </label>
@@ -230,7 +228,7 @@ export default function Profile() {
                       id="language"
                       value={data.language || "English"}
                       onChange={handleChange}
-                      className="w-full border appearance-none border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
+                      className="w-full border appearance-none border-solid border-lightgray rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-primary mb-7"
                     >
                       <option value="English">English</option>
                       <option value="Arabic">Arabic</option>
@@ -249,7 +247,7 @@ export default function Profile() {
                     <div className="w-full relative">
                       <label
                         htmlFor="dateFormat"
-                        className="block font-inter font-[700] text-[14px] leading-[21px] text-[#1A1A1A] mb-2"
+                        className="block font-inter font-[700] text-[14px] leading-[21px] text-primary mb-2"
                       >
                         Date Format
                       </label>
@@ -258,7 +256,7 @@ export default function Profile() {
                         id="dateFormat"
                         value={data.dateFormat || "DD/MM/YYYY"}
                         onChange={handleChange}
-                        className="w-full border appearance-none border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
+                        className="w-full border appearance-none border-solid border-lightgray rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-primary mb-7"
                       >
                         <option value="DD/MM/YYYY">DD/MM/YYYY</option>
                         <option value="MM/DD/YYYY">MM/DD/YYYY</option>
@@ -275,7 +273,7 @@ export default function Profile() {
                     <div className="w-full relative">
                       <label
                         htmlFor="timeFormat"
-                        className="block font-inter font-[700] text-[14px] leading-[21px] text-[#1A1A1A] mb-2"
+                        className="block font-inter font-[700] text-[14px] leading-[21px] text-primary mb-2"
                       >
                         Time Format
                       </label>
@@ -284,7 +282,7 @@ export default function Profile() {
                         id="timeFormat"
                         value={data.timeFormat || "12h (am/pm)"}
                         onChange={handleChange}
-                        className="w-full appearance-none border border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
+                        className="w-full appearance-none border border-solid border-lightgray rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-primary mb-7"
                       >
                         <option value="12h (am/pm)">12h (am/pm)</option>
                         <option value="24h (am/pm)">24h (am/pm)</option>
@@ -302,7 +300,7 @@ export default function Profile() {
                   <div className="relative w-full sm:w-[60%]">
                     <label
                       htmlFor="country"
-                      className="block font-inter font-[700] text-[14px] leading-[21px] text-[#1A1A1A] mb-2"
+                      className="block font-inter font-[700] text-[14px] leading-[21px] text-primary mb-2"
                     >
                       Country
                     </label>
@@ -311,7 +309,7 @@ export default function Profile() {
                       id="country"
                       value={data.country || "Pakistan"}
                       onChange={handleChange}
-                      className="w-full border appearance-none border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
+                      className="w-full border appearance-none border-solid border-lightgray rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-primary mb-7"
                     >
                       <option value="Pakistan">Pakistan</option>
                       <option value="United States">United States</option>
@@ -330,11 +328,11 @@ export default function Profile() {
                     <div className="flex justify-between w-full mb-2">
                       <label
                         htmlFor="timezone"
-                        className="block font-inter font-[700] text-[14px] leading-[21px] text-[#1A1A1A]"
+                        className="block font-inter font-[700] text-[14px] leading-[21px] text-primary"
                       >
                         Timezone
                       </label>
-                      <p className="font-inter font-[500] text-[14px] leading-[21px] text-[#1A1A1A]">
+                      <p className="font-inter font-[500] text-[14px] leading-[21px] text-primary">
                         Current Time: {currentTime}
                       </p>
                     </div>
@@ -343,7 +341,7 @@ export default function Profile() {
                       id="timezone"
                       value={data.timezone || "Pakistan, Maldives Time"}
                       onChange={handleChange}
-                      className="w-full border appearance-none border-solid border-[#DADADA] rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-[#1A1A1A] mb-7"
+                      className="w-full border appearance-none border-solid border-lightgray rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-primary mb-7"
                     >
                       <option value="Pakistan, Maldives Time">
                         Pakistan, Maldives Time
@@ -365,18 +363,18 @@ export default function Profile() {
                         text="Save Changes"
                         onClick={saveChangesHandler}
                         disabled={!editMode}
-                        className={`py-3 w-full sm:w-auto px-[14px] font-inter font-[600] text-[14px] leading-[21px] bg-[#0069FF] text-white rounded-[40px] ${
+                        className={`py-3 w-full sm:w-auto px-[14px] font-inter font-[600] text-[14px] leading-[21px] bg-quaternary text-white rounded-[40px] ${
                           !editMode && "cursor-not-allowed"
                         }`}
                       />
                       <Button
                         text="Cancel"
-                        className="py-3 w-full sm:w-auto px-[14px] font-inter font-[500] text-[14px] leading-[21px] text-black rounded-[40px] border border-solid border-[black]"
+                        className="py-3 w-full sm:w-auto px-[14px] font-inter font-[500] text-[14px] leading-[21px] text-black rounded-[40px] border border-solid border-black"
                       />
                     </div>
                     <Button
                       text="Delete Account"
-                      className="py-3 px-[14px] font-inter font-[600] text-[14px] leading-[21px] bg-[#FF0000] text-white rounded-[40px]"
+                      className="py-3 px-[14px] font-inter font-[600] text-[14px] leading-[21px] bg-danger text-white rounded-[40px]"
                     />
                   </div>
                 </div>

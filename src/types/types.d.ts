@@ -111,3 +111,98 @@ export type Time = {
   hours: number;
   minutes: number;
 };
+
+export type ButtonProps = {
+  text?: string;
+  onClick?;
+  className?: string;
+  disabled?: boolean;
+  children?: React.ReactNode;
+};
+
+export type DropDownProps = {
+  items: { text: string; link: string }[];
+};
+
+export type Event = {
+  id: string;
+  selectedDate: string;
+  selectedTime: string;
+  schedulerName: string;
+};
+
+export type EventListProps = {
+  events: Event[];
+  title: string;
+};
+
+export type InputProps = {
+  id?: string;
+  label: string;
+  type: string;
+  placeholder?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  className?: string;
+  labelClassName?: string;
+  maxLength?: number;
+  pattern?: string;
+  inputMode?:
+    | "search"
+    | "email"
+    | "tel"
+    | "text"
+    | "url"
+    | "none"
+    | "numeric"
+    | "decimal";
+  autoComplete?: string;
+  required?: boolean;
+};
+
+export type MeetingConfirmProps = {
+  hostName: string | null;
+  selectedTime: string | null;
+  timezone: string | null;
+  date: string | null;
+};
+
+export type NavbarProps = {
+  url?: string;
+};
+
+export type SelectProps = {
+  options: { value: string; label: string }[];
+  value: string;
+  onChange: (value: string) => void;
+  className?: string;
+};
+
+export type ScheduledEventDetails = {
+  name: string;
+  email: string;
+  message: string;
+};
+
+export type ScheduledEventHostData = {
+  email: string | null;
+  host: string | null;
+  hostEmail: string | null;
+  startingTime: string | null;
+  endingTime: string | null;
+  day: string | null;
+  location: string | null;
+};
+
+export type ScheduledAppointmentData = {
+  hostName: string;
+  selectedTime: string;
+  timezone: string;
+  selectedDate: string;
+};
+
+
+export type SideBarProps = {
+  isSidebarOpen: boolean;
+  children: React.ReactNode; 
+};

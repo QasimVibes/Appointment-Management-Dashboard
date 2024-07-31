@@ -6,6 +6,7 @@ import { scheduledEventSchema } from "@/types/ValidationSchema/FormSchema";
 import { z } from "zod";
 import toast from "react-hot-toast";
 import { useSession, signIn } from "next-auth/react";
+import { ScheduledEventDetails, ScheduledEventHostData } from "@/types/types";
 
 export const useScheduledEvent = () => {
   const searchParams = useSearchParams();
@@ -36,7 +37,10 @@ export const useScheduledEvent = () => {
   return { details, setDetails, hostData };
 };
 
-export const useSubmitScheduledEvent = (details: any, hostData: any) => {
+export const useSubmitScheduledEvent = (
+  details: ScheduledEventDetails,
+  hostData: ScheduledEventHostData
+) => {
   const dispatch = useAppDispatch();
   const { data: session } = useSession();
   const accessToken = session?.user?.accessToken;

@@ -67,7 +67,7 @@ export const useLogin = () => {
   useEffect(() => {
     if (loginStatus === "succeeded") {
       toast.success("Logged in successfully");
-      router.push("/dashboard");
+      router.push("/");
     } else if (loginStatus === "failed") {
       toast.error(error);
     }

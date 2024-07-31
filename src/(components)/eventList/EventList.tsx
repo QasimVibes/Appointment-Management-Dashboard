@@ -1,21 +1,15 @@
-import React from "react";
 import Image from "next/image";
 import { circle, details } from "../../../public";
+import { Event, EventListProps } from "@/types/types";
 
-const EventList = ({
-  events,
-  title,
-}: {
-  events: any;
-  title: string;
-}): JSX.Element => {
+const EventList = ({ events, title }: EventListProps): JSX.Element => {
   return (
     <>
       {events.length > 0 ? (
-        events.map((event: any) => (
+        events.map((event: Event) => (
           <div key={event.id}>
-            <div className="px-[24px] py-[17px] border-b-[1px] border-solid border-[#CCCCCC]">
-              <h2 className="font-inter font-[700] text-[14.88px] leading-[24px] text-[#1A1A1A]">
+            <div className="px-[24px] py-[17px] border-b-[1px] border-solid border-tertiary">
+              <h2 className="font-inter font-[700] text-[14.88px] leading-[24px] text-primary">
                 {event.selectedDate}
               </h2>
             </div>
@@ -46,8 +40,8 @@ const EventList = ({
           </div>
         ))
       ) : (
-        <div className="px-[24px] py-[17px] border-b-[1px] border-solid border-[#CCCCCC]">
-          <h2 className="font-inter font-[700] text-[14.88px] leading-[24px] text-[#1A1A1A]">
+        <div className="px-[24px] py-[17px] border-b-[1px] border-solid border-tertiary">
+          <h2 className="font-inter font-[700] text-[14.88px] leading-[24px] text-primary">
             No {title} events
           </h2>
         </div>

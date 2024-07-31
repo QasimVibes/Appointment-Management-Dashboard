@@ -22,16 +22,16 @@ export default function OtpVerification() {
             className="sm:w-[182px] sm:h-[45px]"
           />
         </div>
-        <div className="bg-[#F9F9F9] rounded-xl shadow-lg border-2 border-[#DADADA] w-[90%] h-auto flex flex-col">
+        <div className="bg-darkzinc rounded-xl shadow-lg border-2 border-lightgray w-[90%] h-auto flex flex-col">
           <div className="p-4 sm:p-7">
             <div className="text-center">
-              <h1 className="block font-inter text-[22px] leading-[30px] font-bold text-[#1A1A1A] sm:text-[26px] sm:leading-[34px]">
+              <h1 className="block font-inter text-[22px] leading-[30px] font-bold text-primary sm:text-[26px] sm:leading-[34px]">
                 Enter OTP
               </h1>
-              <p className="mt-2 text-sm text-[#1A1A1A]">
+              <p className="mt-2 text-sm text-primary">
                 Remember your password?
                 <Link
-                  className="text-[#0069FF] decoration-2 hover:underline font-medium"
+                  className="text-quaternary decoration-2 hover:underline font-medium"
                   href="/login"
                 >
                   Login here
@@ -52,7 +52,7 @@ export default function OtpVerification() {
                       pattern="[0-9]"
                       inputMode="numeric"
                       autoComplete="one-time-code"
-                      className="sm:w-12 sm:h-12 h-9 w-8 text-center border-2 border-[#DADADA] rounded-md shadow-sm"
+                      className="sm:w-12 sm:h-12 h-9 w-8 text-center border-2 border-lightgray rounded-md shadow-sm"
                       value={digit}
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         handleChange(index, e.target.value)
@@ -65,12 +65,12 @@ export default function OtpVerification() {
                   <Button
                     text="Verify"
                     onClick={handleVerifyOtp}
-                    className="bg-[#0069FF] font-inter text-white font-[500] sm:text-[14px] text-[12px] sm:leading-[22px] leading-[16px] py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    className="bg-quaternary font-inter text-white font-[500] sm:text-[14px] text-[12px] sm:leading-[22px] leading-[16px] py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                   />
 
                   <button
-                    className={`inline-block align-baseline text-[#0069FF] ml-4 font-[500] sm:text-[14px] text-[12px] sm:leading-[22px] leading-[16px] ${
-                      isResending ? "cursor-not-allowed text-[#B2B2B2]" : ""
+                    className={`inline-block align-baseline text-quaternary ml-4 font-[500] sm:text-[14px] text-[12px] sm:leading-[22px] leading-[16px] ${
+                      isResending ? "cursor-not-allowed text-darkgray" : ""
                     }`}
                     onClick={resendOtp}
                     disabled={isResending}

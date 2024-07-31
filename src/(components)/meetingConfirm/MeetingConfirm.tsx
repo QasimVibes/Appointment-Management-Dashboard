@@ -7,21 +7,37 @@ import {
   globe,
   topCornerImage,
 } from "../../../public";
+import { MeetingConfirmProps } from "@/types/types";
 
 export default function MeetingConfirm({
   hostName,
   selectedTime,
   timezone,
   date,
-}: {
-  hostName: string | null;
-  selectedTime: string | null;
-  timezone: string | null;
-  date: string | null;
-}) {
+}: MeetingConfirmProps) {
+  const data = [
+    {
+      icon: person,
+      alt: "person",
+      text: "hostName",
+      value: hostName,
+    },
+    {
+      icon: briefcase,
+      alt: "briefcase",
+      text: "selectedTime",
+      value: `${selectedTime}, ${date}`,
+    },
+    {
+      icon: globe,
+      alt: "globe",
+      text: "timezone",
+      value: timezone,
+    },
+  ];
   return (
     <div className="flex flex-col items-center justify-center py-[66px]">
-      <div className="w-[75%] text-center border border-solid border-[#DADADA] shadow p-8 relative ">
+      <div className="w-[75%] text-center border border-solid border-lightgray shadow p-8 relative ">
         <div className="flex flex-col items-center space-y-5">
           <div className="flex flex-col  sm:flex-row items-center">
             <div className="mr-[8px] flex">
@@ -31,11 +47,11 @@ export default function MeetingConfirm({
               You are scheduled
             </h1>
           </div>
-          <div className="font-inter font-[400] text-[12px] leading-[16px] sm:text-[14px] sm:leading-[22px] text-[#1A1A1A] text-center px-4">
+          <div className="font-inter font-[400] text-[12px] leading-[16px] sm:text-[14px] sm:leading-[22px] text-primary text-center px-4">
             <p>A calendar invitation has been sent to your email address</p>
           </div>
           <div className="flex ">
-            <button className="font-inter py-[10px] px-[24px] border border-solid border-[#1A1A1A] rounded-[40px] font-[500] text-[12px] leading-[16px]  sm:text-[14px] sm:leading-[22px] text-[#1A1A1A] flex items-center">
+            <button className="font-inter py-[10px] px-[24px] border border-solid border-primary rounded-[40px] font-[500] text-[12px] leading-[16px]  sm:text-[14px] sm:leading-[22px] text-primary flex items-center">
               Open invitation
               <span className="ml-2">
                 <Image
@@ -48,40 +64,25 @@ export default function MeetingConfirm({
               </span>
             </button>
           </div>
-          <div className="border border-solid border-[#DADADA] w-full max-w-[445px] rounded-[8px] px-[16px] py-[16px] space-y-[14px]">
-            <h2 className="font-inter font-[700] text-[16px] leading-[18px] sm:text-[22px] sm:leading-[22px] text-[#1A1A1A] text-start">
+          <div className="border border-solid border-lightgray w-full max-w-[445px] rounded-[8px] px-[16px] py-[16px] space-y-[14px]">
+            <h2 className="font-inter font-[700] text-[16px] leading-[18px] sm:text-[22px] sm:leading-[22px] text-primary text-start">
               30 Minutes Meeting
             </h2>
-            <div className="flex flex-col sm:flex-row items-center font-inter font-[400] text-[14px] leading-[22px] text-[#1A1A1A9C]">
-              <Image
-                src={person}
-                alt="person"
-                className="mr-[8px]"
-                width={24}
-                height={24}
-              />
-              {hostName}
-            </div>
-            <div className="flex flex-col sm:flex-row items-center font-inter font-[400] text-[14px] leading-[22px] text-[#1A1A1A9C]">
-              <Image
-                src={briefcase}
-                alt="briefcase"
-                className="mr-[8px]"
-                width={24}
-                height={24}
-              />
-              {selectedTime}, {date}
-            </div>
-            <div className="flex flex-col sm:flex-row items-center font-inter font-[400] text-[14px] leading-[22px] text-[#1A1A1A9C]">
-              <Image
-                src={globe}
-                alt="globe"
-                className="mr-[8px]"
-                width={24}
-                height={24}
-              />
-              {timezone}
-            </div>
+            {data.map((item, index) => (
+              <div
+                key={index}
+                className="flex flex-col sm:flex-row items-center font-inter font-[400] text-[14px] leading-[22px] text-secondary"
+              >
+                <Image
+                  src={item.icon}
+                  alt={item.alt}
+                  className="mr-[8px]"
+                  width={24}
+                  height={24}
+                />
+                {item.value}
+              </div>
+            ))}
           </div>
         </div>
         <div>

@@ -1,15 +1,14 @@
-import React from "react";
-
+import { SelectProps } from "@/types/types";
 const SelectBox = ({
   options,
   value,
   onChange,
   className = "",
   ...props
-}: any) => {
+}: SelectProps) => {
   return (
     <select value={value} {...props} className={className}>
-      {options.map((option: any) => (
+      {options.map((option) => (
         <option key={option.value} value={option.value}>
           {option.label}
         </option>

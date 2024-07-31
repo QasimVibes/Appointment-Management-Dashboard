@@ -114,6 +114,10 @@ export async function POST(request: NextRequest) {
 
     const response = await createGoogleMeetEvent(accessToken, eventDetails);
 
+    // console.log("Responsive",response.conferenceData?.createRequest?.status);
+    // console.log("Responsive",response.conferenceData?.createRequest?.conferenceSolutionKey);
+    
+
     if (!response.htmlLink) {
       return NextResponse.json(
         { message: "Something went wrong" },

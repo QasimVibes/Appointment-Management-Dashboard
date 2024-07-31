@@ -1,14 +1,15 @@
-
+import { ButtonProps } from "@/types/types";
 export default function Button({
   text,
   onClick,
   className = "",
+  children,
   ...props
-}: any) {
+}: ButtonProps) {
   return (
     <>
       <button onClick={onClick} className={className} {...props}>
-        {text}
+        {children || text}
       </button>
     </>
   );

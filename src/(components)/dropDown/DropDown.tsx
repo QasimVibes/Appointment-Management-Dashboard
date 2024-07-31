@@ -3,13 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { dropDown } from "../../../public";
 import LogoutBtn from "../logoutBtn/LogoutBtn";
-
-interface DropDownProps {
-  items: { text: string; link: string }[];
-}
+import { DropDownProps } from "@/types/types";
 
 export default function DropDown({ items, ...props }: DropDownProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -29,10 +26,10 @@ export default function DropDown({ items, ...props }: DropDownProps) {
       {isOpen && (
         <div
           id="dropdown"
-          className="absolute right-0 z-10 mt-2 w-44 bg-white border border-[#DADADA] divide-y divide-gray-100 rounded-lg shadow"
+          className="absolute right-0 z-10 mt-2 w-44 bg-white border border-lightgray divide-y divide-gray-100 rounded-lg shadow"
         >
           <ul
-            className="py- text-sm text-[#1A1A1A]"
+            className="py- text-sm text-primary"
             aria-labelledby="dropdownDefaultButton"
           >
             {items.map((item, index) => (

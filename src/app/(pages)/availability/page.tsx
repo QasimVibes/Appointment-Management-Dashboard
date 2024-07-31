@@ -50,7 +50,7 @@ export default function Availability() {
         />
       </div>
       <div className="space-y-4 flex flex-col items-center">
-        <div className="flex flex-col  md:w-[645px] border border-solid border-[#DADADA] rounded-lg w-[90%]">
+        <div className="flex flex-col  md:w-[645px] border border-solid border-lightgray rounded-lg w-[90%]">
           <div className="flex flex-col md:flex-row h-full">
             <div className="py-6 px-6  md:py-8 space-y-4 m:space-y-6 flex-grow">
               <h1 className="font-inter font-bold text-lg md:text-[18.44px] leading-7 md:leading-[28px]">
@@ -71,7 +71,7 @@ export default function Availability() {
               />
             </div>
           </div>
-          <div className="px-6 pt-6 mb:pt-8 pb-6 border-t border-solid border-[#DADADA]">
+          <div className="px-6 pt-6 mb:pt-8 pb-6 border-t border-solid border-lightgray">
             <div className="space-y-5">
               <div className="space-y-2">
                 <div>
@@ -87,7 +87,7 @@ export default function Availability() {
                       value={startHour}
                       onChange={(e) => setStartHour(e.target.value)}
                       required
-                      className="py-3.5 px-4 w-full md:w-[278px] rounded-lg border border-solid border-[#B2B2B2] appearance-none"
+                      className="py-3.5 px-4 w-full md:w-[278px] rounded-lg border border-solid border-darkgray appearance-none"
                     >
                       <option value="">Select a time</option>
                       {startingHours.map((time, index) => (
@@ -112,7 +112,7 @@ export default function Availability() {
                       value={endHour}
                       onChange={(e) => setEndHour(e.target.value)}
                       required
-                      className="py-3.5 px-4 w-full md:w-[278px] rounded-lg border border-solid border-[#B2B2B2] appearance-none"
+                      className="py-3.5 px-4 w-full md:w-[278px] rounded-lg border border-solid border-darkgray appearance-none"
                     >
                       <option value="">Select a time</option>
                       {endingHours?.map((time, index) => (
@@ -138,10 +138,10 @@ export default function Availability() {
                     Available days
                   </h2>
                 </div>
-                <div className="flex flex-wrap md:justify-between w-full border-[1px] border-solid border-[#DADADA] rounded-lg overflow-hidden">
+                <div className="flex flex-wrap md:justify-between w-full border-[1px] border-solid border-lightgray rounded-lg overflow-hidden">
                   {days?.map((day, index) => (
                     <div
-                      className={`flex border-solid border-[#DADADA] flex-col items-center px-5 py-2 w-full md:w-auto ${
+                      className={`flex border-solid border-lightgray flex-col items-center px-5 py-2 w-full md:w-auto ${
                         index !== 0 ? "md:border-l-[1px]" : ""
                       }`}
                       key={index}
@@ -196,7 +196,7 @@ export default function Availability() {
           <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
             <Link
               href="/dashboard"
-              className="px-4 py-2.5 rounded-full border border-solid hover:border-[grey] text-[#1A1A1A] font-inter font-bold text-xs md:text-[12.91px] leading-[22px] text-center"
+              className="px-4 py-2.5 rounded-full border border-solid border-white hover:border-darkgray text-primary font-inter font-bold text-xs md:text-[12.91px] leading-[22px] text-center"
             >
               Set up later
             </Link>
@@ -204,7 +204,7 @@ export default function Availability() {
               text="Continue"
               onClick={handleButtonClick}
               disabled={!startHour || !endHour || !selectedDays.length}
-              className={`px-4 py-2.5 rounded-full border border-solid bg-[#0069ff] border-[#0069ff] text-white font-inter font-bold text-xs md:text-[12.91px] leading-[22px]
+              className={`px-4 py-2.5 rounded-full border border-solid bg-quaternary border-quaternary text-white font-inter font-bold text-xs md:text-[12.91px] leading-[22px]
                ${
                  !(selectedDays.length && startHour && endHour) &&
                  "cursor-not-allowed"

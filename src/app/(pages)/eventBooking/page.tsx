@@ -30,7 +30,7 @@ export default function EventBooking() {
     }
   }, []);
 
-  const handleTimeSlotClick = (time: any) => {
+  const handleTimeSlotClick = (time: string) => {
     setSelectedTime(time);
   };
 
@@ -63,31 +63,31 @@ export default function EventBooking() {
   return (
     <>
       <Navbar />
-      <div className="pt-[46px] flex justify-center bg-[#FBFCFD]">
+      <div className="pt-[46px] flex justify-center bg-lightwhite">
         <div className="flex flex-col items-center h-screen rounded lg:w-auto w-[90%]">
-          <div className="flex flex-wrap h-[90%] w-full relative bg-[#FFFFFF]">
+          <div className="flex flex-wrap h-[90%] w-full relative bg-white">
             <div className="w-full lg:w-[337px]">
-              <div className="px-[26px] py-[34px] h-full border-[0.5px] border-solid border-[#DADADA] space-y-[28px]">
+              <div className="px-[26px] py-[34px] h-full border-[0.5px] border-solid border-lightgray space-y-[28px]">
                 <div className="space-y-[6px]">
-                  <p className="font-normal text-base leading-[22px] text-[#1A1A1A]">
+                  <p className="font-normal text-base leading-[22px] text-primary">
                     {availabilityData?.user?.fullname}
                   </p>
-                  <h1 className="font-bold text-[28px] leading-[28px] text-[#1A1A1A]">
+                  <h1 className="font-bold text-[28px] leading-[28px] text-primary">
                     30 Minute Meeting
                   </h1>
                 </div>
                 <div className="flex items-center space-x-2">
                   <Image src={clock} alt="clock" width={24} height={24} />
-                  <p className="font-normal text-[14px] leading-[22px] text-[#1A1A1A]">
+                  <p className="font-normal text-[14px] leading-[22px] text-primary">
                     30 min
                   </p>
                 </div>
               </div>
             </div>
             <div className="w-full lg:w-[687px]">
-              <div className="px-[19px] py-[30px] h-full border-[0.5px] border-solid border-[#DADADA] grid grid-cols-1 lg:grid-cols-12 w-full">
+              <div className="px-[19px] py-[30px] h-full border-[0.5px] border-solid border-lightgray grid grid-cols-1 lg:grid-cols-12 w-full">
                 <div className="col-span-7 lg:space-y-3 space-y-4">
-                  <h2 className="font-bold text-[18.75px] leading-[38px] text-[#1A1A1A] ml-[13px]">
+                  <h2 className="font-bold text-[18.75px] leading-[38px] text-primary ml-[13px]">
                     Select a Date & Time
                   </h2>
                   <div className="flex items-center justify-center lg:block">
@@ -98,7 +98,7 @@ export default function EventBooking() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <h2 className="font-bold text-[16px] leading-[28px] text-[#1A1A1A]">
+                    <h2 className="font-bold text-[16px] leading-[28px] text-primary">
                       Time zone
                     </h2>
                     <div className="flex items-center space-x-2">
@@ -108,7 +108,7 @@ export default function EventBooking() {
                         id="timezone"
                         value={selectedTimezone}
                         onChange={(e) => setSelectedTimezone(e.target.value)}
-                        className="font-normal text-[14px] leading-[22px] text-[#1A1A1A] w-full lg:w-auto"
+                        className="font-normal text-[14px] leading-[22px] text-primary w-full lg:w-auto"
                       >
                         {locations?.map((location) => (
                           <option key={location} value={location}>
@@ -121,7 +121,7 @@ export default function EventBooking() {
                 </div>
                 <div className="col-span-5 lg:space-y-8 space-y-4 lg:px-[16px]">
                   <div className="pt-[16px] lg:pt-[36px]">
-                    <h2 className="font-normal text-[16px] leading-[24px] text-[#1A1A1A]">
+                    <h2 className="font-normal text-[16px] leading-[24px] text-primary">
                       {value?.toString().slice(0, 16)}
                     </h2>
                   </div>
@@ -131,7 +131,7 @@ export default function EventBooking() {
                         <div key={time}>
                           <Button
                             text={time}
-                            className="lg:w-[90%] w-full pt-2 pb-5 border border-solid border-[#0069FF] rounded-[6px] font-bold text-[14px] leading-[22px] text-[#0069FF]"
+                            className="lg:w-[90%] w-full pt-2 pb-5 border border-solid border-quaternary rounded-[6px] font-bold text-[14px] leading-[22px] text-quaternary"
                             onClick={() => handleTimeSlotClick(time)}
                           />
                         </div>
@@ -149,7 +149,7 @@ export default function EventBooking() {
                               pathname: "/scheduledEvent",
                               query: paramData,
                             }}
-                            className="w-[40%] px-[18.5px] py-[14px] text-center rounded-[6px] font-bold text-[14px] leading-[22px] text-white bg-[#0069FF]"
+                            className="w-[40%] px-[18.5px] py-[14px] text-center rounded-[6px] font-bold text-[14px] leading-[22px] text-white bg-quaternary"
                           >
                             Next
                           </Link>
