@@ -3,6 +3,7 @@ import Navbar from "@/components/navbar/Navbar";
 import MeetingConfirm from "@/components/meetingConfirm/MeetingConfirm";
 import useFetchAppointment from "./useScheduled";
 import Loading from "@/components/loading/Loading";
+import Error from "@/components/error/Error";
 
 const Scheduled = ({ params }: { params: { url: string } }) => {
   const { url } = params;
@@ -11,20 +12,20 @@ const Scheduled = ({ params }: { params: { url: string } }) => {
 
   if (isLoading) return <Loading />;
 
-  if (isError) {
-    return <div>Error</div>;
-  }
+  if (isError) return <Error />;
 
   return (
     <>
-      <Navbar url={url} />
       {appointment && (
-        <MeetingConfirm
-          hostName={appointment.hostName}
-          selectedTime={appointment.selectedTime}
-          timezone={appointment.timezone}
-          date={appointment.selectedDate}
-        />
+        <>
+          <Navbar url={url} />
+          <MeetingConfirm
+            hostName={appointment.hostName}
+            selectedTime={appointment.selectedTime}
+            timezone={appointment.timezone}
+            date={appointment.selectedDate}
+          />
+        </>
       )}
     </>
   );

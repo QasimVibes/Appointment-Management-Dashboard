@@ -1,24 +1,24 @@
-"use client";
+import { ResetPassword as ResetPasswordComponent } from "@/components/resetPassword/ResetPassword";
 import Link from "next/link";
-import Button from "@/components/button/Button";
-import Input from "@/components/input/Input";
-import { useResetPassword } from "./useResetPassword";
-import { logo } from "../../../../public";
-import Image from "next/image";
+import Logo from "@/components/logo/Logo";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Reset Password",
+  description: "Reset Password",
+  keywords: "Reset Password",
+  openGraph: {
+    title: "Reset Password",
+    description: "Reset Password",
+    url: `${process.env.URL}/resetPassword`,
+  },
+};
 
 export default function ResetPassword() {
-  const { inputFields, handleResetPassword } = useResetPassword();
-
   return (
     <div className="w-full max-w-xl mx-auto sm:pt-[66px] pt-[40px] flex flex-col items-center">
       <div className="flex justify-center mb-6">
-        <Image
-          src={logo}
-          alt="logo"
-          width={150}
-          height={35}
-          className="sm:w-[182px] sm:h-[45px]"
-        />
+        <Logo width={150} height={35} className="md:w-[182px] md:h-[45px]" />
       </div>
       <div className="bg-darkzinc rounded-xl shadow-lg border-2 border-lightgray w-[90%] h-auto flex flex-col">
         <div className="p-4 sm:p-7">
@@ -36,34 +36,7 @@ export default function ResetPassword() {
               </Link>
             </p>
           </div>
-
-          <div className="mt-5">
-            <form onSubmit={handleResetPassword}>
-              <div className="space-y-2">
-                {inputFields.map((field) => (
-                  <Input
-                    key={field.id}
-                    type={field.type}
-                    id={field.id}
-                    label={field.label}
-                    value={field.value}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      field.setValue(e.target.value)
-                    }
-                    className="py-3 px-4 block w-full border-2 border-lightgray rounded-md text-sm focus:border-quaternary focus:ring-quaternary shadow-sm font-inter text-primary"
-                    labelClassName="text-sm font-bold"
-                  />
-                ))}
-              </div>
-
-              <div className="mt-5">
-                <Button
-                  text="Reset password"
-                  className="py-3 w-full px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent bg-quaternary text-white hover:bg-quaternary focus:outline-none focus:ring-2 focus:ring-quaternary focus:ring-offset-2 transition-all text-[16px] leading-[22px] font-[500]"
-                />
-              </div>
-            </form>
-          </div>
+          <ResetPasswordComponent />
         </div>
       </div>
     </div>

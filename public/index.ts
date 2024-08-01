@@ -35,6 +35,8 @@ import clockDashboard from "./asset/clockDashboard.svg"
 import plus from "./asset/plus.svg"
 import opner from "./asset/opner.svg"
 import dropDownBtn from "./asset/dropdownBtn.svg"
+import showPassword from "./asset/showPassword.svg"
+import hidePassword from "./asset/hidePassword.svg"
 
 export {
   logo,
@@ -73,5 +75,7 @@ export {
   clockDashboard,
   plus,
   opner,
-  dropDownBtn
+  dropDownBtn,
+  showPassword,
+  hidePassword
 };

@@ -24,6 +24,7 @@ import Image from "next/image";
 import Analytics from "@/components/chart/Chart";
 import SideBar from "@/components/sidebar/SideBar";
 import GenerateICS from "@/components/generateICS/GenerateICS";
+import Loading from "../loading/Loading";
 
 export default function Dashboard() {
   const { userName, events, isLoading, isError } = useFetchEvents();
@@ -39,6 +40,8 @@ export default function Dashboard() {
     tabs,
     menuItems,
   } = useDashboard();
+
+  if (isLoading) return <Loading />;
 
   return (
     <>
@@ -197,11 +200,13 @@ export default function Dashboard() {
                         <div className="flex font-inter font-[400] text-[15px] leading-[24px] text-secondary">
                           {tabs.map((tab) => (
                             <div
-                            key={tab.value}
-                            className={`cursor-pointer px-[8px] ${
-                              tab.value === "Upcoming" ? "md:pr-[16px] md:px-0" : "md:px-[16px]"
-                            }`}
-                          >
+                              key={tab.value}
+                              className={`cursor-pointer px-[8px] ${
+                                tab.value === "Upcoming"
+                                  ? "md:pr-[16px] md:px-0"
+                                  : "md:px-[16px]"
+                              }`}
+                            >
                               <Button
                                 className={`pt-[7px] pb-[17px] ${
                                   activeTab === tab.value

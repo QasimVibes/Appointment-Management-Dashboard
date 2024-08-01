@@ -5,9 +5,9 @@ import {
   person,
   briefcase,
   globe,
-  topCornerImage,
 } from "../../../public";
 import { MeetingConfirmProps } from "@/types/types";
+import TopCornerImage from "../topCornerImage/TopCornerImage";
 
 export default function MeetingConfirm({
   hostName,
@@ -85,15 +85,7 @@ export default function MeetingConfirm({
             ))}
           </div>
         </div>
-        <div>
-          <Image
-            src={topCornerImage}
-            alt="topCornerImage"
-            className="absolute top-0 right-0 w-[80px] h-[80px] sm:w-[105px] sm:h-[105px]"
-            width={105}
-            height={105}
-          />
-        </div>
+        <TopCornerImage />
       </div>
     </div>
   );

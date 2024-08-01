@@ -158,7 +158,7 @@ export type InputProps = {
     | "decimal";
   autoComplete?: string;
   required?: boolean;
-  checked?:boolean
+  checked?: boolean;
 };
 
 export type MeetingConfirmProps = {
@@ -182,6 +182,9 @@ export interface SelectProps {
   value: string;
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   className?: string;
+  optionText?: string;
+  name?: string;
+  id?: string;
 }
 
 export type ScheduledEventDetails = {
@@ -191,7 +194,6 @@ export type ScheduledEventDetails = {
 };
 
 export type ScheduledEventHostData = {
-  email: string | null;
   host: string | null;
   hostEmail: string | null;
   startingTime: string | null;
@@ -216,4 +218,52 @@ export type AvailabilityProps = {
   days: string[];
   startingHours: string[];
   endingHours: string[];
+};
+
+export type LocationsOption = {
+  value: string;
+  label: string;
+};
+
+export type ValuePiece = Date | null;
+
+export type Value = ValuePiece | [ValuePiece, ValuePiece];
+
+export type locationsProps = {
+  locations: string[];
+};
+
+export type AvailabilityDataParam = {
+  user: {
+    fullname: string;
+    email: string;
+  };
+  days: string[];
+  time: string;
+};
+
+export type ScheduledEventProps = {
+  inputDetails: { id: string; label: string; type: string }[];
+};
+
+export type LabelProps = {
+  htmlFor: string;
+  label: string;
+  className?: string;
+  [key: string]: any;
+};
+
+export type TextAreaProps = {
+  name: string;
+  id: string;
+  value?: string;
+  onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  rows?: number;
+  className?: string;
+};
+
+export type LogoProps = {
+  width: number;
+  height: number;
+  className?: string;
 };

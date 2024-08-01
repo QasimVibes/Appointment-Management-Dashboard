@@ -5,15 +5,17 @@ import {
   useSubmitAvailability,
   useFetchAvailability,
   useSelectOptions,
-} from "./useSetAvailability";
+} from "./useAvailability";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "../button/Button";
 import { AvailabilityProps } from "@/types/types";
 import SelectBox from "../select/Select";
 import Input from "../input/Input";
+import Loading from "../loading/Loading";
+import Label from "../label/Label";
 
-export default function SetAvailability({
+export function Availability({
   days,
   startingHours,
   endingHours,
@@ -45,6 +47,8 @@ export default function SetAvailability({
     setEndHour,
     setSelectedDays
   );
+
+  if (isLoading) return <Loading />;
   return (
     <>
       <div className="space-y-4 flex flex-col items-center">
@@ -80,10 +84,13 @@ export default function SetAvailability({
                 <div className="relative flex flex-col md:flex-row gap-y-4 md:gap-x-8 items-center">
                   <div className="relative w-full md:w-auto">
                     <SelectBox
+                      name="startingHours"
+                      id="startingHours"
                       options={startingHoursOptions}
                       value={startHour}
                       onChange={handleStartHourChange}
                       className="py-3.5 px-4 w-full md:w-[278px] rounded-lg border border-solid border-darkgray appearance-none"
+                      optionText="Select a time"
                     />
                     <div className="absolute inset-y-0 right-[21px] flex items-center pointer-events-none">
                       <Image
@@ -96,10 +103,13 @@ export default function SetAvailability({
                   </div>
                   <div className="relative w-full md:w-auto">
                     <SelectBox
+                      name="endingHours"
+                      id="endingHours"
                       options={endingHoursOptions}
                       value={endHour}
                       onChange={handleEndHourChange}
                       className="py-3.5 px-4 w-full md:w-[278px] rounded-lg border border-solid border-darkgray appearance-none"
+                      optionText="Select a time"
                     />
                     <div className="absolute inset-y-0 right-[21px] flex items-center pointer-events-none">
                       <Image
@@ -144,12 +154,11 @@ export default function SetAvailability({
                         className="w-full"
                         labelClassName="hidden"
                       />
-                      <label
+                      <Label
+                        label={day}
                         htmlFor={day}
                         className="font-inter font-normal text-xs md:text-[11.06px] leading-[18px] w-full text-center"
-                      >
-                        {day}
-                      </label>
+                      />
                     </div>
                   ))}
                 </div>

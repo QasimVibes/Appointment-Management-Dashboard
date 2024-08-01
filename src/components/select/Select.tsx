@@ -1,15 +1,25 @@
 import { SelectProps } from "@/types/types";
 
 const SelectBox = ({
-  options,
+  name,
+  id,
   value,
+  options,
   onChange,
   className = "",
+  optionText = "Select a time",
   ...props
 }: SelectProps) => {
   return (
-    <select value={value} onChange={onChange} className={className} {...props}>
-      <option value="">Select a time</option>
+    <select
+      name={name}
+      id={id}
+      value={value}
+      onChange={onChange}
+      className={className}
+      {...props}
+    >
+      <option value="">{optionText}</option>
       {options.map((option) => (
         <option key={option.value} value={option.value}>
           {option.label}
