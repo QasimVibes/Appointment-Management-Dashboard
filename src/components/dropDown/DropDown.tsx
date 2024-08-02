@@ -20,7 +20,7 @@ export default function DropDown({ items, ...props }: DropDownProps) {
         className=""
         type="button"
       >
-        <Image src={dropDown} alt="dropDown" width={16} height={16}/>
+        <Image src={dropDown} alt="dropDown" width={16} height={16} />
       </button>
 
       {isOpen && (
@@ -29,18 +29,18 @@ export default function DropDown({ items, ...props }: DropDownProps) {
           className="absolute right-0 z-10 mt-2 w-44 bg-white border border-lightgray divide-y divide-gray-100 rounded-lg shadow"
         >
           <ul
-            className="py- text-sm text-primary"
+            className="text-sm text-primary"
             aria-labelledby="dropdownDefaultButton"
           >
             {items.map((item, index) => (
               <li key={index}>
-                <Link href={item.link} className="block px-4 py-2" {...props}>
+                <Link href={item.link} className="block px-4 py-2 hover:bg-lightgray" {...props}>
                   {item.text}
                 </Link>
               </li>
             ))}
             <li>
-              <LogoutBtn className="block px-4 py-2"/>
+              <LogoutBtn className="block px-4 py-2 w-full text-left hover:bg-lightgray" />
             </li>
           </ul>
         </div>

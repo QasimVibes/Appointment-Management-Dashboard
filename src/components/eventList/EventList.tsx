@@ -1,8 +1,10 @@
 import Image from "next/image";
 import { circle, details } from "../../../public";
 import { Event, EventListProps } from "@/types/types";
+import Link from "next/link";
 
 const EventList = ({ events, title }: EventListProps): JSX.Element => {
+  const baseUrl = window.location.origin; 
   return (
     <>
       {events.length > 0 ? (
@@ -30,12 +32,15 @@ const EventList = ({ events, title }: EventListProps): JSX.Element => {
               <div>
                 <p className="text-[14.5px]">1 host | 0 non-hosts</p>
               </div>
-              <div className="flex flex-row items-center space-x-[6px]">
+              <Link
+                href={`${baseUrl}/scheduled/${event.url}`}
+                className="flex flex-row items-center space-x-[6px]"
+              >
                 <Image src={details} alt="details" width={10} height={14} />
                 <p className="text-[14.88px] leading-[22.4px] text-gray-600">
                   Details
                 </p>
-              </div>
+              </Link>
             </div>
           </div>
         ))

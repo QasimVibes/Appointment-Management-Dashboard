@@ -15,6 +15,7 @@ model User {
   password        String
   availability    Availability @relation(fields: [id], references: [userId])
   meeting         Meeting[]
+  stats           AppointmentStats[]
   otp             String?
   otpExpires      DateTime?
   welcomeMessage  String?
@@ -49,8 +50,22 @@ model Meeting {
   hostName        String
   timezone        String
   url             String   @unique
+  meetingLink     String
   userId          String   @unique @map("_userId") @db.ObjectId
   user            User @relation(fields: [userId], references: [id])
   createdAt       DateTime @default(now())
   updateAt        DateTime @updatedAt
+}
+
+model AppointmentStats {
+  id                  String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId              String   @unique @map("_userId") @db.ObjectId
+  user                User @relation(fields: [userId], references: [id])
+  date                DateTime @default(now())
+  visits              Int  @default(0)
+  scheduledCount      Int  @default(0)
+  url                 String[] @default([])
+  peakHours           Int[] @default([])
+  createdAt           DateTime @default(now())
+  updateAt            DateTime @updatedAt
 }

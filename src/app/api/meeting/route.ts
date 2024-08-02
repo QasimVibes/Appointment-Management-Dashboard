@@ -15,6 +15,15 @@ async function getSessionToken(req: NextRequest) {
   return token;
 }
 
+const getWeekStartDate = (isoDate: string): Date => {
+  const weekStartDate = new Date(isoDate);
+  const day = weekStartDate.getUTCDay();
+  const diff = weekStartDate.getUTCDate() - day + (day === 0 ? -6 : 1);
+  weekStartDate.setUTCDate(diff);
+  weekStartDate.setUTCHours(0, 0, 0, 0);
+  return weekStartDate;
+};
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -29,7 +38,7 @@ export async function POST(request: NextRequest) {
       timezone,
       userId,
     } = body;
-    
+
     const session = await getSessionToken(request);
     if (!session || !session.accessToken) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
@@ -66,6 +75,40 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const { start, end } = parseSelectedDateTime(selectedDate, selectedTime);
+
+    const eventDetails = {
+      summary: "Google Meet",
+      description: `${schedulerName}'s Meeting`,
+      start: {
+        dateTime: start,
+        timeZone: "Asia/Karachi",
+      },
+      end: {
+        dateTime: end,
+        timeZone: "Asia/Karachi",
+      },
+      conferenceRequestId: nanoid(),
+      attendees: [{ email: `${schedulerEmail}` }],
+      reminders: {
+        useDefault: true,
+      },
+    };
+
+    const response = await createGoogleMeetEvent(accessToken, eventDetails);
+
+    if (
+      !response.htmlLink ||
+      !response.start?.dateTime ||
+      !(response.attendees?.length ?? 0) ||
+      !response.hangoutLink
+    ) {
+      return NextResponse.json(
+        { message: "Something went wrong" },
+        { status: 500 }
+      );
+    }
+
     const url = nanoid();
 
     const newMeeting = await prisma.meeting.create({
@@ -79,6 +122,7 @@ export async function POST(request: NextRequest) {
         timezone,
         url,
         userId,
+        meetingLink: response.hangoutLink,
       },
     });
 
@@ -89,46 +133,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { start, end } = parseSelectedDateTime(
-      newMeeting.selectedDate,
-      newMeeting.selectedTime
-    );
-
-    const eventDetails = {
-      summary: "Google Meet",
-      description: `${newMeeting.schedulerName}'s Meeting`,
-      start: {
-        dateTime: start,
-        timeZone: "Asia/Karachi",
-      },
-      end: {
-        dateTime: end,
-        timeZone: "Asia/Karachi",
-      },
-      conferenceRequestId: nanoid(),
-      attendees: [{ email: `${newMeeting.schedulerEmail}` }],
-      reminders: {
-        useDefault: true,
-      },
-    };
-
-    const response = await createGoogleMeetEvent(accessToken, eventDetails);
-
-    // console.log("Responsive",response.conferenceData?.createRequest?.status);
-    // console.log("Responsive",response.conferenceData?.createRequest?.conferenceSolutionKey);
-    
-
-    if (!response.htmlLink) {
-      return NextResponse.json(
-        { message: "Something went wrong" },
-        { status: 500 }
-      );
-    }
-
     const { htmlLink } = response;
-
     // add Google Calendar event
-
     const htmlHost = generateEmailConfirmationHost(
       newMeeting.hostName,
       newMeeting.schedulerEmail,
@@ -158,6 +164,45 @@ export async function POST(request: NextRequest) {
       html: htmlParticipant,
     });
 
+    const weekStartDate = getWeekStartDate(response.start.dateTime);
+    const visits = response.attendees ? response.attendees.length : 0;
+
+    const existingAppointmentStatus = await prisma.appointmentStats.findFirst({
+      where: {
+        userId: newMeeting.userId,
+        date: weekStartDate,
+      },
+    });
+
+    if (existingAppointmentStatus) {
+      const urlArray = [...existingAppointmentStatus.url, url];
+      await prisma.appointmentStats.update({
+        where: {
+          userId: newMeeting.userId,
+          date: weekStartDate,
+        },
+        data: {
+          visits: visits,
+          scheduledCount: { increment: 1 },
+          url: {
+            set: urlArray,
+          },
+        },
+      });
+    }
+
+    if (!existingAppointmentStatus) {
+      await prisma.appointmentStats.create({
+        data: {
+          userId: newMeeting.userId,
+          date: weekStartDate,
+          visits: visits,
+          scheduledCount: 1,
+          url: [url],
+        },
+      });
+    }
+
     return NextResponse.json(
       { message: "Meeting Scheduled successfully", meeting: newMeeting },
       { status: 200 }
@@ -180,11 +225,8 @@ export async function GET(request: NextRequest) {
       const meetings = await prisma.meeting.findMany({
         where: { userId },
       });
-      
-      return NextResponse.json(
-        {  meetings },
-        { status: 200 }
-      );
+
+      return NextResponse.json({ meetings }, { status: 200 });
     } else if (url) {
       const meeting = await prisma.meeting.findUnique({
         where: { url },
@@ -197,10 +239,7 @@ export async function GET(request: NextRequest) {
         );
       }
 
-      return NextResponse.json(
-        { meeting },
-        { status: 200 }
-      );
+      return NextResponse.json({ meeting }, { status: 200 });
     } else {
       return NextResponse.json(
         { message: "Please provide either userId or url in query parameters" },

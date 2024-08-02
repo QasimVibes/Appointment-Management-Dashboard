@@ -21,6 +21,24 @@ export type AvailabilityState = {
   availabilityData: availabilityData | null;
 };
 
+export type AnalyticsData = {
+  date: Date;
+  visits: number;
+  scheduledCount: number;
+  peakHours?: number[];
+};
+
+export type AnalyticsState = {
+  isLoading: boolean;
+  isError: boolean;
+  analyticsData: AnalyticsData | null;
+};
+
+export type PeakHoursAnalyticsData = {
+  userId: string;
+  url: string;
+  durationInMinutes: number;
+};
 export type SignupState = {
   error: null | string;
   signupStatus: "idle" | "loading" | "failed" | "succeeded";
@@ -129,6 +147,7 @@ export type Event = {
   selectedDate: string;
   selectedTime: string;
   schedulerName: string;
+  url: string;
 };
 
 export type EventListProps = {
@@ -159,13 +178,6 @@ export type InputProps = {
   autoComplete?: string;
   required?: boolean;
   checked?: boolean;
-};
-
-export type MeetingConfirmProps = {
-  hostName: string | null;
-  selectedTime: string | null;
-  timezone: string | null;
-  date: string | null;
 };
 
 export type NavbarProps = {
@@ -203,10 +215,13 @@ export type ScheduledEventHostData = {
 };
 
 export type ScheduledAppointmentData = {
-  hostName: string;
-  selectedTime: string;
-  timezone: string;
-  selectedDate: string;
+  hostName: string | null;
+  selectedTime: string | null;
+  timezone: string | null;
+  selectedDate: string | null;
+  meetingLink: string | null;
+  url: string | null;
+  userId: string | null;
 };
 
 export type SideBarProps = {
@@ -266,4 +281,9 @@ export type LogoProps = {
   width: number;
   height: number;
   className?: string;
+};
+
+
+export type UseWeeklyChartsProps = {
+  analyticsData: AnalyticsData[] | null;
 };

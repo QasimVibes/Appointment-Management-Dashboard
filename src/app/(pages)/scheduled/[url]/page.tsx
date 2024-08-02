@@ -23,7 +23,10 @@ const Scheduled = ({ params }: { params: { url: string } }) => {
             hostName={appointment.hostName}
             selectedTime={appointment.selectedTime}
             timezone={appointment.timezone}
-            date={appointment.selectedDate}
+            selectedDate={appointment.selectedDate}
+            meetingLink={appointment.meetingLink}
+            url={url}
+            userId={appointment.userId}
           />
         </>
       )}

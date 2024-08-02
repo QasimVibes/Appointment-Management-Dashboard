@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 export default function Profile() {
   return (
     <>
-      <div className="relative h-[100vh] flex">
+      <div className="relative h-[100vh] flex justify-center">
         <ProfileComponent />
       </div>
     </>

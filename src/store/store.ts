@@ -8,6 +8,7 @@ import forgotPasswordSlice from "./slice/forgotPasswordSlice";
 import verifyOtpSlice from "./slice/verifyOtpSlice";
 import resetPasswordSlice from "./slice/resetPasswordSlice";
 import icsSlice from "./slice/generateIcsFileSlice";
+import analyticsSlice from "./slice/analyticsSlice";
 
 const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ const store = configureStore({
     verifyOtp: verifyOtpSlice,
     resetPassword: resetPasswordSlice,
     ics: icsSlice,
+    analytics: analyticsSlice,
   },
 });
 

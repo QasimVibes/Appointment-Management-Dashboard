@@ -6,15 +6,19 @@ import {
   briefcase,
   globe,
 } from "../../../public";
-import { MeetingConfirmProps } from "@/types/types";
+import { ScheduledAppointmentData } from "@/types/types";
 import TopCornerImage from "../topCornerImage/TopCornerImage";
+import { useInvitationHandler } from "./useMeetingConfirm";
 
 export default function MeetingConfirm({
   hostName,
   selectedTime,
   timezone,
-  date,
-}: MeetingConfirmProps) {
+  selectedDate,
+  meetingLink,
+  url,
+  userId,
+}: ScheduledAppointmentData) {
   const data = [
     {
       icon: person,
@@ -26,7 +30,7 @@ export default function MeetingConfirm({
       icon: briefcase,
       alt: "briefcase",
       text: "selectedTime",
-      value: `${selectedTime}, ${date}`,
+      value: `${selectedTime}, ${selectedDate}`,
     },
     {
       icon: globe,
@@ -35,6 +39,9 @@ export default function MeetingConfirm({
       value: timezone,
     },
   ];
+
+  const { invitationHandler } = useInvitationHandler(meetingLink, userId, url);
+
   return (
     <div className="flex flex-col items-center justify-center py-[66px]">
       <div className="w-[75%] text-center border border-solid border-lightgray shadow p-8 relative ">
@@ -51,7 +58,10 @@ export default function MeetingConfirm({
             <p>A calendar invitation has been sent to your email address</p>
           </div>
           <div className="flex ">
-            <button className="font-inter py-[10px] px-[24px] border border-solid border-primary rounded-[40px] font-[500] text-[12px] leading-[16px]  sm:text-[14px] sm:leading-[22px] text-primary flex items-center">
+            <button
+              onClick={invitationHandler}
+              className="font-inter py-[10px] px-[24px] border border-solid border-primary rounded-[40px] font-[500] text-[12px] leading-[16px]  sm:text-[14px] sm:leading-[22px] text-primary flex items-center"
+            >
               Open invitation
               <span className="ml-2">
                 <Image
