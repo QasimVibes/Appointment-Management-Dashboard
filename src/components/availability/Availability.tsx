@@ -1,5 +1,10 @@
 "use client";
-import { availability, progressbar, dropDownBtn } from "../../../public";
+import {
+  availability,
+  progressbar,
+  dropDownBtn,
+  anocement,
+} from "../../../public";
 import {
   useSelectAvailability,
   useSubmitAvailability,
@@ -9,17 +14,16 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 import Button from "../button/Button";
-import { AvailabilityProps } from "@/types/types";
 import SelectBox from "../select/Select";
 import Input from "../input/Input";
 import Loading from "../loading/Loading";
 import Label from "../label/Label";
+import { Availability as AvailabilityConstant } from "@/constants/Availability";
+import Error from "../error/Error";
 
-export function Availability({
-  days,
-  startingHours,
-  endingHours,
-}: AvailabilityProps) {
+export function Availability() {
+  const { days, startingHours, endingHours } = AvailabilityConstant();
+
   const {
     selectedDays,
     setSelectedDays,
@@ -49,16 +53,17 @@ export function Availability({
   );
 
   if (isLoading) return <Loading />;
+  if (isError) return <Error />;
   return (
     <>
       <div className="space-y-4 flex flex-col items-center">
         <div className="flex flex-col  md:w-[645px] border border-solid border-lightgray rounded-lg w-[90%]">
           <div className="flex flex-col md:flex-row h-full">
-            <div className="py-6 px-6  md:py-8 space-y-4 m:space-y-6 flex-grow">
+            <div className="py-6 px-6  md:py-8 space-y-4 m:space-y-6 flex-grow w-auto md:max-w-[457.33px]">
               <h1 className="font-inter font-bold text-lg md:text-[18.44px] leading-7 md:leading-[28px]">
                 Set your availability
               </h1>
-              <p className="font-inter font-normal text-sm md:text-[14.88px] leading-6 md:leading-[22.4px]">
+              <p className="md:w-[365px] w-auto font-inter font-normal text-sm md:text-[14.88px] leading-6 md:leading-[22.4px]">
                 Let Calendly know when you&apos;re typically available to accept
                 meetings.
               </p>
@@ -73,7 +78,7 @@ export function Availability({
               />
             </div>
           </div>
-          <div className="px-6 pt-6 mb:pt-8 pb-6 border-t border-solid border-lightgray">
+          <div className="px-6 pt-6 md:pt-8 pb-6 border-t border-solid border-lightgray">
             <div className="space-y-5">
               <div className="space-y-2">
                 <div>
@@ -87,7 +92,7 @@ export function Availability({
                       name="startingHours"
                       id="startingHours"
                       options={startingHoursOptions}
-                      value={startHour}
+                      value={startHour || ""}
                       onChange={handleStartHourChange}
                       className="py-3.5 px-4 w-full md:w-[278px] rounded-lg border border-solid border-darkgray appearance-none"
                       optionText="Select a time"
@@ -106,7 +111,7 @@ export function Availability({
                       name="endingHours"
                       id="endingHours"
                       options={endingHoursOptions}
-                      value={endHour}
+                      value={endHour || ""}
                       onChange={handleEndHourChange}
                       className="py-3.5 px-4 w-full md:w-[278px] rounded-lg border border-solid border-darkgray appearance-none"
                       optionText="Select a time"
@@ -141,14 +146,14 @@ export function Availability({
                         id={day}
                         value={day}
                         required
-                        checked={selectedDays.includes(day)}
+                        checked={selectedDays?.includes(day) ?? false}
                         onChange={() => {
-                          if (selectedDays.includes(day)) {
+                          if (selectedDays?.includes(day)) {
                             setSelectedDays(
                               selectedDays.filter((d) => d !== day)
                             );
                           } else {
-                            setSelectedDays([...selectedDays, day]);
+                            setSelectedDays([...(selectedDays ?? []), day]);
                           }
                         }}
                         className="w-full"
@@ -163,9 +168,15 @@ export function Availability({
                   ))}
                 </div>
               </div>
-              <div className="md:pt-9">
-                <div className="text-center">
-                  <p>
+              <div className="md:pt-9 pt-4 flex justify-center">
+                <div className="flex flex-col items-center text-center md:flex-row md:gap-2 md:items-center md:justify-center">
+                  <Image
+                    src={anocement}
+                    alt="anocement"
+                    width={16}
+                    height={16}
+                  />
+                  <p className="mt-2 md:mt-0 font-inter font-[400] text-[14.75px] leading-[24px]">
                     Don&apos;t worry! You&apos;ll be able to further customize
                     your availability later on.
                   </p>
@@ -185,20 +196,18 @@ export function Availability({
           <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
             <Link
               href="/"
-              className="px-4 py-2.5 rounded-full border border-solid border-white hover:border-darkgray text-primary font-inter font-bold text-xs md:text-[12.91px] leading-[22px] text-center"
+              className="px-4 py-2.5 rounded-full border border-solid border-white hover:border-darkgray text-primary font-inter font-[400] text-xs md:text-[12.91px] leading-[20px] text-center"
             >
               Set up later
             </Link>
             <Button
               text="Continue"
               onClick={handleButtonClick}
-              disabled={!startHour || !endHour || !selectedDays.length}
-              className={`px-4 py-2.5 rounded-full border border-solid bg-quaternary border-quaternary text-white font-inter font-bold text-xs md:text-[12.91px] leading-[22px]
-               ${
-                 !(selectedDays.length && startHour && endHour) &&
-                 "cursor-not-allowed"
-               }
-              `}
+              disabled={!startHour || !endHour || !selectedDays?.length}
+              className={`px-4 py-2.5 rounded-full border border-solid bg-quaternary border-quaternary text-white font-inter font-bold text-xs md:text-[12.91px] leading-[22px] ${
+                !(selectedDays?.length && startHour && endHour) &&
+                "cursor-not-allowed"
+              }`}
             />
           </div>
         </div>

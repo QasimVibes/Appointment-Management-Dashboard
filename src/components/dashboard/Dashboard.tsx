@@ -25,6 +25,8 @@ import Analytics from "@/components/chart/Chart";
 import SideBar from "@/components/sidebar/SideBar";
 import GenerateICS from "@/components/generateICS/GenerateICS";
 import Loading from "../loading/Loading";
+import { tabs } from "@/constants/EventTabs";
+import Error from "../error/Error";
 
 export default function Dashboard() {
   const { userName, events, isLoading, isError } = useFetchEvents();
@@ -37,17 +39,17 @@ export default function Dashboard() {
     setDashboardActiveTab,
     isSidebarOpen,
     setIsSidebarOpen,
-    tabs,
     menuItems,
   } = useDashboard();
 
   if (isLoading) return <Loading />;
+  if (isError) return <Error />;
 
   return (
     <>
       {/* Sidebar */}
       <SideBar isSidebarOpen={isSidebarOpen}>
-        <div className="space-y-[4px]">
+        <div className="space-y-[4px] bg-white">
           <div className="flex items-center justify-between p-[20px]">
             <Image src={logo} alt="logo" width={132} height={32} />
             <button
@@ -73,16 +75,20 @@ export default function Dashboard() {
             </Link>
           </div>
         </div>
-        <div className="flex flex-col justify-between flex-grow font-inter font-[700] text-[14.75px] leading-[24px]">
-          <div className="self-start py-[4px] px-[8px] space-y-[4px]">
-            <div className="flex items-center py-[10px] px-[16px]">
+        <div className="pb-[16px] flex flex-col justify-between flex-grow font-inter font-[700] text-[14.75px] leading-[24px]">
+          <div className="self-start py-[4px] px-[8px] space-y-[4px] w-full">
+            <div
+              className={`flex items-center py-[10px] px-[16px] w-full rounded-[8px] cursor-pointer hover:text-quaternary ${
+                dashboardActiveTab === "ScheduledEvents" ? "bg-bluewhite" : ""
+              }`}
+              onClick={() => setDashboardActiveTab("ScheduledEvents")}
+            >
               <div
-                className={`flex items-center cursor-pointer ${
+                className={`flex items-center   ${
                   dashboardActiveTab === "ScheduledEvents"
                     ? "text-quaternary"
                     : ""
                 }`}
-                onClick={() => setDashboardActiveTab("ScheduledEvents")}
               >
                 <Image
                   src={scheduledEvent}
@@ -94,12 +100,16 @@ export default function Dashboard() {
                 <p>Scheduled events</p>
               </div>
             </div>
-            <div className="flex items-center py-[10px] px-[16px]">
+            <div
+              className={`flex items-center py-[10px] px-[16px] cursor-pointer hover:text-quaternary ${
+                dashboardActiveTab === "Analytics" ? "bg-bluewhite" : ""
+              }`}
+              onClick={() => setDashboardActiveTab("Analytics")}
+            >
               <div
-                className={`flex items-center cursor-pointer ${
+                className={`flex items-center   ${
                   dashboardActiveTab === "Analytics" ? "text-quaternary" : ""
                 }`}
-                onClick={() => setDashboardActiveTab("Analytics")}
               >
                 <Image
                   src={analytics}
@@ -112,20 +122,21 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-          <div className="self-start py-[4px] px-[8px] space-y-[4px]">
-            <div className="flex items-center py-[10px] px-[16px]">
-              <Image
-                src={clockDashboard}
-                alt="clock"
-                className="mr-[20px]"
-                height={16}
-                width={16}
-              />
-              <Link href="/availability" className="hover:text-quaternary">
-                Availability
-              </Link>
-            </div>
-            <div className="flex items-center py-[10px] px-[16px]">
+          <div className="self-start py-[4px] px-[8px] space-y-[4px] w-full">
+            <Link href="/availability">
+              <div className="flex items-center py-[10px] px-[16px] w-full cursor-pointer hover:text-quaternary">
+                <Image
+                  src={clockDashboard}
+                  alt="clock"
+                  className="mr-[20px]"
+                  height={16}
+                  width={16}
+                />
+
+                <p>Availability</p>
+              </div>
+            </Link>
+            <div className="flex items-center py-[10px] px-[16px] w-full hover:text-quaternary cursor-pointer">
               <Image
                 src={adminCenter}
                 alt="adminCenter"
@@ -133,14 +144,14 @@ export default function Dashboard() {
                 height={16}
                 width={16}
               />
-              <p className="hover:text-quaternary">Admin center</p>
+              <p>Admin center</p>
             </div>
           </div>
         </div>
       </SideBar>
 
       {/* Right side / Main Content */}
-      <div className="flex-1 h-full overflow-auto">
+      <div className="flex-1 h-full overflow-auto bg-lightwhitered">
         <div className="py-[15.75px]">
           <div className="flex flex-row justify-between lg:justify-end items-center py-[4px]">
             <div className="flex lg:hidden items-center pl-[25px]">
@@ -165,7 +176,7 @@ export default function Dashboard() {
             </div>
           </div>
           {dashboardActiveTab === "ScheduledEvents" && (
-            <div className="px-[32px]">
+            <div className="lg:px-[32px] px-[16px] ">
               <div className="space-y-[32px]">
                 <div className="py-[16px]">
                   <h1 className="font-inter font-[700] text-[22px] leading-[24px] md:text-[25.75px] md:leading-[39.2px] text-primary">
@@ -194,15 +205,15 @@ export default function Dashboard() {
                     </div>
                   </div>
 
-                  <div className="border border-solid border-tertiary rounded-[6px]">
+                  <div className="border border-solid border-tertiary rounded-[6px] bg-white">
                     <div className="flex flex-row justify-between border-b-[1px] border-solid border-tertiary">
                       <div className="pt-[16px] px-[12px] md:px-[24px]">
                         <div className="flex font-inter font-[400] text-[15px] leading-[24px] text-secondary">
-                          {tabs.map((tab) => (
+                          {tabs?.map((tab) => (
                             <div
-                              key={tab.value}
+                              key={tab?.value}
                               className={`cursor-pointer px-[8px] ${
-                                tab.value === "Upcoming"
+                                tab?.value === "Upcoming"
                                   ? "md:pr-[16px] md:px-0"
                                   : "md:px-[16px]"
                               }`}
@@ -213,13 +224,13 @@ export default function Dashboard() {
                                     ? "text-primary border-b-[2px] border-solid border-quaternary"
                                     : ""
                                 }`}
-                                onClick={() => setActiveTab(tab.value)}
+                                onClick={() => setActiveTab(tab?.value)}
                               >
                                 <span className="block sm:hidden truncate w-[5ch] overflow-hidden whitespace-nowrap text-ellipsis">
-                                  {tab.label}
+                                  {tab?.label}
                                 </span>
                                 <span className="hidden sm:inline">
-                                  {tab.label}
+                                  {tab?.label}
                                 </span>
                               </Button>
                             </div>

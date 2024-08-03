@@ -4,8 +4,9 @@ import { google } from "../../../public";
 import Input from "@/components/input/Input";
 import Link from "next/link";
 import Button from "@/components/button/Button";
-import { useLogin, inputFields } from "./useLogin";
+import { useLogin } from "./useLogin";
 import Image from "next/image";
+import { inputFields } from "@/constants/InputDetails";
 
 export function Login() {
   const { onChangeHandler, handleEmailSignIn, handleGoogleSignIn, data } =
@@ -16,12 +17,12 @@ export function Login() {
         <div>
           {inputFields?.map((input) => (
             <Input
-              key={input.name}
-              label={input.label}
-              type={input.type}
-              placeholder={input.placeholder}
-              id={input.name}
-              value={data[input.name as keyof typeof data]}
+              key={input?.name}
+              label={input?.label}
+              type={input?.type}
+              placeholder={input?.placeholder}
+              id={input?.name}
+              value={data[input?.name as keyof typeof data]}
               onChange={onChangeHandler}
               className="mb-[12px] w-full h-[46px] rounded-[8px] border border-solid border-darkgray px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] text-primary"
               labelClassName="text-[14.75px] font-bold font-inter leading-[22px] text-primary mb-[8px]"

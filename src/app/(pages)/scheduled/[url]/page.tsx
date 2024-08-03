@@ -20,13 +20,13 @@ const Scheduled = ({ params }: { params: { url: string } }) => {
         <>
           <Navbar url={url} />
           <MeetingConfirm
-            hostName={appointment.hostName}
-            selectedTime={appointment.selectedTime}
-            timezone={appointment.timezone}
-            selectedDate={appointment.selectedDate}
-            meetingLink={appointment.meetingLink}
+            hostName={appointment?.hostName}
+            selectedTime={appointment?.selectedTime}
+            timezone={appointment?.timezone}
+            selectedDate={appointment?.selectedDate}
+            meetingLink={appointment?.meetingLink}
             url={url}
-            userId={appointment.userId}
+            userId={appointment?.userId}
           />
         </>
       )}

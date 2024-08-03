@@ -8,22 +8,24 @@ import {
 } from "./useScheduledEvent";
 import Image from "next/image";
 import Link from "next/link";
-import { ScheduledEventProps } from "@/types/types";
+import { inputDetails } from "@/constants/InputDetails";
 import TextArea from "../textArea/TextArea";
 import Label from "../label/Label";
+import { InputDetail } from "@/types/types";
 
-export function ScheduledEvent({ inputDetails }: ScheduledEventProps) {
+export function ScheduledEvent() {
   const { details, setDetails, hostData } = useScheduledEvent();
   const { handleButtonClick } = useSubmitScheduledEvent(details, hostData);
+
   return (
     <>
       <div className="grid grid-cols-1 lg:grid-cols-3 w-full h-full">
-        <div className="col-span-1">
+        <div className="col-span-1 relative">
           <div className="px-[24px] py-[24px] h-full border-[0.5px] border-solid border-lightgray space-y-[16px] lg:space-y-[28px]">
             <div>
               <Link
                 href="/eventBooking"
-                className="w-10 h-10 flex items-center justify-center rounded-full bg-lightzinc"
+                className="w-10 h-10 flex items-center justify-center rounded-full border border-solid border-lightgray"
               >
                 <Image src={arrowLeft} alt="arrowLeft" width={24} height={24} />
               </Link>
@@ -57,6 +59,14 @@ export function ScheduledEvent({ inputDetails }: ScheduledEventProps) {
                 </p>
               </div>
             </div>
+            <div className="hidden lg:flex justify-between absolute bottom-7 left-7 right-7">
+              <div className="font-[400] text-[14px] leading-[22px] text-quaternary">
+                Cookie Setting
+              </div>
+              <div className="font-[400] text-[14px] leading-[22px] text-primary">
+                Report abuse
+              </div>
+            </div>
           </div>
         </div>
         <div className="col-span-1 lg:col-span-2">
@@ -67,13 +77,14 @@ export function ScheduledEvent({ inputDetails }: ScheduledEventProps) {
               </h2>
             </div>
             <div className="w-full max-w-full lg:max-w-[374px] h-full space-y-3">
-              {inputDetails?.map((input: any) => (
+              {inputDetails?.map((input: InputDetail) => (
                 <Input
                   key={input.id}
                   id={input.id}
+                  name={input.name}
                   label={input.label}
                   type={input.type}
-                  value={input.value}
+                  value={details[input.id] || ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setDetails({
                       ...details,

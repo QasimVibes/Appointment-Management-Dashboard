@@ -46,7 +46,6 @@ const loginSlice = createSlice({
     clearLoginDetails: (state) => {
       state.loginStatus = "idle";
       state.error = null;
-    
     },
   },
   extraReducers: (builder) => {

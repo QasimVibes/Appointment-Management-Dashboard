@@ -1,7 +1,11 @@
 import { AxiosInstance } from "@/utils/axiosInstance";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-hot-toast";
-import { SetAvailabilityProps, AvailabilityState } from "@/types/types";
+import {
+  SetAvailabilityProps,
+  AvailabilityState,
+  AvailabilityDataSlice,
+} from "@/types/types";
 
 const initialState: AvailabilityState = {
   isLoading: false,
@@ -41,17 +45,12 @@ export const fetchAvailabilityData = createAsyncThunk(
   "availability/fetchAvailabilityData",
   async (userId: string, { rejectWithValue }) => {
     try {
-      const response = await AxiosInstance.get(`/availability`);
+      const response = await AxiosInstance.get(`/availability`, {
+        params: { userId },
+      });
 
       if (response.status === 200) {
-        const filteredData = response.data?.availability?.find(
-          (data: any) => data.userId === userId
-        );        
-        if (filteredData) {
-          return filteredData;
-        } else {
-          return rejectWithValue("No availability data found for the user.");
-        }
+        return response.data.availability;
       } else {
         return rejectWithValue(
           `Request failed with status: ${response.status}`

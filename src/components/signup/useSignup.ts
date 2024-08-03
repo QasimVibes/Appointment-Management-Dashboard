@@ -4,35 +4,8 @@ import { clearSignupDetails, signupUser } from "@/store/slice/signupSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { SignupProps } from "@/types/types";
 import { z } from "zod";
-import { signupSchema } from "@/types/ValidationSchema/FormSchema";
+import { signupSchema } from "@/constants/FormSchema";
 import toast from "react-hot-toast";
-
-export const inputFields = [
-  {
-    label: "Enter your email to get started.",
-    type: "email",
-    placeholder: "Email",
-    name: "email",
-  },
-  {
-    label: "Enter your full name.",
-    type: "text",
-    placeholder: "John Doe",
-    name: "fullname",
-  },
-  {
-    label: "Enter your username",
-    type: "text",
-    placeholder: "John Doe",
-    name: "username",
-  },
-  {
-    label: "Choose a password with at least 8 characters.",
-    type: "password",
-    placeholder: "Password",
-    name: "password",
-  },
-];
 
 export const useSignup = () => {
   const dispatch = useAppDispatch();
@@ -44,6 +17,7 @@ export const useSignup = () => {
     username: "",
     password: "",
   });
+  
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -78,5 +52,6 @@ export const useSignup = () => {
     onChangeHandler,
     onHandleSubmit,
     signupState,
+    data
   };
 };

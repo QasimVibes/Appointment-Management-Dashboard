@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { availabilitySchema } from "@/types/ValidationSchema/FormSchema";
+import { availabilitySchema } from "@/constants/FormSchema";
 import { z } from "zod";
 import { SelectOption } from "@/types/types";
 

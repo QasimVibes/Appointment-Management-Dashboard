@@ -2,7 +2,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "@/hooks/reduxHook";
 import { verifyOtp } from "@/store/slice/verifyOtpSlice";
-import { otpSchema } from "@/types/ValidationSchema/FormSchema";
+import { otpSchema } from "@/constants/FormSchema";
 import { forgotPassword } from "@/store/slice/forgotPasswordSlice";
 import { z } from "zod";
 import toast from "react-hot-toast";
@@ -65,13 +65,12 @@ export const useOtpVerification = () => {
     }
   };
 
-
   const resendOtp = async () => {
     try {
       if (isResending) {
         return;
       }
-      setIsResending(true); 
+      setIsResending(true);
       const resultAction = await dispatch(forgotPassword({ email }));
       if (forgotPassword.fulfilled.match(resultAction)) {
         setTimeout(() => {
@@ -82,7 +81,7 @@ export const useOtpVerification = () => {
       toast.error("Failed to resend OTP. Please try again.");
       setIsResending(false);
     }
-  }
+  };
 
   return {
     otp,

@@ -1,31 +1,12 @@
-import Handlebars from 'handlebars';
-import { resetPasswordEmail } from '@/templates/resetPasswordEmail';
-import { emailConfirmationHost } from '@/templates/emailConfirmationHost';
-import { emailConfirmationParticipant } from '@/templates/emailConfirmationParticipant';
-
-interface ResetPasswordEmailData {
-  otpCode: string;
-}
-
-interface EmailConfirmationHostData {
-  name: string;
-  email: string;
-  time: string;
-  date: string;
-  timeZone: string;
-  message: string;
-  googleBtnLink: string;
-}
-
-interface EmailConfirmationParticipantData {
-  name: string;
-  hostName: string;
-  time: string;
-  date: string;
-  timezone: string;
-  message: string;
-  buttonLink: string;
-}
+import Handlebars from "handlebars";
+import { resetPasswordEmail } from "@/templates/resetPasswordEmail";
+import { emailConfirmationHost } from "@/templates/emailConfirmationHost";
+import { emailConfirmationParticipant } from "@/templates/emailConfirmationParticipant";
+import {
+  ResetPasswordEmailData,
+  EmailConfirmationHostData,
+  EmailConfirmationParticipantData,
+} from "@/types/types";
 
 export function generateResetPasswordEmail(otp: string): string {
   const template = Handlebars.compile(resetPasswordEmail);

@@ -12,7 +12,7 @@ export function OtpVerification() {
       <div className="mt-5">
         <div className="px-4 py-6">
           <div className="flex justify-center gap-1 sm:gap-2 mb-6">
-            {otp.map((digit, index) => (
+            {otp?.map((digit, index) => (
               <Input
                 key={index}
                 label=""

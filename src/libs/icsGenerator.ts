@@ -6,10 +6,6 @@ export const generateICS = async (
 ): Promise<string> => {
   const { name, email, description, hostName, start, end } = appointment;
 
-  if (!name || !email || !description || !hostName || !start || !end) {
-    throw new Error("Missing required fields for appointment");
-  }
-
   const eventAttributes: EventAttributes = {
     start: [
       start.getFullYear(),

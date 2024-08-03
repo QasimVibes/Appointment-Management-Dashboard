@@ -3,7 +3,7 @@ import { forgotPassword as forgotPasswordAsyncThunk } from "@/store/slice/forgot
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { z } from "zod";
-import { forgotPasswordSchema } from "@/types/ValidationSchema/FormSchema";
+import { forgotPasswordSchema } from "@/constants/FormSchema";
 import toast from "react-hot-toast";
 
 export const useForgotPassword = () => {

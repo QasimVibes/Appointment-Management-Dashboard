@@ -21,7 +21,6 @@ export async function createGoogleMeetEvent(
       requestBody: {
         summary: eventDetails.summary,
         description: eventDetails.description,
-        // location: "http://localhost:3000/dashboard", // Leater on added
         start: {
           dateTime: eventDetails.start.dateTime,
           timeZone: eventDetails.start.timeZone,

@@ -7,7 +7,7 @@ import {
 } from "@/libs/email/emailTemplates";
 import { sendMail } from "@/libs/email/nodemailer";
 import { getToken } from "next-auth/jwt";
-import { parseSelectedDateTime } from "@/constants/parseSelectedDateTime";
+import { parseSelectedDateTime } from "@/hooks/parseSelectedDateTimeHook";
 import { createGoogleMeetEvent } from "@/libs/googleMeet";
 
 async function getSessionToken(req: NextRequest) {

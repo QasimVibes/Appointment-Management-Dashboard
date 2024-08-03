@@ -1,4 +1,4 @@
-export const useAvailability = () => {
+export const Availability = () => {
   const days = [
     "Sunday",
     "Monday",

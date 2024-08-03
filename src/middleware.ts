@@ -8,7 +8,8 @@ export async function middleware(request: NextRequest) {
     path === "/login" ||
     path === "/signup" ||
     path === "/forgotPassword" ||
-    path === "/otpVerification" || path === "/resetPassword";
+    path === "/otpVerification" ||
+    path === "/resetPassword";
 
   const token = await getToken({
     req: request,

@@ -2,20 +2,33 @@
 import Button from "@/components/button/Button";
 import Input from "@/components/input/Input";
 import { useResetPassword } from "./useResetPassword";
+import { inputFieldsResetPassword } from "@/constants/InputDetails";
 
 export function ResetPassword() {
-  const { inputFields, handleResetPassword } = useResetPassword();
+  const {
+    handleResetPassword,
+    newPassword,
+    confirmPassword,
+    setNewPassword,
+    setConfirmPassword,
+  } = useResetPassword();
+  const inputFields = inputFieldsResetPassword({
+    newPassword,
+    confirmPassword,
+    setNewPassword,
+    setConfirmPassword,
+  });
   return (
     <div className="mt-5">
       <form onSubmit={handleResetPassword}>
         <div className="space-y-2">
-          {inputFields.map((field) => (
+          {inputFields?.map((field) => (
             <Input
-              key={field.id}
+              key={field?.id}
               type={field.type}
-              id={field.id}
-              label={field.label}
-              value={field.value}
+              id={field?.id}
+              label={field?.label}
+              value={field?.value}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 field.setValue(e.target.value)
               }

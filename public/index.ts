@@ -31,12 +31,14 @@ import logoutIcon from "./asset/logoutIcon.svg";
 import personAdd from "./asset/personAdd.svg";
 import personButton from "./asset/personButton.svg";
 import progressbar from "./asset/progressbar.svg";
-import clockDashboard from "./asset/clockDashboard.svg"
-import plus from "./asset/plus.svg"
-import opner from "./asset/opner.svg"
-import dropDownBtn from "./asset/dropdownBtn.svg"
-import showPassword from "./asset/showPassword.svg"
-import hidePassword from "./asset/hidePassword.svg"
+import clockDashboard from "./asset/clockDashboard.svg";
+import plus from "./asset/plus.svg";
+import opner from "./asset/opner.svg";
+import dropDownBtn from "./asset/dropdownBtn.svg";
+import showPassword from "./asset/showPassword.svg";
+import hidePassword from "./asset/hidePassword.svg";
+import anocement from "./asset/anocement.svg";
+import troubleshoot from "./asset/troubleshoot.svg"
 
 export {
   logo,
@@ -77,5 +79,7 @@ export {
   opner,
   dropDownBtn,
   showPassword,
-  hidePassword
+  hidePassword,
+  anocement,
+  troubleshoot,
 };

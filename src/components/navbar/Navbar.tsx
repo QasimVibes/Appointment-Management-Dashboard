@@ -10,7 +10,7 @@ const Navbar = ({ url }: NavbarProps) => {
 
   return (
     <div className="w-full h-14 bg-white">
-      <div className="max-w-[800px] mx-auto flex justify-end items-center py-1.5 px-4 lg:px-0">
+      <div className="max-w-[800px] mx-auto flex justify-end items-center py-1.5 px-4 lg:px-0 bg-white">
         <div className="flex space-x-2 font-inter font-[400] text-[14px] leading-[20px]">
           <div className="flex items-center flex-grow">
             <DropdownMenu />

@@ -2,21 +2,11 @@ import path from "path";
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  webpack: (config, { isServer }) => {
-    config.module.rules.push({
-      test: /\.hbs$/,
-      loader: "handlebars-loader",
-      options: {},
-    });
-
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-        path: false,
-      };
-    }
-
+  reactStrictMode: true,
+  webpack(config) {
+    config.resolve.alias["handlebars"] = path.resolve(
+      "./node_modules/handlebars/dist/handlebars.js"
+    );
     return config;
   },
 };

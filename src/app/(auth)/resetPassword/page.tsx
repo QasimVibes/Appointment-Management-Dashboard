@@ -2,6 +2,7 @@ import { ResetPassword as ResetPasswordComponent } from "@/components/resetPassw
 import Link from "next/link";
 import Logo from "@/components/logo/Logo";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Reset Password",
@@ -36,7 +37,9 @@ export default function ResetPassword() {
               </Link>
             </p>
           </div>
-          <ResetPasswordComponent />
+          <Suspense fallback={<div>Loading Reset Password...</div>}>
+            <ResetPasswordComponent />
+          </Suspense>
         </div>
       </div>
     </div>

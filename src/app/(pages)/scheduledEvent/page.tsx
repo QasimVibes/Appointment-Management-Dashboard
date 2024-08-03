@@ -1,8 +1,8 @@
 import Navbar from "@/components/navbar/Navbar";
 import TopCornerImage from "@/components/topCornerImage/TopCornerImage";
 import { ScheduledEvent as ScheduledEventComponent } from "@/components/scheduledEvent/ScheduledEvent";
-import { inputDetails } from "./useScheduledEvent";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Scheduled Event",
@@ -18,9 +18,11 @@ export default function ScheduledEvent() {
   return (
     <>
       <Navbar />
-      <div className="pt-[46px] flex justify-center bg-lightwhite mb-[48px]">
+      <div className="pt-[46px] flex justify-center bg-lightwhitered mb-[48px]">
         <div className="relative flex flex-col items-center rounded w-[90%] lg:w-auto bg-white">
-          <ScheduledEventComponent inputDetails={inputDetails} />
+          <Suspense fallback={<div>Loading Scheduled Event...</div>}>
+            <ScheduledEventComponent />
+          </Suspense>
           <TopCornerImage />
         </div>
       </div>

@@ -3,16 +3,6 @@ import { useSession } from "next-auth/react";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { updateUser, getUserDetails } from "@/store/slice/userSlice";
 import { UserData } from "@/types/types";
-import {
-  profilePerson,
-  star,
-  link,
-  preferences,
-  settingIcon,
-  calender,
-  helpIcon,
-  logoutIcon,
-} from "../../../public";
 
 export const useUserProfile = () => {
   const dispatch = useAppDispatch();
@@ -92,62 +82,8 @@ export const useSidebarandSelectOptions = () => {
     setIsSidebarOpen((prev) => !prev);
   };
 
-  const menuItems = [{ text: "Dashboard", link: "/" }];
-
-  const aboveItems = [
-    { src: profilePerson, alt: "profilePerson", text: "Profile" },
-    { src: star, alt: "star", text: "Branding" },
-    { src: link, alt: "link", text: "My Link" },
-    { src: preferences, alt: "preferences", text: "Login Preferences" },
-    { src: settingIcon, alt: "settingIcon", text: "Cookie Settings" },
-    { src: calender, alt: "calender", text: "Calender sync" },
-  ];
-
-  const belowItems = [
-    { src: helpIcon, alt: "helpIcon", text: "Help" },
-    { src: logoutIcon, alt: "logoutIcon", text: "Logout" },
-  ];
-  const languageOptions = ["English", "Urdu", "Hindi", "French"];
-  const dateFormatOptions = ["DD/MM/YYYY", "MM/DD/YYYY", "YYYY/MM/DD"];
-  const timeFormatOptions = ["12h (am/pm)", "24h (am/pm)"];
-  const countryOptions = [
-    "Pakistan",
-    "India",
-    "Afghanistan",
-    "Albania",
-    "Algeria",
-  ];
-  const timezoneOptions = [
-    "Pakistan, Maldives Time",
-    "India Standard Time",
-    "Afghanistan Standard Time",
-    "Albania Standard Time",
-    "Algeria Standard Time",
-  ];
-
-  const mapOptions = (options: string[]) => {
-    return options.map((option) => ({
-      value: option,
-      label: option,
-    }));
-  };
-
-  const languageItems = mapOptions(languageOptions);
-  const dateFormatItems = mapOptions(dateFormatOptions);
-  const timeFormatItems = mapOptions(timeFormatOptions);
-  const countryItems = mapOptions(countryOptions);
-  const timezoneItems = mapOptions(timezoneOptions);
-
   return {
     isSidebarOpen,
     toggleSidebar,
-    menuItems,
-    aboveItems,
-    belowItems,
-    languageItems,
-    dateFormatItems,
-    timeFormatItems,
-    countryItems,
-    timezoneItems,
   };
 };

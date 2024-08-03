@@ -9,6 +9,7 @@ import {
 import { ScheduledAppointmentData } from "@/types/types";
 import TopCornerImage from "../topCornerImage/TopCornerImage";
 import { useInvitationHandler } from "./useMeetingConfirm";
+import { meetingConfirmData } from "@/constants/MeetingConfirm";
 
 export default function MeetingConfirm({
   hostName,
@@ -19,33 +20,22 @@ export default function MeetingConfirm({
   url,
   userId,
 }: ScheduledAppointmentData) {
-  const data = [
-    {
-      icon: person,
-      alt: "person",
-      text: "hostName",
-      value: hostName,
-    },
-    {
-      icon: briefcase,
-      alt: "briefcase",
-      text: "selectedTime",
-      value: `${selectedTime}, ${selectedDate}`,
-    },
-    {
-      icon: globe,
-      alt: "globe",
-      text: "timezone",
-      value: timezone,
-    },
-  ];
+  const data = meetingConfirmData({
+    person,
+    hostName,
+    selectedTime,
+    selectedDate,
+    timezone,
+    briefcase,
+    globe,
+  });
 
   const { invitationHandler } = useInvitationHandler(meetingLink, userId, url);
 
   return (
     <div className="flex flex-col items-center justify-center py-[66px]">
       <div className="w-[75%] text-center border border-solid border-lightgray shadow p-8 relative ">
-        <div className="flex flex-col items-center space-y-5">
+        <div className="flex flex-col items-center space-y-5 ">
           <div className="flex flex-col  sm:flex-row items-center">
             <div className="mr-[8px] flex">
               <Image src={checkmark} width={20} height={20} alt="checkmark" />
@@ -74,25 +64,30 @@ export default function MeetingConfirm({
               </span>
             </button>
           </div>
-          <div className="border border-solid border-lightgray w-full max-w-[445px] rounded-[8px] px-[16px] py-[16px] space-y-[14px]">
+          <div className=" border border-solid border-lightgray w-full max-w-[445px] rounded-[8px] px-[16px] py-[16px] space-y-[14px]">
             <h2 className="font-inter font-[700] text-[16px] leading-[18px] sm:text-[22px] sm:leading-[22px] text-primary text-start">
               30 Minutes Meeting
             </h2>
-            {data.map((item, index) => (
+            {data?.map((item, index) => (
               <div
                 key={index}
                 className="flex flex-col sm:flex-row items-center font-inter font-[400] text-[14px] leading-[22px] text-secondary"
               >
                 <Image
-                  src={item.icon}
-                  alt={item.alt}
+                  src={item?.icon}
+                  alt={item?.alt}
                   className="mr-[8px]"
                   width={24}
                   height={24}
                 />
-                {item.value}
+                {item?.value}
               </div>
             ))}
+          </div>
+          <div className="hidden lg:block absolute bottom-3 left-5 cursor-pointer">
+            <p className="text-[14px] leading-[18px]  text-purple-600">
+              Cookie settings
+            </p>
           </div>
         </div>
         <TopCornerImage />

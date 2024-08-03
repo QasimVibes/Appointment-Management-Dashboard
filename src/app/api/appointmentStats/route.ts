@@ -47,7 +47,7 @@ export const PUT = async (request: NextRequest) => {
         peakHours: true,
       },
     });
-    
+
     if (!existingData) {
       return NextResponse.json({ message: "Data not found" }, { status: 404 });
     }

@@ -20,8 +20,12 @@ const config: Config = {
       fontFamily: {
         inter: ["Inter", "sans-serif"],
       },
+      screens: {
+        'custom-lg': { 'min': '1024px', 'max': '1056px' },
+      },
     },
   },
   plugins: [],
 };
+
 export default config;

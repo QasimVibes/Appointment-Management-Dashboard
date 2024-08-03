@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { setScheduledEvent } from "@/store/slice/scheduledEventSlice";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { scheduledEventSchema } from "@/types/ValidationSchema/FormSchema";
+import { scheduledEventSchema } from "@/constants/FormSchema";
 import { z } from "zod";
 import toast from "react-hot-toast";
 import { useSession, signIn } from "next-auth/react";
@@ -27,7 +27,7 @@ export const useScheduledEvent = () => {
     location: searchParams.get("location"),
   };
 
-  const [details, setDetails] = useState({
+  const [details, setDetails] = useState<ScheduledEventDetails>({
     name: "",
     email: "",
     message: "",
@@ -83,7 +83,7 @@ export const useSubmitScheduledEvent = (
         toast.error("An unexpected error occurred. Please try again.");
       }
     }
-  }, [details, hostData, accessToken, dispatch, router]);
+  }, [details, hostData, accessToken, dispatch, router, session?.user?.id]);
 
   return { handleButtonClick, isLoading, isError };
 };

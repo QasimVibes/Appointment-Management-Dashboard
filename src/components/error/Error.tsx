@@ -5,7 +5,7 @@ export default function Error() {
     <div className="flex flex-col h-screen justify-center items-center bg-lightwhite px-4">
       <div className="flex flex-col items-center text-center max-w-md">
         <h1 className="text-4xl font-bold text-primary mb-6">
-          We can't find that page.
+          We can&apos;t find that page.
         </h1>
         <p className="text-secondary mb-8">
           Try searching again, or return home to start from the beginning.

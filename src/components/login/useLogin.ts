@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
-import { loginSchema } from "@/types/ValidationSchema/FormSchema";
+import { loginSchema } from "@/constants/FormSchema";
 import { z } from "zod";
 import {
   clearLoginDetails,
@@ -9,21 +9,6 @@ import {
   loginWithGoogle,
 } from "@/store/slice/loginSlice";
 import toast from "react-hot-toast";
-
-export const inputFields = [
-  {
-    label: "Enter your email",
-    type: "email",
-    placeholder: "Email",
-    name: "email",
-  },
-  {
-    label: "Enter your password",
-    type: "password",
-    placeholder: "Password",
-    name: "password",
-  },
-];
 
 export const useLogin = () => {
   const dispatch = useAppDispatch();

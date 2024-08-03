@@ -5,7 +5,7 @@ export const POST = async (request: NextRequest) => {
   try {
     const body = await request.json();
     const { email, otp } = body;
-    
+
     if (!email || !otp) {
       return NextResponse.json(
         { message: "Please provide all the fields" },
@@ -24,11 +24,17 @@ export const POST = async (request: NextRequest) => {
     }
 
     if (user.otp !== otp || !user.otpExpires || user.otpExpires < new Date()) {
-      return NextResponse.json({ message: "Invalid or expired OTP" }, { status: 400 });
+      return NextResponse.json(
+        { message: "Invalid or expired OTP" },
+        { status: 400 }
+      );
     }
 
     return NextResponse.json({ message: "OTP verified" }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
+    return NextResponse.json(
+      { message: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 };

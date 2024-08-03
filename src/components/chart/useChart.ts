@@ -1,7 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { fetchAnalyticsData } from "@/store/slice/analyticsSlice";
 import { useSession } from "next-auth/react";
-import { ApexOptions } from "apexcharts";
 import { useState, useEffect } from "react";
 import { AnalyticsData, UseWeeklyChartsProps } from "@/types/types";
 
@@ -111,71 +110,9 @@ export const useWeeklyCharts = ({ analyticsData }: UseWeeklyChartsProps) => {
     }
   }, [analyticsData]);
 
-  const weekLabels = Array.from({ length: 7 }, (_, i) => `Week ${i + 1}`);
-
-  const visitsOptions: ApexOptions = {
-    chart: {
-      type: "bar",
-      height: 350,
-    },
-    title: {
-      text: "Number of Visits to Appointment Page per Week",
-    },
-    xaxis: {
-      categories: weekLabels,
-    },
-    yaxis: {
-      title: {
-        text: "Number of Visits",
-      },
-    },
-    colors: ["#00E396"],
-  };
-
-  const appointmentsOptions: ApexOptions = {
-    chart: {
-      type: "bar",
-      height: 350,
-    },
-    title: {
-      text: "Scheduled Appointments per Week",
-    },
-    xaxis: {
-      categories: weekLabels,
-    },
-    yaxis: {
-      title: {
-        text: "Number of Appointments",
-      },
-    },
-    colors: ["#FF4560"],
-  };
-
-  const peakHoursOptions: ApexOptions = {
-    chart: {
-      type: "bar",
-      height: 350,
-    },
-    title: {
-      text: "Peak Hours for Appointments",
-    },
-    xaxis: {
-      categories: weekLabels,
-    },
-    yaxis: {
-      title: {
-        text: "Number of Appointments",
-      },
-    },
-    colors: ["#0099FF"],
-  };
-
   return {
     weeklyData,
     weeklyVisitsData,
     weeklyPeakHoursData,
-    visitsOptions,
-    appointmentsOptions,
-    peakHoursOptions,
   };
 };

@@ -54,6 +54,7 @@ export type SignupProps = {
   fullname: string;
   username: string;
   password: string;
+  [key: string]: string;
 };
 
 export type UserData = {
@@ -159,6 +160,7 @@ export type InputProps = {
   id?: string;
   label?: string;
   type: string;
+  name?: string;
   placeholder?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -203,6 +205,7 @@ export type ScheduledEventDetails = {
   name: string;
   email: string;
   message: string;
+  [key: string]: string;
 };
 
 export type ScheduledEventHostData = {
@@ -229,12 +232,6 @@ export type SideBarProps = {
   children: React.ReactNode;
 };
 
-export type AvailabilityProps = {
-  days: string[];
-  startingHours: string[];
-  endingHours: string[];
-};
-
 export type LocationsOption = {
   value: string;
   label: string;
@@ -244,10 +241,6 @@ export type ValuePiece = Date | null;
 
 export type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-export type locationsProps = {
-  locations: string[];
-};
-
 export type AvailabilityDataParam = {
   user: {
     fullname: string;
@@ -255,10 +248,14 @@ export type AvailabilityDataParam = {
   };
   days: string[];
   time: string;
+  time?: string;
 };
 
-export type ScheduledEventProps = {
-  inputDetails: { id: string; label: string; type: string }[];
+export type AvailabilityDataSlice = {
+  startHour: string;
+  endHour: string;
+  days: string[];
+  userId: string;
 };
 
 export type LabelProps = {
@@ -283,7 +280,62 @@ export type LogoProps = {
   className?: string;
 };
 
-
 export type UseWeeklyChartsProps = {
   analyticsData: AnalyticsData[] | null;
+};
+
+export type MeetingConfirmData = {
+  person: string;
+  hostName: string | null;
+  selectedTime: string | null;
+  selectedDate: string | null;
+  timezone: string | null;
+  briefcase: string;
+  globe: string;
+};
+
+export type ResetPasswordEmailData = {
+  otpCode: string;
+};
+
+export type EmailConfirmationHostData = {
+  name: string;
+  email: string;
+  time: string;
+  date: string;
+  timeZone: string;
+  message: string;
+  googleBtnLink: string;
+};
+
+export type EmailConfirmationParticipantData = {
+  name: string;
+  hostName: string;
+  time: string;
+  date: string;
+  timezone: string;
+  message: string;
+  buttonLink: string;
+};
+
+export type SendMailOptions = {
+  to: string;
+  subject: string;
+  html: string;
+};
+
+export type NextAuthSessionProviderProps = {
+  children: React.ReactNode;
+};
+
+export type ReduxProviderProps = {
+  children: React.ReactNode;
+};
+
+export type InputDetail = {
+  id: string;
+  label: string;
+  type: string;
+  value?: string;
+  name: string;
 };

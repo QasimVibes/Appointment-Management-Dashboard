@@ -1,16 +1,17 @@
 import nodemailer from "nodemailer";
+import { SendMailOptions } from "@/types/types";
 
-interface SendMailOptions {
-  to: string;
-  subject: string;
-  html: string;
-}
-
-export async function sendMail({ to, subject, html }: SendMailOptions): Promise<void> {
+export async function sendMail({
+  to,
+  subject,
+  html,
+}: SendMailOptions): Promise<void> {
   const { SMTP_USER, SMTP_PASS } = process.env;
 
   if (!SMTP_USER || !SMTP_PASS) {
-    console.error("SMTP_USER and SMTP_PASS must be defined in environment variables");
+    console.error(
+      "SMTP_USER and SMTP_PASS must be defined in environment variables"
+    );
     return;
   }
 

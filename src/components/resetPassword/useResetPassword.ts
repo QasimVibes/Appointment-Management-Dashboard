@@ -3,7 +3,7 @@ import { useAppDispatch } from "@/hooks/reduxHook";
 import { useEffect, useState } from "react";
 import { resetPassword } from "@/store/slice/resetPasswordSlice";
 import toast from "react-hot-toast";
-import { resetPasswordSchema } from "@/types/ValidationSchema/FormSchema";
+import { resetPasswordSchema } from "@/constants/FormSchema";
 import { z } from "zod";
 
 export const useResetPassword = () => {
@@ -51,25 +51,11 @@ export const useResetPassword = () => {
       }
     }
   };
-
-  const inputFields = [
-    {
-      id: "new-password",
-      type: "password",
-      label: "New password",
-      value: newPassword,
-      setValue: setNewPassword,
-    },
-    {
-      id: "confirm-password",
-      type: "password",
-      label: "Confirm password",
-      value: confirmPassword,
-      setValue: setConfirmPassword,
-    },
-  ];
   return {
-    inputFields,
     handleResetPassword,
+    newPassword,
+    confirmPassword,
+    setNewPassword,
+    setConfirmPassword,
   };
 };

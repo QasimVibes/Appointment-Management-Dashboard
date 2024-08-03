@@ -20,6 +20,17 @@ import Label from "@/components/label/Label";
 import TextArea from "@/components/textArea/TextArea";
 import Loading from "../loading/Loading";
 import Logo from "../logo/Logo";
+import {
+  menuItems,
+  aboveItems,
+  belowItems,
+  languageItems,
+  dateFormatItems,
+  timeFormatItems,
+  countryItems,
+  timezoneItems,
+} from "@/constants/Profile";
+import Error from "../error/Error";
 
 export function Profile() {
   const {
@@ -32,26 +43,16 @@ export function Profile() {
     isError,
     isLoading,
   } = useUserProfile();
-  const {
-    isSidebarOpen,
-    toggleSidebar,
-    menuItems,
-    aboveItems,
-    belowItems,
-    languageItems,
-    dateFormatItems,
-    timeFormatItems,
-    countryItems,
-    timezoneItems,
-  } = useSidebarandSelectOptions();
+  const { isSidebarOpen, toggleSidebar } = useSidebarandSelectOptions();
 
   if (isLoading) return <Loading />;
+  if (isError) return <Error />;
   return (
     <>
       {/* Left Side */}
       <SideBar isSidebarOpen={isSidebarOpen}>
         <div className="flex items-center justify-between p-[20px]">
-          <Logo width={132} height={32}/>
+          <Logo width={132} height={32} />
           <button className="cursor-pointer" onClick={() => toggleSidebar()}>
             <Image src={closer} alt="closer" width={16} height={16} />
           </button>
@@ -69,39 +70,39 @@ export function Profile() {
             Back to home
           </Link>
         </div>
-        <div className="font-inter font-[700] text-[18px] leading-[24px] text-primary py-[4px] px-[22px]">
+        <div className="font-inter font-[700] text-[18px] leading-[24px] text-primary py-[12px] px-[22px]">
           <h2>Account Settings</h2>
         </div>
         <div className="flex flex-col justify-between flex-grow">
-          <div className="space-y-[12px] self-start">
+          <div className="space-y-[12px] self-start w-full">
             {aboveItems?.map((item, index) => (
               <div
                 key={index}
                 className={`${
-                  item.text === "Profile" ? "text-quaternary" : " text-primary "
-                } flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] py-[4px] px-[22px]`}
+                  item?.text === "Profile" ? "text-quaternary" : " text-primary "
+                } flex flex-row items-center space-x-[14px]  font-inter font-[700] text-[15px] leading-[20px] py-[4px] px-[22px] w-full`}
               >
-                <Image src={item.src} alt={item.alt} width={20} height={20} />
-                <h3>{item.text}</h3>
+                <Image src={item?.src} alt={item?.alt} width={20} height={20} />
+                <h3>{item?.text}</h3>
               </div>
             ))}
           </div>
         </div>
-        <div className="space-y-[12px] self-start pb-[16px] mt-3 lg:mt-0">
+        <div className="space-y-[12px] self-start pb-[16px] mt-3 lg:mt-0 w-full">
           {belowItems?.map((item, index) => (
             <div
               key={index}
-              className="flex flex-row items-center space-x-[14px] font-inter font-[700] text-[15px] leading-[20px] text-primary py-[4px] px-[22px]"
+              className="flex flex-row items-center space-x-[14px] w-full font-inter font-[700] text-[15px] leading-[20px] text-primary py-[4px] px-[22px]"
             >
-              <Image src={item.src} alt={item.alt} width={20} height={20} />
-              <h3>{item.text}</h3>
+              <Image src={item?.src} alt={item?.alt} width={20} height={20} />
+              <h3>{item?.text}</h3>
             </div>
           ))}
         </div>
       </SideBar>
 
       {/* Right Side */}
-      <div className="flex-1 h-full overflow-auto space-y-5">
+      <div className="flex-1 h-full overflow-auto space-y-5 bg-lightwhitered">
         <div className="py-3">
           <div className="flex flex-row justify-between lg:justify-end items-center">
             <div className="flex lg:hidden items-center pl-[25px]">

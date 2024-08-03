@@ -32,10 +32,14 @@ export default function DropDown({ items, ...props }: DropDownProps) {
             className="text-sm text-primary"
             aria-labelledby="dropdownDefaultButton"
           >
-            {items.map((item, index) => (
+            {items?.map((item, index) => (
               <li key={index}>
-                <Link href={item.link} className="block px-4 py-2 hover:bg-lightgray" {...props}>
-                  {item.text}
+                <Link
+                  href={item?.link}
+                  className="block px-4 py-2 hover:bg-lightgray"
+                  {...props}
+                >
+                  {item?.text}
                 </Link>
               </li>
             ))}

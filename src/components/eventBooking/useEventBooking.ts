@@ -20,20 +20,22 @@ export const useEventBooking = () => {
   const { isLoading, isError, availabilityData } = useAppSelector(
     (state) => state.availability
   );
-
+  
   useEffect(() => {
     const fetchEventData = async () => {
       if (!userId) return;
       try {
         await dispatch(fetchAvailabilityData(userId)).unwrap();
       } catch (error: any) {
-        toast.error(error || "An error occurred while fetching event data.");
+        toast.error(
+          error.message || "An error occurred while fetching event data."
+        );
         router.push("/availability");
       }
     };
 
     fetchEventData();
-  }, [userId, dispatch]);
+  }, [userId, dispatch, router]);
 
   return { isLoading, isError, availabilityData };
 };

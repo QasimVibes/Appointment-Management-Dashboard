@@ -4,20 +4,20 @@ import Loading from "../loading/Loading";
 import Error from "../error/Error";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 import { AnalyticsData } from "@/types/types";
+import {
+  visitsOptions,
+  appointmentsOptions,
+  peakHoursOptions,
+} from "@/constants/ChartOptions";
 
 const Analytics: React.FC = () => {
   const { isLoading, isError, analyticsData } = useChart();
 
-  const {
-    weeklyData,
-    weeklyVisitsData,
-    weeklyPeakHoursData,
-    visitsOptions,
-    appointmentsOptions,
-    peakHoursOptions,
-  } = useWeeklyCharts({
-    analyticsData: analyticsData as AnalyticsData[] | null,
-  });
+  const { weeklyData, weeklyVisitsData, weeklyPeakHoursData } = useWeeklyCharts(
+    {
+      analyticsData: analyticsData as AnalyticsData[] | null,
+    }
+  );
 
   if (isLoading) return <Loading />;
   if (isError) return <Error />;

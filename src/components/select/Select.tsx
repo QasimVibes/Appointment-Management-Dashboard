@@ -14,15 +14,15 @@ const SelectBox = ({
     <select
       name={name}
       id={id}
-      value={value}
+      value={value || ""}
       onChange={onChange}
       className={className}
       {...props}
     >
       <option value="">{optionText}</option>
-      {options.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.label}
+      {options?.map((option) => (
+        <option key={option?.value} value={option?.value}>
+          {option?.label}
         </option>
       ))}
     </select>

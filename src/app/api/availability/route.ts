@@ -25,7 +25,7 @@ export async function PUT(request: NextRequest) {
     }
 
     return NextResponse.json(
-      { message: "Availability updated"},
+      { message: "Availability updated" },
       { status: 200 }
     );
   } catch (error) {
@@ -37,35 +37,30 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const availability = await prisma.availability.findMany({
-      include: {
-        user: true,
-      },
-    });
+    const { searchParams } = new URL(request.url);
+    const userId = searchParams.get("userId");
+    if (userId) {
+      const availability = await prisma.availability.findUnique({
+        where: { userId },
+        include: {
+          user: true,
+        },
+      });
 
-    if (availability.length === 0) {
       return NextResponse.json(
-        { message: "Availability not found" },
-        { status: 404 }
+        {
+          availability: availability,
+        },
+        { status: 200 }
+      );
+    } else {
+      return NextResponse.json(
+        { message: "Please provide userId" },
+        { status: 400 }
       );
     }
-
-    const availabilityWithPasswordNull = availability.map((availability) => {
-      return {
-        ...availability,
-        user: {
-          ...availability.user,
-          password: "",
-        },
-      };
-    });
-    return NextResponse.json(
-
-      { message: "Availability found", availability: availabilityWithPasswordNull },
-      { status: 200 }
-    );
   } catch (error) {
     console.error(error);
     return NextResponse.json(

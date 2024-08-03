@@ -101,19 +101,12 @@ export const useDashboard = () => {
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-  const tabs = [
-    { label: "Upcoming", value: "Upcoming" },
-    { label: "Pending", value: "Pending" },
-    { label: "Past", value: "Past" },
-  ];
-
   return {
     activeTab,
     setActiveTab,
     menuItems,
     dashboardActiveTab,
     setDashboardActiveTab,
-    tabs,
     isSidebarOpen,
     setIsSidebarOpen,
   };

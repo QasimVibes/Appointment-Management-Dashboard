@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateICS } from "../../../libs/icsGenerator";
 import prisma from "../../../libs/prisma";
-import { parseSelectedDateTime } from "@/constants/parseSelectedDateTime";
+import { parseSelectedDateTime } from "@/hooks/parseSelectedDateTimeHook";
 
 export const POST = async (request: NextRequest) => {
   try {
@@ -32,6 +32,7 @@ export const POST = async (request: NextRequest) => {
           meeting.selectedDate,
           meeting.selectedTime
         );
+
         const dateOfStart = new Date(start);
         const dateOfEnd = new Date(end);
         const appointment = {
