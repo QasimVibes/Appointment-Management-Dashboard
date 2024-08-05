@@ -17,7 +17,6 @@ export const useSignup = () => {
     username: "",
     password: "",
   });
-  
 
   const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -52,6 +51,6 @@ export const useSignup = () => {
     onChangeHandler,
     onHandleSubmit,
     signupState,
-    data
+    data,
   };
 };

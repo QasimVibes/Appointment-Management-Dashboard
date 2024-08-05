@@ -79,7 +79,9 @@ export function Profile() {
               <div
                 key={index}
                 className={`${
-                  item?.text === "Profile" ? "text-quaternary" : " text-primary "
+                  item?.text === "Profile"
+                    ? "text-quaternary"
+                    : " text-primary "
                 } flex flex-row items-center space-x-[14px]  font-inter font-[700] text-[15px] leading-[20px] py-[4px] px-[22px] w-full`}
               >
                 <Image src={item?.src} alt={item?.alt} width={20} height={20} />

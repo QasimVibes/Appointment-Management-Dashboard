@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-hot-toast";
-import { AxiosInstance } from "@/utils/axiosInstance";
+import { AxiosInstance } from "@/utils/instance/axiosInstance";
 import { GenerateICSState } from "@/types/types";
 
 const initialState: GenerateICSState = {

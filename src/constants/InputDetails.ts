@@ -1,4 +1,4 @@
-export const inputDetails= [
+export const inputDetails = [
   {
     id: "name",
     label: "Name *",

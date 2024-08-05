@@ -1,4 +1,4 @@
-import { AxiosInstance } from "@/utils/axiosInstance";
+import { AxiosInstance } from "@/utils/instance/axiosInstance";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-hot-toast";
 import { ForgotPasswordProps, ForgotPasswordState } from "@/types/types";

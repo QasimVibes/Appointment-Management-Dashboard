@@ -1,11 +1,7 @@
-import { AxiosInstance } from "@/utils/axiosInstance";
+import { AxiosInstance } from "@/utils/instance/axiosInstance";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { toast } from "react-hot-toast";
-import {
-  SetAvailabilityProps,
-  AvailabilityState,
-  AvailabilityDataSlice,
-} from "@/types/types";
+import { SetAvailabilityProps, AvailabilityState } from "@/types/types";
 
 const initialState: AvailabilityState = {
   isLoading: false,

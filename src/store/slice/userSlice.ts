@@ -1,5 +1,5 @@
 import { UserState } from "@/types/types";
-import { AxiosInstance } from "@/utils/axiosInstance";
+import { AxiosInstance } from "@/utils/instance/axiosInstance";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 

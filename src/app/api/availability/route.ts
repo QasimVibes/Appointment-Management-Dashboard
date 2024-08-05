@@ -29,7 +29,6 @@ export async function PUT(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
-    console.error(error);
     return NextResponse.json(
       { message: "Something went wrong" },
       { status: 500 }
@@ -62,7 +61,6 @@ export async function GET(request: NextRequest) {
       );
     }
   } catch (error) {
-    console.error(error);
     return NextResponse.json(
       { message: "Something went wrong" },
       { status: 500 }

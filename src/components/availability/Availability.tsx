@@ -18,11 +18,11 @@ import SelectBox from "../select/Select";
 import Input from "../input/Input";
 import Loading from "../loading/Loading";
 import Label from "../label/Label";
-import { Availability as AvailabilityConstant } from "@/constants/Availability";
+import { getAvailability } from "@/constants/Availability";
 import Error from "../error/Error";
 
 export function Availability() {
-  const { days, startingHours, endingHours } = AvailabilityConstant();
+  const { days, startingHours, endingHours } = getAvailability();
 
   const {
     selectedDays,
