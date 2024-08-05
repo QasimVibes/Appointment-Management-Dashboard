@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { generateICS } from "../../../libs/icsGenerator";
 import prisma from "../../../libs/prisma";
 import { parseSelectedDateTime } from "@/hooks/parseSelectedDateTimeHook";
+import { Meeting } from "@/types/types";
 
 export const POST = async (request: NextRequest) => {
   try {
@@ -15,7 +16,7 @@ export const POST = async (request: NextRequest) => {
       );
     }
 
-    const meetings = await prisma.meeting.findMany({
+    const meetings: Meeting[] = await prisma.meeting.findMany({
       where: { userId: userId },
     });
 
@@ -26,7 +27,7 @@ export const POST = async (request: NextRequest) => {
       );
     }
 
-    const icsPromises = meetings.map(async (meeting) => {
+    const icsPromises = meetings.map(async (meeting: Meeting) => {
       try {
         const { start, end } = parseSelectedDateTime(
           meeting.selectedDate,

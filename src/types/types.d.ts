@@ -339,3 +339,31 @@ export type InputDetail = {
   value?: string;
   name: string;
 };
+
+export type Meeting = {
+  id: string;
+  schedulerEmail: string;
+  schedulerName: string;
+  description: string;
+  selectedTime: string;
+  selectedDate: string;
+  hostName: string;
+  timezone: string;
+  url: string;
+  meetingLink: string;
+  userId: string;
+  createdAt: Date;
+  updateAt: Date;
+};
+
+export type AppointmentSlice = {
+  schedulerEmail: string;
+  schedulerName: string;
+  description: string;
+  selectedTime: string;
+  selectedDate: string | null;
+  hostName: string | null;
+  hostEmail: string | null;
+  timezone: string | null;
+  userId: string | undefined;
+};

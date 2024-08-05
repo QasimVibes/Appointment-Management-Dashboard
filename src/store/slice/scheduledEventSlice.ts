@@ -1,7 +1,7 @@
 import { AxiosInstance } from "@/utils/instance/axiosInstance";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
-import { ScheduledEventState } from "@/types/types";
+import { ScheduledEventState, AppointmentSlice } from "@/types/types";
 
 const initialState: ScheduledEventState = {
   isLoading: false,
@@ -11,10 +11,9 @@ const initialState: ScheduledEventState = {
 
 export const setScheduledEvent = createAsyncThunk(
   "scheduledEvent/setScheduledEvent",
-  async (data: any, { rejectWithValue }) => {
+  async (data: AppointmentSlice, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post("/meeting", data);
-
       if (response?.data) {
         toast.success(response.data.message);
         return response.data.meeting;
