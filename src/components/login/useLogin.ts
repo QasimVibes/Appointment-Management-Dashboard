@@ -12,7 +12,8 @@ import toast from "react-hot-toast";
 
 export const useLogin = () => {
   const dispatch = useAppDispatch();
-  const { loginStatus, error } = useAppSelector((state) => state.login);
+  const { loginStatus, error, isLoadingwithemail, isLoadingwithgoogle } =
+    useAppSelector((state) => state.login);
   const router = useRouter();
 
   const [data, setData] = useState<{ email: string; password: string }>({
@@ -69,5 +70,7 @@ export const useLogin = () => {
     handleEmailSignIn,
     handleGoogleSignIn,
     data,
+    isLoadingwithemail,
+    isLoadingwithgoogle,
   };
 };

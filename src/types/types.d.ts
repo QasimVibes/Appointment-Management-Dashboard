@@ -42,11 +42,14 @@ export type PeakHoursAnalyticsData = {
 export type SignupState = {
   error: null | string;
   signupStatus: "idle" | "loading" | "failed" | "succeeded";
+  isLoading: boolean;
 };
 
 export type LoginState = {
   loginStatus: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
+  isLoadingwithemail: boolean;
+  isLoadingwithgoogle: boolean;
 };
 
 export type SignupProps = {
@@ -137,6 +140,7 @@ export type ButtonProps = {
   className?: string;
   disabled?: boolean;
   children?: React.ReactNode;
+  isLoading?: boolean;
 };
 
 export type DropDownProps = {

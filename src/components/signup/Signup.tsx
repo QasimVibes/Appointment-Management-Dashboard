@@ -39,7 +39,8 @@ export function Signup() {
         <div className="flex justify-center">
           <Button
             text="Sign Up"
-            disabled={signupState.signupStatus === "loading"}
+            disabled={signupState?.signupStatus === "loading"}
+            isLoading={signupState?.isLoading}
             className="border border-solid border-quaternary py-[11px] px-[16.5px] bg-quaternary text-white rounded-[40px]"
           />
         </div>

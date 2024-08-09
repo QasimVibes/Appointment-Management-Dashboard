@@ -4,7 +4,7 @@ import Input from "../input/Input";
 import { useForgotPassword } from "./useForgetPassword";
 
 export function ForgotPassword() {
-  const { email, setEmail, onHandleSubmit } = useForgotPassword();
+  const { email, setEmail, onHandleSubmit, isLoading } = useForgotPassword();
   return (
     <>
       <div className="mt-5">
@@ -25,6 +25,7 @@ export function ForgotPassword() {
           <Button
             text="Reset password"
             onClick={onHandleSubmit}
+            isLoading={isLoading}
             className="py-3 w-full px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent bg-quaternary text-white hover:bg-quaternary focus:outline-none focus:ring-2 focus:ring-quaternary focus:ring-offset-2 transition-all text-[16px] leading-[22px] font-[500]"
           />
         </div>

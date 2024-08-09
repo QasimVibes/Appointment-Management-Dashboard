@@ -1,5 +1,5 @@
 import { useRouter, useSearchParams } from "next/navigation";
-import { useAppDispatch } from "@/hooks/reduxHook";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { useEffect, useState } from "react";
 import { resetPassword } from "@/store/slice/resetPasswordSlice";
 import toast from "react-hot-toast";
@@ -26,6 +26,8 @@ export const useResetPassword = () => {
       router.push("/login");
     }
   }, [searchParams, router]);
+
+  const { isLoading } = useAppSelector((state) => state.resetPassword);
 
   const handleResetPassword = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
@@ -57,5 +59,6 @@ export const useResetPassword = () => {
     confirmPassword,
     setNewPassword,
     setConfirmPassword,
+    isLoading,
   };
 };

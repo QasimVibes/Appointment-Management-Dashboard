@@ -5,6 +5,8 @@ import { LoginState } from "@/types/types";
 const initialState: LoginState = {
   loginStatus: "idle",
   error: null,
+  isLoadingwithemail: false,
+  isLoadingwithgoogle: false,
 };
 
 export const loginWithEmail = createAsyncThunk(
@@ -53,27 +55,33 @@ const loginSlice = createSlice({
       .addCase(loginWithEmail.pending, (state) => {
         state.loginStatus = "loading";
         state.error = null;
+        state.isLoadingwithemail = true;
       })
       .addCase(loginWithEmail.fulfilled, (state) => {
         state.loginStatus = "succeeded";
         state.error = null;
+        state.isLoadingwithemail = false;
       })
       .addCase(loginWithEmail.rejected, (state, action) => {
         state.loginStatus = "failed";
         state.error = action.payload as string;
+        state.isLoadingwithemail = false;
       });
     builder
       .addCase(loginWithGoogle.pending, (state) => {
         state.loginStatus = "loading";
         state.error = null;
+        state.isLoadingwithgoogle = true;
       })
       .addCase(loginWithGoogle.fulfilled, (state) => {
         state.loginStatus = "succeeded";
         state.error = null;
+        state.isLoadingwithgoogle = false;
       })
       .addCase(loginWithGoogle.rejected, (state, action) => {
         state.loginStatus = "failed";
         state.error = action.payload as string;
+        state.isLoadingwithgoogle = false;
       });
   },
 });

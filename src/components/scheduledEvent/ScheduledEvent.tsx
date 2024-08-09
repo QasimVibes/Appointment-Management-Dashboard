@@ -15,7 +15,10 @@ import { InputDetail } from "@/types/types";
 
 export function ScheduledEvent() {
   const { details, setDetails, hostData } = useScheduledEvent();
-  const { handleButtonClick } = useSubmitScheduledEvent(details, hostData);
+  const { handleButtonClick, isLoading } = useSubmitScheduledEvent(
+    details,
+    hostData
+  );
 
   return (
     <>
@@ -129,6 +132,7 @@ export function ScheduledEvent() {
               <Button
                 text="Schedule Event"
                 onClick={handleButtonClick}
+                isLoading={isLoading}
                 className="w-full lg:w-auto rounded-[28px] border border-solid px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] bg-blue-700 text-white"
               />
             </div>

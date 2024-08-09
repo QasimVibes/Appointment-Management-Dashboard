@@ -1,4 +1,4 @@
-import { useAppDispatch } from "@/hooks/reduxHook";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { forgotPassword as forgotPasswordAsyncThunk } from "@/store/slice/forgotPasswordSlice";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -10,22 +10,19 @@ export const useForgotPassword = () => {
   const [email, setEmail] = useState<string>("");
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const { isLoading } = useAppSelector((state) => state.forgotPassword);
 
   const onHandleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
       forgotPasswordSchema.parse({ email });
-      const resultAction = await dispatch(forgotPasswordAsyncThunk({ email }));
-      if (forgotPasswordAsyncThunk.fulfilled.match(resultAction)) {
-        router.push(`/otpVerification?email=${encodeURIComponent(email)}`);
-      }
+      await dispatch(forgotPasswordAsyncThunk({ email })).unwrap();
+      router.push(`/otpVerification?email=${encodeURIComponent(email)}`);
     } catch (error) {
       if (error instanceof z.ZodError) {
         error.errors.forEach((err) => {
           toast.error(err.message);
         });
-      } else {
-        toast.error("An unexpected error occurred. Please try again.");
       }
     }
   };
@@ -34,5 +31,6 @@ export const useForgotPassword = () => {
     email,
     setEmail,
     onHandleSubmit,
+    isLoading,
   };
 };

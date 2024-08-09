@@ -6,6 +6,7 @@ import { SignupState, SignupProps } from "@/types/types";
 const initialState: SignupState = {
   error: null,
   signupStatus: "idle",
+  isLoading: false,
 };
 
 export const signupUser = createAsyncThunk(
@@ -36,14 +37,17 @@ export const signupSlice = createSlice({
       .addCase(signupUser.pending, (state) => {
         state.error = null;
         state.signupStatus = "loading";
+        state.isLoading = true;
       })
       .addCase(signupUser.fulfilled, (state) => {
         state.error = null;
         state.signupStatus = "succeeded";
+        state.isLoading = false;
       })
       .addCase(signupUser.rejected, (state, action) => {
         state.signupStatus = "failed";
         state.error = action.payload as string;
+        state.isLoading = false;
       });
   },
 });

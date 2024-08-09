@@ -7,10 +7,17 @@ import Button from "@/components/button/Button";
 import { useLogin } from "./useLogin";
 import Image from "next/image";
 import { inputFields } from "@/constants/InputDetails";
+import Loader from "../loader/Loader";
 
 export function Login() {
-  const { onChangeHandler, handleEmailSignIn, handleGoogleSignIn, data } =
-    useLogin();
+  const {
+    onChangeHandler,
+    handleEmailSignIn,
+    handleGoogleSignIn,
+    data,
+    isLoadingwithemail,
+    isLoadingwithgoogle,
+  } = useLogin();
   return (
     <>
       <div className="w-[90%] md:w-[440px] rounded-[6px] border border-solid border-lightgray py-[28px] px-[15px] md:px-[33px] flex flex-col shadow-[0px_1px_5px_0px_#004A7426]">
@@ -35,6 +42,7 @@ export function Login() {
         <div className="flex justify-center">
           <Button
             text="Sign In"
+            isLoading={isLoadingwithemail}
             onClick={handleEmailSignIn}
             className="border border-solid w-full border-quaternary py-[11px] px-[16.5px] bg-quaternary text-white rounded-lg"
           />
@@ -48,17 +56,24 @@ export function Login() {
           <button
             onClick={handleGoogleSignIn}
             className="flex items-center justify-center w-full px-4 py-2 border border-gray-200 rounded-lg text-black hover:border-gray-400 hover:shadow transition duration-150"
+            disabled={isLoadingwithgoogle}
           >
-            <div className="w-6 h-6 relative mr-2">
-              <Image
-                src={google}
-                alt="Google logo"
-                layout="fill"
-                objectFit="contain"
-                loading="lazy"
-              />
-            </div>
-            <span>Login with Google</span>
+            {isLoadingwithgoogle ? (
+              <Loader className="mr-2" />
+            ) : (
+              <div className="w-6 h-6 relative mr-2">
+                <Image
+                  src={google}
+                  alt="Google logo"
+                  layout="fill"
+                  objectFit="contain"
+                  loading="lazy"
+                />
+              </div>
+            )}
+            <span>
+              {isLoadingwithgoogle ? "Signing in..." : "Login with Google"}
+            </span>
           </button>
         </div>
         <div className="font-inter font-normal text-[14px] leading-[18px] text-center text-primary pt-[15px]">
