@@ -9,6 +9,7 @@ import {
   LocationsOption,
   Value,
   AvailabilityDataParam,
+  ParamData,
 } from "@/types/types";
 
 export const useEventBooking = () => {
@@ -111,9 +112,10 @@ export const useEventBookingState = (
   locations: string[],
   getNextTimeSlot: (time: string) => string
 ) => {
+  const router = useRouter();
   const [selectedTime, setSelectedTime] = useState("");
   const [selectedTimezone, setSelectedTimezone] = useState("");
-  const [value, onChange] = useState<Value>(new Date());
+  const [value, onChange] = useState<Value>();
 
   useEffect(() => {
     if (locations.length > 0) {
@@ -139,21 +141,32 @@ export const useEventBookingState = (
     );
   };
 
-  const paramData = {
-    host: availabilityData?.user?.fullname,
-    hostEmail: availabilityData?.user?.email,
-    startingTime: selectedTime,
-    endingTime: selectedTime ? getNextTimeSlot(selectedTime) : "",
-    day: value?.toString().slice(0, 16),
-    location: selectedTimezone,
-  };
-
   const locationsListOptions: LocationsOption[] = locations.map(
     (location: string) => ({
       value: location,
       label: location,
     })
   );
+
+  const handleClick = () => {
+    const paramData: ParamData = {
+      host: availabilityData?.user?.fullname,
+      hostEmail: availabilityData?.user?.email,
+      startingTime: selectedTime,
+      endingTime: selectedTime ? getNextTimeSlot(selectedTime) : "",
+      day: value?.toString().slice(0, 16),
+      location: selectedTimezone,
+    };
+
+    if (paramData?.day) {
+      const queryParams = new URLSearchParams(
+        paramData as ParamData
+      ).toString();
+      router.push(`/scheduledEvent?${queryParams}`);
+    } else {
+      toast.error("Please select a Date");
+    }
+  };
 
   return {
     selectedTime,
@@ -163,7 +176,7 @@ export const useEventBookingState = (
     onChange,
     handleTimeSlotClick,
     tileDisabled,
-    paramData,
+    handleClick,
     locationsListOptions,
   };
 };

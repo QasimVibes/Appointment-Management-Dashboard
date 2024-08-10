@@ -178,7 +178,7 @@ export async function POST(request: NextRequest) {
       const urlArray = [...existingAppointmentStatus.url, url];
       await prisma.appointmentStats.update({
         where: {
-          userId: newMeeting.userId,
+          id: existingAppointmentStatus.id,
           date: weekStartDate,
         },
         data: {

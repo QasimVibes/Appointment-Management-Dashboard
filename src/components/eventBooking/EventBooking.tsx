@@ -122,15 +122,11 @@ export function EventBooking() {
                         text={EventBookingState?.selectedTime}
                         className="w-[60%] px-[18.5px] py-[14px] rounded-[6px] font-bold text-[14px] leading-[22px] text-white bg-gray-500"
                       />
-                      <Link
-                        href={{
-                          pathname: "/scheduledEvent",
-                          query: EventBookingState?.paramData,
-                        }}
+                      <Button
+                        text="Next"
+                        onClick={EventBookingState?.handleClick}
                         className="w-[40%] px-[18.5px] py-[14px] text-center rounded-[6px] font-bold text-[14px] leading-[22px] text-white bg-quaternary"
-                      >
-                        Next
-                      </Link>
+                      />
                     </div>
                   )
                 )}

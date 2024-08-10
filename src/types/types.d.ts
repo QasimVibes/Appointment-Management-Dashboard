@@ -371,3 +371,12 @@ export type AppointmentSlice = {
   timezone: string | null;
   userId: string | undefined;
 };
+
+export type ParamData = {
+  host: string;
+  hostEmail: string;
+  startingTime: string;
+  endingTime: string;
+  day?: string;
+  location: string;
+};
