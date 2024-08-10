@@ -42,7 +42,6 @@ export const fetchAnalyticsData = createAsyncThunk(
       const response = await AxiosInstance.get("/appointmentStats", {
         params: { userId },
       });
-
       if (response.data) {
         return response.data;
       } else {

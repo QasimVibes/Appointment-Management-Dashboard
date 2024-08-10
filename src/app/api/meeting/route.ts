@@ -64,7 +64,12 @@ export async function POST(request: NextRequest) {
 
     const existingMeeting = await prisma.meeting.findFirst({
       where: {
-        AND: [{ schedulerEmail }, { selectedTime }, { selectedDate }],
+        AND: [
+          { schedulerEmail },
+          { selectedTime },
+          { selectedDate },
+          { userId },
+        ],
       },
     });
 

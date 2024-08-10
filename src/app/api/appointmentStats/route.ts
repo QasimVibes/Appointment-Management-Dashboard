@@ -14,9 +14,10 @@ export const GET = async (request: NextRequest) => {
     }
     const data = await prisma.appointmentStats.findMany({
       where: {
-        userId,
+        userId: userId,
       },
     });
+
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     return NextResponse.json(
@@ -36,9 +37,9 @@ export const PUT = async (request: NextRequest) => {
       );
     }
 
-    const existingData = await prisma.appointmentStats.findUnique({
+    const existingData = await prisma.appointmentStats.findFirst({
       where: {
-        userId,
+        userId: userId,
         url: {
           has: url,
         },
@@ -54,9 +55,9 @@ export const PUT = async (request: NextRequest) => {
 
     const updatedPeakHours = [...existingData.peakHours, durationInMinutes];
 
-    await prisma.appointmentStats.update({
+    await prisma.appointmentStats.updateMany({
       where: {
-        userId,
+        userId: userId,
         url: {
           has: url,
         },
@@ -65,7 +66,6 @@ export const PUT = async (request: NextRequest) => {
         peakHours: updatedPeakHours,
       },
     });
-
     return NextResponse.json(
       { message: "Peak hours updated" },
       { status: 200 }
