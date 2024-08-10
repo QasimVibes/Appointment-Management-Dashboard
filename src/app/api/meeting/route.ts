@@ -208,6 +208,7 @@ export async function POST(request: NextRequest) {
       { status: 200 }
     );
   } catch (error) {
+    console.error("Error scheduling meeting:", error);
     return NextResponse.json(
       { message: "Something went wrong" },
       { status: 500 }

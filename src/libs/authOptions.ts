@@ -23,6 +23,9 @@ export const authOptions: NextAuthOptions = {
             "openid profile email https://www.googleapis.com/auth/calendar",
         },
       },
+      httpOptions: {
+        timeout: 10000,
+      },
     }),
     CredentialsProvider({
       name: "Credentials",
