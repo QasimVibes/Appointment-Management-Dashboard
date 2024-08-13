@@ -1,10 +1,41 @@
-export const emailConfirmationParticipant = `
+import nodemailer from "nodemailer";
+import { NodemailerProps } from "@/types/types";
+
+export async function sendMailToParticipant({
+  to,
+  templateVariables,
+}: NodemailerProps): Promise<void> {
+  const { SMTP_USER, SMTP_PASS } = process.env;
+
+  if (!SMTP_USER || !SMTP_PASS) {
+    console.error(
+      "SMTP_USER and SMTP_PASS must be defined in environment variables"
+    );
+    return;
+  }
+
+  const transport = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: SMTP_USER,
+      pass: SMTP_PASS,
+    },
+  });
+
+  try {
+    await transport.verify();
+  } catch (error) {
+    console.error("SMTP connection failed:", error);
+    return;
+  }
+
+  const emailTemplate = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Template</title>
+    <title>Email Confirmation</title>
     <style>
        body {
         font-family: Helvetica, Arial, sans-serif;
@@ -78,16 +109,14 @@ export const emailConfirmationParticipant = `
 <body>
     <div class="email-container">
         <div class="email-body">
-            <p>Hi {{name}},</p>
-            <p>Your 30 Minute Meeting with {{hostName}} at {{time}} ({{timezone}}) on {{date}} is scheduled.</p>
+            <p>Hi ${templateVariables.name},</p>
+            <p>Your 30 Minute Meeting with ${templateVariables.hostName} at ${templateVariables.time} (${templateVariables.timezone}) on ${templateVariables.date} is scheduled.</p>
             <p>Your Answer:</p>
             <h2>Please share anything that will help prepare for our meeting.</h2>
-            <p>{{message}}</p>
+            <p>${templateVariables.message}</p>
             <p class="note">This event should automatically show up on your calendar. If needed, you can still add it manually.</p>
             <div class="buttons">
-            
-                <button style="background-color: #6420d3;"><a href="{{buttonLink}}" style="color: white; text-decoration: none;">Add to Calendar</a></button>
-                
+                <button style="background-color: #6420d3;"><a href="${templateVariables.buttonLink}" style="color: white; text-decoration: none;">Add to Calendar</a></button>
             </div>
         </div>
         <div class="email-footer">
@@ -96,5 +125,16 @@ export const emailConfirmationParticipant = `
     </div>
 </body>
 </html>
+  `;
 
-`;
+  try {
+    await transport.sendMail({
+      from: `"Appointment Management Dashboard" <${SMTP_USER}>`,
+      to,
+      subject: `New Event:${templateVariables.hostName} - ${templateVariables.time} ${templateVariables.date} - 30 Minutes Meeting`,
+      html: emailTemplate,
+    });
+  } catch (error) {
+    console.error("Error sending email:", error);
+  }
+}

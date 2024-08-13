@@ -43,7 +43,7 @@ export default function Dashboard() {
     menuItems,
   } = useDashboard();
 
-  const { handleNavigate } = useNavigateHandler();
+  const { handleNavigate, onNavigate } = useNavigateHandler();
 
   if (isLoading) return <Loading />;
   if (isError) return <Error />;
@@ -71,7 +71,7 @@ export default function Dashboard() {
                 alt="plus"
                 width={12}
                 height={12}
-                className="mr-[8px]"
+                className={`mr-[8px] ${onNavigate ? "animate-spin" : ""} `}
               />
               Create
             </Button>

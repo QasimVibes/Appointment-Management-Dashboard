@@ -4,10 +4,10 @@ import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { loginSchema } from "@/constants/FormSchema";
 import { z } from "zod";
 import {
-  clearLoginDetails,
+  clearDetails,
   loginWithEmail,
   loginWithGoogle,
-} from "@/store/slice/loginSlice";
+} from "@/store/slice/authSlice";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { fetchAvailabilityData } from "@/store/slice/availabilitySlice";
@@ -17,8 +17,8 @@ export const useLogin = () => {
   const router = useRouter();
   const { data: session } = useSession();
   const userId = session?.user?.id;
-  const { loginStatus, error, isLoadingwithemail, isLoadingwithgoogle } =
-    useAppSelector((state) => state.login);
+  const { loginStatus, error, isLoadingWithEmail, isLoadingWithGoogle } =
+    useAppSelector((state) => state.auth);
 
   const [data, setData] = useState<{ email: string; password: string }>({
     email: "",
@@ -81,7 +81,7 @@ export const useLogin = () => {
 
   useEffect(() => {
     return () => {
-      dispatch(clearLoginDetails());
+      dispatch(clearDetails());
     };
   }, [dispatch]);
 
@@ -90,7 +90,7 @@ export const useLogin = () => {
     handleEmailSignIn,
     handleGoogleSignIn,
     data,
-    isLoadingwithemail,
-    isLoadingwithgoogle,
+    isLoadingWithEmail,
+    isLoadingWithGoogle,
   };
 };

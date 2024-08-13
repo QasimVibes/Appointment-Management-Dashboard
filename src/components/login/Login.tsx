@@ -15,8 +15,8 @@ export function Login() {
     handleEmailSignIn,
     handleGoogleSignIn,
     data,
-    isLoadingwithemail,
-    isLoadingwithgoogle,
+    isLoadingWithEmail,
+    isLoadingWithGoogle,
   } = useLogin();
   return (
     <>
@@ -42,7 +42,7 @@ export function Login() {
         <div className="flex justify-center">
           <Button
             text="Sign In"
-            isLoading={isLoadingwithemail}
+            isLoading={isLoadingWithEmail}
             onClick={handleEmailSignIn}
             className="border border-solid w-full border-quaternary py-[11px] px-[16.5px] bg-quaternary text-white rounded-lg"
           />
@@ -56,9 +56,9 @@ export function Login() {
           <button
             onClick={handleGoogleSignIn}
             className="flex items-center justify-center w-full px-4 py-2 border border-gray-200 rounded-lg text-black hover:border-gray-400 hover:shadow transition duration-150"
-            disabled={isLoadingwithgoogle}
+            disabled={isLoadingWithGoogle}
           >
-            {isLoadingwithgoogle ? (
+            {isLoadingWithGoogle ? (
               <Loader className="mr-2" />
             ) : (
               <div className="w-6 h-6 relative mr-2">
@@ -72,7 +72,7 @@ export function Login() {
               </div>
             )}
             <span>
-              {isLoadingwithgoogle ? "Signing in..." : "Login with Google"}
+              {isLoadingWithGoogle ? "Signing in..." : "Login with Google"}
             </span>
           </button>
         </div>

@@ -1,14 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/libs/prisma";
 import { nanoid } from "nanoid";
-import {
-  generateEmailConfirmationHost,
-  generateEmailConfirmationParticipant,
-} from "@/libs/email/emailTemplates";
-import { sendMail } from "@/libs/email/nodemailer";
 import { getToken } from "next-auth/jwt";
 import { parseSelectedDateTime } from "@/hooks/parseSelectedDateTimeHook";
 import { createGoogleMeetEvent } from "@/libs/googleMeet";
+import { sendMailToParticipant } from "@/libs/email/emailConfirmationParticipant";
+import { sendMailToHost } from "@/libs/email/emailConfirmationHost";
 
 async function getSessionToken(req: NextRequest) {
   const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
@@ -140,33 +137,31 @@ export async function POST(request: NextRequest) {
 
     const { htmlLink } = response;
 
-    const htmlHost = generateEmailConfirmationHost({
-      name: newMeeting?.hostName,
-      email: newMeeting?.schedulerEmail,
-      time: newMeeting?.selectedTime,
-      date: newMeeting?.selectedDate,
-      timeZone: newMeeting?.timezone,
-      message: newMeeting?.description,
-      googleBtnLink: htmlLink,
-    });
-    const htmlParticipant = generateEmailConfirmationParticipant({
-      name: newMeeting?.schedulerName,
-      hostName: newMeeting?.hostName,
-      time: newMeeting?.selectedTime,
-      date: newMeeting?.selectedDate,
-      timezone: newMeeting?.timezone,
-      message: newMeeting?.description,
-      buttonLink: htmlLink,
-    });
-    await sendMail({
+    await sendMailToHost({
       to: hostEmail,
-      subject: `New Event:${newMeeting?.schedulerName} - ${newMeeting?.selectedTime} ${newMeeting?.selectedDate} - 30 Minutes Meeting`,
-      html: htmlHost,
+      templateVariables: {
+        name: newMeeting?.hostName,
+        email: newMeeting?.schedulerEmail,
+        time: newMeeting?.selectedTime,
+        date: newMeeting?.selectedDate,
+        timezone: newMeeting?.timezone,
+        message: newMeeting?.description,
+        googleBtnLink: htmlLink,
+        schedulerName: newMeeting?.schedulerName,
+      },
     });
-    await sendMail({
+
+    await sendMailToParticipant({
       to: newMeeting?.schedulerEmail,
-      subject: `New Event:${newMeeting?.hostName} - ${newMeeting?.selectedTime} ${newMeeting?.selectedDate} - 30 Minutes Meeting`,
-      html: htmlParticipant,
+      templateVariables: {
+        name: newMeeting?.schedulerName,
+        hostName: newMeeting?.hostName,
+        time: newMeeting?.selectedTime,
+        timezone: newMeeting?.timezone,
+        date: newMeeting?.selectedDate,
+        message: newMeeting?.description,
+        buttonLink: htmlLink,
+      },
     });
 
     const weekStartDate = getWeekStartDate(response?.start?.dateTime);

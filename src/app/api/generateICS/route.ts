@@ -20,7 +20,7 @@ export const POST = async (request: NextRequest) => {
       where: { userId: userId },
     });
 
-    if (!meetings || meetings.length === 0) {
+    if (!meetings || meetings?.length === 0) {
       return NextResponse.json(
         { message: "No meetings found" },
         { status: 404 }

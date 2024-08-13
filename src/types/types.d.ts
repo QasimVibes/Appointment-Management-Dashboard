@@ -39,17 +39,14 @@ export type PeakHoursAnalyticsData = {
   url: string;
   durationInMinutes: number;
 };
-export type SignupState = {
-  error: null | string;
-  signupStatus: "idle" | "loading" | "failed" | "succeeded";
-  isLoading: boolean;
-};
 
-export type LoginState = {
+export type AuthState = {
   loginStatus: "idle" | "loading" | "succeeded" | "failed";
+  signupStatus: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
-  isLoadingwithemail: boolean;
-  isLoadingwithgoogle: boolean;
+  isLoadingWithEmail: boolean;
+  isLoadingWithGoogle: boolean;
+  isLoading: boolean;
 };
 
 export type SignupProps = {
@@ -298,36 +295,6 @@ export type MeetingConfirmData = {
   globe: string;
 };
 
-export type ResetPasswordEmailData = {
-  otpCode: string;
-};
-
-export type EmailConfirmationHostData = {
-  name: string;
-  email: string;
-  time: string;
-  date: string;
-  timeZone: string;
-  message: string;
-  googleBtnLink: string;
-};
-
-export type EmailConfirmationParticipantData = {
-  name: string;
-  hostName: string;
-  time: string;
-  date: string;
-  timezone: string;
-  message: string;
-  buttonLink: string;
-};
-
-export type SendMailOptions = {
-  to: string;
-  subject: string;
-  html: string;
-};
-
 export type NextAuthSessionProviderProps = {
   children: React.ReactNode;
 };
@@ -381,26 +348,6 @@ export type ParamData = {
   location: string;
 };
 
-export type EmailConfirmationHost = {
-  name: string;
-  email: string;
-  time: string;
-  date: string;
-  timeZone: string;
-  message: string;
-  googleBtnLink: string;
-};
-
-export type EmailConfirmationParticipant = {
-  name: string;
-  hostName: string;
-  time: string;
-  date: string;
-  timezone: string;
-  message: string;
-  buttonLink: string;
-};
-
 type EventDateTime = {
   dateTime: string;
   timeZone: string;
@@ -428,4 +375,9 @@ export type GoogleMeetEventDetails = {
   conferenceRequestId: string;
   attendees: EventAttendee[];
   reminders: EventReminders;
+};
+
+export type NodemailerProps = {
+  to: string;
+  templateVariables: { [key: string]: string };
 };

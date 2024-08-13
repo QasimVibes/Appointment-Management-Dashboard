@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { clearSignupDetails, signupUser } from "@/store/slice/signupSlice";
+import { clearDetails, signupUser } from "@/store/slice/authSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { SignupProps } from "@/types/types";
 import { z } from "zod";
@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 
 export const useSignup = () => {
   const dispatch = useAppDispatch();
-  const signupState = useAppSelector((state) => state.signup);
+  const signupState = useAppSelector((state) => state.auth);
   const router = useRouter();
   const [data, setData] = useState<SignupProps>({
     email: "",
@@ -44,7 +44,7 @@ export const useSignup = () => {
   };
 
   useEffect(() => {
-    dispatch(clearSignupDetails());
+    dispatch(clearDetails());
   }, [dispatch]);
 
   return {

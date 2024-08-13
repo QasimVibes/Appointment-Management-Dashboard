@@ -42,14 +42,14 @@ export const useCategorizeEvents = (events: Event[]) => {
   const [pastEvents, setPastEvents] = useState<Event[]>([]);
 
   useEffect(() => {
-    if (events.length > 0) {
+    if (events?.length > 0) {
       const getEvent = (category: string) => {
         const currentDate = new Date();
 
         const eventsData = events
           .filter((event) => {
             const eventStartTime = new Date(
-              `${event.selectedDate} ${event.selectedTime.split(" - ")[0]}`
+              `${event?.selectedDate} ${event?.selectedTime?.split(" - ")[0]}`
             );
             if (category === "upcoming") {
               return eventStartTime > currentDate;
@@ -119,9 +119,11 @@ export const useNavigateHandler = () => {
   const userId = session?.user?.id;
   const router = useRouter();
   const dispatch = useAppDispatch();
+  let [onNavigate, setOnNavigate] = useState(false);
 
   const handleNavigate = useCallback(() => {
     if (userId) {
+      setOnNavigate(true);
       dispatch(fetchAvailabilityData(userId))
         .unwrap()
         .then((data) => {
@@ -132,10 +134,11 @@ export const useNavigateHandler = () => {
           router.push(redirectTo);
         })
         .catch(() => {
+          setOnNavigate(false);
           router.push("/availability");
         });
     }
   }, [userId, dispatch, router]);
 
-  return { handleNavigate };
+  return { handleNavigate, onNavigate };
 };

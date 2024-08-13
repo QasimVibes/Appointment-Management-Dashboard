@@ -1,14 +1,4 @@
-import path from "path";
-
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  webpack(config) {
-    config.resolve.alias["handlebars"] = path.resolve(
-      "./node_modules/handlebars/dist/handlebars.js"
-    );
-    return config;
-  },
-};
+const nextConfig = {};
 
 export default nextConfig;

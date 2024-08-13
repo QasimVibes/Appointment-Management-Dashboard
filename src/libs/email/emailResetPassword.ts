@@ -1,4 +1,35 @@
-export const resetPasswordEmail = `
+import nodemailer from "nodemailer";
+import { NodemailerProps } from "@/types/types";
+
+export async function sendMailToResetPassword({
+  to,
+  templateVariables,
+}: NodemailerProps): Promise<void> {
+  const { SMTP_USER, SMTP_PASS } = process.env;
+
+  if (!SMTP_USER || !SMTP_PASS) {
+    console.error(
+      "SMTP_USER and SMTP_PASS must be defined in environment variables"
+    );
+    return;
+  }
+
+  const transport = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: SMTP_USER,
+      pass: SMTP_PASS,
+    },
+  });
+
+  try {
+    await transport.verify();
+  } catch (error) {
+    console.error("SMTP connection failed:", error);
+    return;
+  }
+
+  const emailTemplate = `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,7 +88,7 @@ export const resetPasswordEmail = `
       Please use the verification code below to reset your password
       for Appointment Management Dashboard.
     </p>
-    <p class="otp">{{otpCode}}</p>
+    <p class="otp">${templateVariables.otp}</p>
     <p class="text">
       If you didn’t request a password reset, you can ignore this
       email.
@@ -76,5 +107,16 @@ export const resetPasswordEmail = `
   </div>
 </body>
 </html>
+  `;
 
-`;
+  try {
+    await transport.sendMail({
+      from: `Appointment Management Dashboard <${SMTP_USER}>`,
+      to,
+      subject: "Reset Password",
+      html: emailTemplate,
+    });
+  } catch (error) {
+    console.error("Error sending email:", error);
+  }
+}
