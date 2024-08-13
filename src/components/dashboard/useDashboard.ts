@@ -3,6 +3,8 @@ import { useSession } from "next-auth/react";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { fetchMeeting } from "@/store/slice/scheduledEventSlice";
 import { Event } from "@/types/types";
+import { fetchAvailabilityData } from "@/store/slice/availabilitySlice";
+import { useRouter } from "next/navigation";
 
 export const useFetchEvents = () => {
   const { data: session } = useSession();
@@ -58,20 +60,20 @@ export const useCategorizeEvents = (events: Event[]) => {
           })
           .sort((eventA, eventB) => {
             const dateA = new Date(
-              `${eventA.selectedDate} ${eventA.selectedTime.split(" - ")[0]}`
+              `${eventA?.selectedDate} ${eventA?.selectedTime?.split(" - ")[0]}`
             );
             const dateB = new Date(
-              `${eventB.selectedDate} ${eventB.selectedTime.split(" - ")[0]}`
+              `${eventB?.selectedDate} ${eventB?.selectedTime?.split(" - ")[0]}`
             );
 
             if (dateA < dateB) return -1;
             if (dateA > dateB) return 1;
 
             const timeA = new Date(
-              `1970-01-01 ${eventA.selectedTime.split(" - ")[0]}`
+              `1970-01-01 ${eventA?.selectedTime?.split(" - ")[0]}`
             );
             const timeB = new Date(
-              `1970-01-01 ${eventB.selectedTime.split(" - ")[0]}`
+              `1970-01-01 ${eventB?.selectedTime?.split(" - ")[0]}`
             );
 
             if (timeA < timeB) return -1;
@@ -110,4 +112,30 @@ export const useDashboard = () => {
     isSidebarOpen,
     setIsSidebarOpen,
   };
+};
+
+export const useNavigateHandler = () => {
+  const { data: session } = useSession();
+  const userId = session?.user?.id;
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+
+  const handleNavigate = useCallback(() => {
+    if (userId) {
+      dispatch(fetchAvailabilityData(userId))
+        .unwrap()
+        .then((data) => {
+          const redirectTo =
+            data && Object.keys(data).length > 0
+              ? "/eventBooking"
+              : "/availability";
+          router.push(redirectTo);
+        })
+        .catch(() => {
+          router.push("/availability");
+        });
+    }
+  }, [userId, dispatch, router]);
+
+  return { handleNavigate };
 };

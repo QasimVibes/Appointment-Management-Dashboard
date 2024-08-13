@@ -17,6 +17,7 @@ import {
   useCategorizeEvents,
   useDashboard,
   useFetchEvents,
+  useNavigateHandler,
 } from "./useDashboard";
 import EventList from "@/components/eventList/EventList";
 import DropDown from "@/components/dropDown/DropDown";
@@ -42,12 +43,13 @@ export default function Dashboard() {
     menuItems,
   } = useDashboard();
 
+  const { handleNavigate } = useNavigateHandler();
+
   if (isLoading) return <Loading />;
   if (isError) return <Error />;
 
   return (
     <>
-      {/* Sidebar */}
       <SideBar isSidebarOpen={isSidebarOpen}>
         <div className="space-y-[4px] bg-white">
           <div className="flex items-center justify-between p-[20px]">
@@ -60,9 +62,9 @@ export default function Dashboard() {
             </button>
           </div>
           <div className="flex justify-center p-[10px]">
-            <Link
-              href="/eventBooking"
-              className="flex px-[80px] py-[12px] bg-quaternary rounded-[40px] font-inter font-[700] text-[14.75px] leading-[22px] text-white"
+            <Button
+              onClick={handleNavigate}
+              className="flex items-center px-[80px] py-[12px] bg-quaternary rounded-[40px] font-inter font-[700] text-[14.75px] leading-[22px] text-white"
             >
               <Image
                 src={plus}
@@ -72,7 +74,7 @@ export default function Dashboard() {
                 className="mr-[8px]"
               />
               Create
-            </Link>
+            </Button>
           </div>
         </div>
         <div className="pb-[16px] flex flex-col justify-between flex-grow font-inter font-[700] text-[14.75px] leading-[24px]">
@@ -150,7 +152,6 @@ export default function Dashboard() {
         </div>
       </SideBar>
 
-      {/* Right side / Main Content */}
       <div className="flex-1 h-full overflow-auto bg-lightwhitered">
         <div className="py-[15.75px]">
           <div className="flex flex-row justify-between lg:justify-end items-center py-[4px]">
@@ -220,7 +221,7 @@ export default function Dashboard() {
                             >
                               <Button
                                 className={`pt-[7px] pb-[17px] ${
-                                  activeTab === tab.value
+                                  activeTab === tab?.value
                                     ? "text-primary border-b-[2px] border-solid border-quaternary"
                                     : ""
                                 }`}
@@ -243,7 +244,7 @@ export default function Dashboard() {
                         </div>
                       </div>
                       <div className="flex flex-row justify-center items-center pr-[12px] md:pr-[24px] space-x-2">
-                        <GenerateICS />
+                        <GenerateICS events={events} />
                         <div>
                           <Button className="hidden md:flex font-inter font-[500] text-[12.69px] leading-[20px] text-primary  border border-solid border-primary rounded-[40px] px-[13px] py-[6px] ">
                             <Image

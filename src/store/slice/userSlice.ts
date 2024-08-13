@@ -14,16 +14,16 @@ export const updateUser = createAsyncThunk(
   async (data: UserData, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.put("/user", data);
-      if (response.data) {
-        toast.success(response.data.message);
-        return response.data;
+      if (response?.data) {
+        toast.success(response?.data?.message);
+        return response?.data;
       } else {
-        toast.error(response.data.message);
-        return rejectWithValue(response.data);
+        toast.error(response?.data?.message);
+        return rejectWithValue(response?.data);
       }
     } catch (error: any) {
-      toast.error(error.response.data.message);
-      return rejectWithValue(error.response.data);
+      toast.error(error?.response?.data?.message);
+      return rejectWithValue(error?.response?.data);
     }
   }
 );
@@ -35,15 +35,15 @@ export const getUserDetails = createAsyncThunk(
       const response = await AxiosInstance.get("/user", {
         params: { userId },
       });
-      if (response.data) {
-        return response.data.user;
+      if (response?.data) {
+        return response?.data?.user;
       } else {
-        toast.error(response.data.message);
+        toast.error(response?.data?.message);
         return rejectWithValue("Failed to fetch user details");
       }
     } catch (error: any) {
-      toast.error(error.response?.data?.message || "An error occurred");
-      return rejectWithValue(error.response?.data || "An error occurred");
+      toast.error(error?.response?.data?.message || "An error occurred");
+      return rejectWithValue(error?.response?.data || "An error occurred");
     }
   }
 );

@@ -22,9 +22,9 @@ export const POST = async (request: NextRequest) => {
 
     if (
       !user ||
-      user.otp !== otp ||
-      !user.otpExpires ||
-      user.otpExpires < new Date()
+      user?.otp !== otp ||
+      !user?.otpExpires ||
+      user?.otpExpires < new Date()
     ) {
       return NextResponse.json(
         { message: "Invalid or expired Token" },

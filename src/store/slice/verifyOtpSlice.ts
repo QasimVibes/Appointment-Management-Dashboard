@@ -14,11 +14,11 @@ export const verifyOtp = createAsyncThunk(
   async (credentials: VerifyOtpProps, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post("/verifyOtp", credentials);
-      toast.success(response.data.message);
-      return response.data;
+      toast.success(response?.data?.message);
+      return response?.data;
     } catch (error: any) {
-      toast.error(error.response.data.message);
-      return rejectWithValue(error.response.data.message);
+      toast.error(error?.response?.data?.message);
+      return rejectWithValue(error?.response?.data?.message);
     }
   }
 );

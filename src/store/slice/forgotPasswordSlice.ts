@@ -14,11 +14,11 @@ export const forgotPassword = createAsyncThunk(
   async (email: ForgotPasswordProps, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post("/forgotPassword", email);
-      toast.success(response.data.message);
-      return response.data;
+      toast.success(response?.data?.message);
+      return response?.data;
     } catch (error: any) {
-      toast.error(error.response.data.message);
-      return rejectWithValue(error.response.data);
+      toast.error(error?.response?.data?.message);
+      return rejectWithValue(error?.response?.data);
     }
   }
 );

@@ -3,6 +3,11 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import prisma from "../libs/prisma";
 import bcrypt from "bcrypt";
+import { User as NextAuthUser, Account, Profile } from "next-auth";
+
+type CustomProfile = Profile & {
+  id?: string;
+};
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET || "randomsecretkey",
@@ -59,33 +64,43 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Incorrect password");
         }
         return {
-          id: user.id,
-          email: user.email,
-          username: user.username,
+          id: user?.id,
+          email: user?.email,
+          username: user?.username,
         };
       },
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile }: any) {
+    async signIn({
+      user,
+      account,
+      profile,
+    }: {
+      user: NextAuthUser;
+      account: Account | null;
+      profile?: CustomProfile;
+    }) {
       if (account?.provider === "google") {
         const existingUser = await prisma.user.findUnique({
-          where: { email: profile.email },
+          where: { email: profile?.email },
         });
 
-        if (existingUser) {
-          profile.id = existingUser.id;
+        if (profile && existingUser) {
+          profile.id = existingUser?.id;
         } else {
           try {
             const newUser = await prisma.user.create({
               data: {
-                fullname: profile.name,
-                email: profile.email,
-                username: profile.email.split("@")[0],
+                fullname: profile?.name || "",
+                email: profile?.email || "",
+                username: profile?.email?.split("@")[0] || "",
                 password: "",
               },
             });
-            profile.id = newUser.id;
+            if (profile && newUser) {
+              profile.id = newUser?.id;
+            }
           } catch (error) {
             return false;
           }
@@ -100,19 +115,19 @@ export const authOptions: NextAuthOptions = {
 
     async jwt({ token, account, user }) {
       if (user) {
-        token.id = user.id?.toString();
-        token.username = user.username;
+        token.id = user?.id?.toString();
+        token.username = user?.username;
       }
       if (account?.provider === "google") {
-        token.accessToken = account.access_token;
+        token.accessToken = account?.access_token;
       }
       return token;
     },
     async session({ session, token }) {
       if (token) {
-        session.user.accessToken = token.accessToken;
-        session.user.id = token.id;
-        session.user.username = token.username;
+        session.user.accessToken = token?.accessToken;
+        session.user.id = token?.id;
+        session.user.username = token?.username;
       }
 
       return session;

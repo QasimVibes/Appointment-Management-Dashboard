@@ -1,4 +1,4 @@
-import { useAppDispatch } from "@/hooks/reduxHook";
+import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { generateICSFile as generateICSFileAsync } from "@/store/slice/generateIcsFileSlice";
 import { useRef } from "react";
 import { useSession } from "next-auth/react";

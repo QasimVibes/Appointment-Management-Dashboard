@@ -23,16 +23,16 @@ export const setAvailability = createAsyncThunk(
         userId,
       });
 
-      if (response.data) {
-        toast.success(response.data.message);
-        return response.data;
+      if (response?.data) {
+        toast.success(response?.data?.message);
+        return response?.data;
       } else {
-        toast.error(response.data.message);
+        toast.error(response?.data?.message);
       }
-      return rejectWithValue(response.data);
+      return rejectWithValue(response?.data);
     } catch (error: any) {
-      toast.error(error.response.data.message);
-      return rejectWithValue(error.response.data);
+      toast.error(error?.response?.data?.message);
+      return rejectWithValue(error?.response?.data);
     }
   }
 );
@@ -46,15 +46,15 @@ export const fetchAvailabilityData = createAsyncThunk(
       });
 
       if (response.status === 200) {
-        return response.data.availability;
+        return response?.data?.availability;
       } else {
         return rejectWithValue(
-          `Request failed with status: ${response.status}`
+          `Request failed with status: ${response?.status}`
         );
       }
     } catch (error: any) {
       let errorMessage =
-        error.response?.data?.message ||
+        error?.response?.data?.message ||
         error.message ||
         "Failed to fetch availability data.";
       toast.error(errorMessage);

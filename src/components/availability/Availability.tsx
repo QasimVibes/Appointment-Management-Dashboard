@@ -150,7 +150,7 @@ export function Availability() {
                         onChange={() => {
                           if (selectedDays?.includes(day)) {
                             setSelectedDays(
-                              selectedDays.filter((d) => d !== day)
+                              selectedDays?.filter((d) => d !== day)
                             );
                           } else {
                             setSelectedDays([...(selectedDays ?? []), day]);

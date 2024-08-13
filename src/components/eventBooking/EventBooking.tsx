@@ -2,7 +2,6 @@
 import { clock, globe, troubleshoot } from "../../../public";
 import Calendar from "react-calendar";
 import Button from "@/components/button/Button";
-import Link from "next/link";
 import Image from "next/image";
 import TopCornerImage from "@/components/topCornerImage/TopCornerImage";
 import SelectBox from "@/components/select/Select";

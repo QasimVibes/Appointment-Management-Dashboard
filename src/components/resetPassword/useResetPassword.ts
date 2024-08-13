@@ -32,7 +32,7 @@ export const useResetPassword = () => {
   const handleResetPassword = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-      resetPasswordSchema.parse({ newPassword, confirmPassword });
+      resetPasswordSchema?.parse({ newPassword, confirmPassword });
       if (newPassword === confirmPassword) {
         const resultAction = await dispatch(
           resetPassword({ email, otp, newPassword })

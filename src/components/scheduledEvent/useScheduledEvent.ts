@@ -19,12 +19,12 @@ export const useScheduledEvent = () => {
   }, [searchParams, router]);
 
   const hostData = {
-    host: searchParams.get("host"),
-    hostEmail: searchParams.get("hostEmail"),
-    startingTime: searchParams.get("startingTime"),
-    endingTime: searchParams.get("endingTime"),
-    day: searchParams.get("day"),
-    location: searchParams.get("location"),
+    host: searchParams?.get("host"),
+    hostEmail: searchParams?.get("hostEmail"),
+    startingTime: searchParams?.get("startingTime"),
+    endingTime: searchParams?.get("endingTime"),
+    day: searchParams?.get("day"),
+    location: searchParams?.get("location"),
   };
 
   const [details, setDetails] = useState<ScheduledEventDetails>({
@@ -52,14 +52,14 @@ export const useSubmitScheduledEvent = (
   const handleButtonClick = useCallback(async () => {
     try {
       const submitData = {
-        schedulerEmail: details.email,
-        schedulerName: details.name,
-        description: details.message,
-        selectedTime: `${hostData.startingTime} - ${hostData.endingTime}`,
-        selectedDate: hostData.day,
-        hostName: hostData.host,
-        hostEmail: hostData.hostEmail,
-        timezone: hostData.location,
+        schedulerEmail: details?.email,
+        schedulerName: details?.name,
+        description: details?.message,
+        selectedTime: `${hostData?.startingTime} - ${hostData?.endingTime}`,
+        selectedDate: hostData?.day,
+        hostName: hostData?.host,
+        hostEmail: hostData?.hostEmail,
+        timezone: hostData?.location,
         userId: session?.user?.id,
       };
 

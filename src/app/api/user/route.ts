@@ -18,14 +18,14 @@ export const GET = async (request: NextRequest) => {
 
     if (user) {
       const userToSend = {
-        id: user.id,
-        fullname: user.fullname,
-        welcomeMessage: user.welcomeMessage,
-        language: user.language,
-        dateFormat: user.dateFormat,
-        timeFormat: user.timeFormat,
-        country: user.country,
-        timezone: user.timezone,
+        id: user?.id,
+        fullname: user?.fullname,
+        welcomeMessage: user?.welcomeMessage,
+        language: user?.language,
+        dateFormat: user?.dateFormat,
+        timeFormat: user?.timeFormat,
+        country: user?.country,
+        timezone: user?.timezone,
       };
 
       return NextResponse.json({ user: userToSend }, { status: 200 });

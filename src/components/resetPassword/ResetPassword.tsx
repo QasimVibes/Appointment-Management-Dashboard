@@ -26,7 +26,7 @@ export function ResetPassword() {
           {inputFields?.map((field) => (
             <Input
               key={field?.id}
-              type={field.type}
+              type={field?.type}
               id={field?.id}
               label={field?.label}
               value={field?.value}

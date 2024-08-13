@@ -19,7 +19,7 @@ export const generateICSFile = createAsyncThunk(
         { responseType: "blob" }
       );
 
-      if (response.data) {
+      if (response?.data) {
         const blob = new Blob([response.data], { type: "text/calendar" });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement("a");
@@ -32,8 +32,8 @@ export const generateICSFile = createAsyncThunk(
         toast.success("ICS file generated successfully");
         return { success: true };
       } else {
-        toast.error(response.data.message);
-        return rejectWithValue(response.data);
+        toast.error(response?.data?.message);
+        return rejectWithValue(response?.data);
       }
     } catch (error: any) {
       toast.error("Error generating ICS file");

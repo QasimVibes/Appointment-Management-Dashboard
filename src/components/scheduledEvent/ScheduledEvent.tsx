@@ -82,12 +82,12 @@ export function ScheduledEvent() {
             <div className="w-full max-w-full lg:max-w-[374px] h-full space-y-3">
               {inputDetails?.map((input: InputDetail) => (
                 <Input
-                  key={input.id}
-                  id={input.id}
-                  name={input.name}
-                  label={input.label}
-                  type={input.type}
-                  value={details[input.id] || ""}
+                  key={input?.id}
+                  id={input?.id}
+                  name={input?.name}
+                  label={input?.label}
+                  type={input?.type}
+                  value={details[input?.id] || ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setDetails({
                       ...details,

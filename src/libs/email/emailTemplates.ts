@@ -6,6 +6,8 @@ import {
   ResetPasswordEmailData,
   EmailConfirmationHostData,
   EmailConfirmationParticipantData,
+  EmailConfirmationHost,
+  EmailConfirmationParticipant,
 } from "@/types/types";
 
 export function generateResetPasswordEmail(otp: string): string {
@@ -14,15 +16,15 @@ export function generateResetPasswordEmail(otp: string): string {
   return template(data);
 }
 
-export function generateEmailConfirmationHost(
-  name: string,
-  email: string,
-  time: string,
-  date: string,
-  timeZone: string,
-  message: string,
-  googleBtnLink: string
-): string {
+export function generateEmailConfirmationHost({
+  name,
+  email,
+  time,
+  date,
+  timeZone,
+  message,
+  googleBtnLink,
+}: EmailConfirmationHost): string {
   const template = Handlebars.compile(emailConfirmationHost);
   const data: EmailConfirmationHostData = {
     name,
@@ -36,15 +38,15 @@ export function generateEmailConfirmationHost(
   return template(data);
 }
 
-export function generateEmailConfirmationParticipant(
-  name: string,
-  hostName: string,
-  time: string,
-  date: string,
-  timezone: string,
-  message: string,
-  buttonLink: string
-): string {
+export function generateEmailConfirmationParticipant({
+  name,
+  hostName,
+  time,
+  date,
+  timezone,
+  message,
+  buttonLink,
+}: EmailConfirmationParticipant): string {
   const template = Handlebars.compile(emailConfirmationParticipant);
   const data: EmailConfirmationParticipantData = {
     name,

@@ -21,11 +21,11 @@ export const putPeakHoursAnalyticsData = createAsyncThunk(
         url,
         durationInMinutes,
       });
-      if (response.data) {
-        return response.data;
+      if (response?.data) {
+        return response?.data;
       } else {
-        toast.error(response.data.message);
-        return rejectWithValue(response.data.message);
+        toast.error(response?.data?.message);
+        return rejectWithValue(response?.data?.message);
       }
     } catch (error: any) {
       const errorMessage = error.response?.data?.message || "An error occurred";
@@ -42,11 +42,11 @@ export const fetchAnalyticsData = createAsyncThunk(
       const response = await AxiosInstance.get("/appointmentStats", {
         params: { userId },
       });
-      if (response.data) {
-        return response.data;
+      if (response?.data) {
+        return response?.data;
       } else {
-        toast.error(response.data.message);
-        return rejectWithValue(response.data.message);
+        toast.error(response?.data?.message);
+        return rejectWithValue(response?.data?.message);
       }
     } catch (error: any) {
       const errorMessage = error.response?.data?.message || "An error occurred";

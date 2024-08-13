@@ -103,10 +103,10 @@ export async function POST(request: NextRequest) {
     const response = await createGoogleMeetEvent(accessToken, eventDetails);
 
     if (
-      !response.htmlLink ||
-      !response.start?.dateTime ||
-      !(response.attendees?.length ?? 0) ||
-      !response.hangoutLink
+      !response?.htmlLink ||
+      !response?.start?.dateTime ||
+      !(response?.attendees?.length ?? 0) ||
+      !response?.hangoutLink
     ) {
       return NextResponse.json(
         { message: "Something went wrong" },
@@ -127,7 +127,7 @@ export async function POST(request: NextRequest) {
         timezone,
         url,
         userId,
-        meetingLink: response.hangoutLink,
+        meetingLink: response?.hangoutLink,
       },
     });
 
@@ -139,38 +139,38 @@ export async function POST(request: NextRequest) {
     }
 
     const { htmlLink } = response;
-    // add Google Calendar event
-    const htmlHost = generateEmailConfirmationHost(
-      newMeeting.hostName,
-      newMeeting.schedulerEmail,
-      newMeeting.selectedTime,
-      newMeeting.selectedDate,
-      newMeeting.timezone,
-      newMeeting.description,
-      htmlLink
-    );
-    const htmlParticipant = generateEmailConfirmationParticipant(
-      newMeeting.schedulerName,
-      newMeeting.hostName,
-      newMeeting.selectedTime,
-      newMeeting.selectedDate,
-      newMeeting.timezone,
-      newMeeting.description,
-      htmlLink
-    );
+
+    const htmlHost = generateEmailConfirmationHost({
+      name: newMeeting?.hostName,
+      email: newMeeting?.schedulerEmail,
+      time: newMeeting?.selectedTime,
+      date: newMeeting?.selectedDate,
+      timeZone: newMeeting?.timezone,
+      message: newMeeting?.description,
+      googleBtnLink: htmlLink,
+    });
+    const htmlParticipant = generateEmailConfirmationParticipant({
+      name: newMeeting?.schedulerName,
+      hostName: newMeeting?.hostName,
+      time: newMeeting?.selectedTime,
+      date: newMeeting?.selectedDate,
+      timezone: newMeeting?.timezone,
+      message: newMeeting?.description,
+      buttonLink: htmlLink,
+    });
     await sendMail({
       to: hostEmail,
-      subject: `New Event:${newMeeting.schedulerName} - ${newMeeting.selectedTime} ${newMeeting.selectedDate} - 30 Minutes Meeting`,
+      subject: `New Event:${newMeeting?.schedulerName} - ${newMeeting?.selectedTime} ${newMeeting?.selectedDate} - 30 Minutes Meeting`,
       html: htmlHost,
     });
     await sendMail({
-      to: newMeeting.schedulerEmail,
-      subject: `New Event:${newMeeting.hostName} - ${newMeeting.selectedTime} ${newMeeting.selectedDate} - 30 Minutes Meeting`,
+      to: newMeeting?.schedulerEmail,
+      subject: `New Event:${newMeeting?.hostName} - ${newMeeting?.selectedTime} ${newMeeting?.selectedDate} - 30 Minutes Meeting`,
       html: htmlParticipant,
     });
 
-    const weekStartDate = getWeekStartDate(response.start.dateTime);
-    const visits = response.attendees ? response.attendees.length : 0;
+    const weekStartDate = getWeekStartDate(response?.start?.dateTime);
+    const visits = response?.attendees ? response?.attendees.length : 0;
 
     const existingAppointmentStatus = await prisma.appointmentStats.findFirst({
       where: {
@@ -183,7 +183,7 @@ export async function POST(request: NextRequest) {
       const urlArray = [...existingAppointmentStatus.url, url];
       await prisma.appointmentStats.update({
         where: {
-          id: existingAppointmentStatus.id,
+          id: existingAppointmentStatus?.id,
           date: weekStartDate,
         },
         data: {

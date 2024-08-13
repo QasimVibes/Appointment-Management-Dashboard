@@ -47,7 +47,7 @@ export const POST = async (request: NextRequest) => {
         return await generateICS(appointment);
       } catch (error) {
         console.error(
-          `Error generating ICS for meeting ID ${meeting.id}: ${error}`
+          `Error generating ICS for meeting ID ${meeting?.id}: ${error}`
         );
         return "";
       }

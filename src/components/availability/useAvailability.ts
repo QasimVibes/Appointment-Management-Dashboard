@@ -41,7 +41,7 @@ export const useSubmitAvailability = () => {
               startHour: startHour,
               endHour: endHour,
               days: selectedDays,
-              userId: session?.user.id,
+              userId: session?.user?.id,
             })
           ).unwrap();
           router.push("/eventBooking");
@@ -83,9 +83,9 @@ export const useFetchAvailability = (
 
   useEffect(() => {
     if (availabilityData) {
-      setStartHour(availabilityData.startHour);
-      setEndHour(availabilityData.endHour);
-      setSelectedDays(availabilityData.days);
+      setStartHour(availabilityData?.startHour);
+      setEndHour(availabilityData?.endHour);
+      setSelectedDays(availabilityData?.days);
     }
   }, [availabilityData, setStartHour, setEndHour, setSelectedDays]);
 

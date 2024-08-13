@@ -266,7 +266,7 @@ export type LabelProps = {
   htmlFor: string;
   label: string;
   className?: string;
-  [key: string]: any;
+  [key: string]: string | undefined | Record<string, unknown>;
 };
 
 export type TextAreaProps = {
@@ -379,4 +379,53 @@ export type ParamData = {
   endingTime: string;
   day?: string;
   location: string;
+};
+
+export type EmailConfirmationHost = {
+  name: string;
+  email: string;
+  time: string;
+  date: string;
+  timeZone: string;
+  message: string;
+  googleBtnLink: string;
+};
+
+export type EmailConfirmationParticipant = {
+  name: string;
+  hostName: string;
+  time: string;
+  date: string;
+  timezone: string;
+  message: string;
+  buttonLink: string;
+};
+
+type EventDateTime = {
+  dateTime: string;
+  timeZone: string;
+};
+
+type EventAttendee = {
+  email: string;
+};
+
+type EventReminderOverride = {
+  method: string;
+  minutes: number;
+};
+
+type EventReminders = {
+  useDefault: boolean;
+  overrides?: EventReminderOverride[];
+};
+
+export type GoogleMeetEventDetails = {
+  summary: string;
+  description: string;
+  start: EventDateTime;
+  end: EventDateTime;
+  conferenceRequestId: string;
+  attendees: EventAttendee[];
+  reminders: EventReminders;
 };

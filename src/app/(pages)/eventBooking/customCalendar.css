@@ -1,10 +1,8 @@
-/* Hide previous and next 2 buttons */
 .react-calendar__navigation__prev2-button,
 .react-calendar__navigation__next2-button {
   display: none !important;
 }
 
-/* Center align the navigation */
 .react-calendar__navigation {
   display: flex !important;
   justify-content: center !important;
@@ -12,13 +10,11 @@
   font-size: larger !important;
 }
 
-/* Flex display for month view days and weekdays */
 .react-calendar__month-view__days,
 .react-calendar__month-view__weekdays {
   display: flex !important;
 }
 
-/* Style the navigation arrows */
 .react-calendar__navigation__arrow,
 .react-calendar__navigation__next-button:hover {
   height: 40px !important;
@@ -26,13 +22,11 @@
   color: #1a1a1a !important;
 }
 
-/* Hover effect for tiles */
 .react-calendar__tile:enabled:hover {
   background-color: #0069ff !important;
   color: white !important;
 }
 
-/* Active and enabled state for tiles */
 .react-calendar__tile:active,
 .react-calendar__month-view__days__day:enabled {
   display: flex !important;
@@ -41,7 +35,6 @@
   font-size: medium !important;
 }
 
-/* Remove any background color and border */
 .react-calendar,
 .react-calendar__month-view__days__day,
 .react-calendar__tile,
@@ -51,28 +44,23 @@
   border: none !important;
 }
 
-/* Additional styles for specific states */
 .react-calendar__tile--active:enabled {
   color: white !important;
   background-color: #0069ff !important;
 }
 
-/* Style for navigation buttons */
 .react-calendar button {
   border-radius: 100px !important;
 }
 
-/* Padding for tiles */
 .react-calendar__tile {
   padding: 16px 6.6667px !important;
 }
 
-/* Center align the navigation label */
 .react-calendar__navigation__label {
   flex-grow: 0.1 !important;
 }
 
-/* Hide scrollbar */
 .overflow-y-auto::-webkit-scrollbar {
   display: none !important;
 }

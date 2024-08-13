@@ -49,7 +49,6 @@ export function Profile() {
   if (isError) return <Error />;
   return (
     <>
-      {/* Left Side */}
       <SideBar isSidebarOpen={isSidebarOpen}>
         <div className="flex items-center justify-between p-[20px]">
           <Logo width={132} height={32} />
@@ -103,7 +102,6 @@ export function Profile() {
         </div>
       </SideBar>
 
-      {/* Right Side */}
       <div className="flex-1 h-full overflow-auto space-y-5 bg-lightwhitered">
         <div className="py-3">
           <div className="flex flex-row justify-between lg:justify-end items-center">

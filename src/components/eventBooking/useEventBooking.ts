@@ -27,7 +27,7 @@ export const useEventBooking = () => {
       if (!userId) return;
       try {
         const data = await dispatch(fetchAvailabilityData(userId)).unwrap();
-        if (!data || data.length === 0) {
+        if (!data || data?.length === 0) {
           toast.error("Set your availability first");
           router.push("/availability");
         }
@@ -46,9 +46,9 @@ export const useEventBooking = () => {
 };
 
 const convertTo24Hour = (time: string): Time => {
-  const [hours, minutesPart] = time.split(/:| /);
+  const [hours, minutesPart] = time?.split(/:| /);
   const minutes = parseInt(minutesPart);
-  const period = time.split(" ")[1];
+  const period = time?.split(" ")[1];
 
   let hours24 =
     period === "PM" && hours !== "12" ? parseInt(hours) + 12 : parseInt(hours);
@@ -58,14 +58,14 @@ const convertTo24Hour = (time: string): Time => {
 };
 
 const addMinutes = (time: Time, minsToAdd: number): Time => {
-  const date = new Date(0, 0, 0, time.hours, time.minutes + minsToAdd);
-  return { hours: date.getHours(), minutes: date.getMinutes() };
+  const date = new Date(0, 0, 0, time?.hours, time?.minutes + minsToAdd);
+  return { hours: date?.getHours(), minutes: date?.getMinutes() };
 };
 
 const formatTime = (time: Time): string => {
-  let hours = time.hours % 12 || 12;
-  let minutes = time.minutes.toString().padStart(2, "0");
-  let period = time.hours >= 12 ? "PM" : "AM";
+  let hours = time?.hours % 12 || 12;
+  let minutes = time?.minutes?.toString().padStart(2, "0");
+  let period = time?.hours >= 12 ? "PM" : "AM";
   return `${hours}:${minutes} ${period}`;
 };
 
@@ -84,8 +84,8 @@ export const useTimeSlots = (
       const endTimeConverted = convertTo24Hour(end);
 
       while (
-        startTimeConverted.hours * 60 + startTimeConverted.minutes <
-        endTimeConverted.hours * 60 + endTimeConverted.minutes
+        startTimeConverted.hours * 60 + startTimeConverted?.minutes <
+        endTimeConverted.hours * 60 + endTimeConverted?.minutes
       ) {
         slots.push(formatTime(startTimeConverted));
         startTimeConverted = addMinutes(startTimeConverted, 30);
@@ -141,7 +141,7 @@ export const useEventBookingState = (
     );
   };
 
-  const locationsListOptions: LocationsOption[] = locations.map(
+  const locationsListOptions: LocationsOption[] = locations?.map(
     (location: string) => ({
       value: location,
       label: location,

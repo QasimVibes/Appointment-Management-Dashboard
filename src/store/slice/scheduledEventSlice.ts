@@ -15,14 +15,14 @@ export const setScheduledEvent = createAsyncThunk(
     try {
       const response = await AxiosInstance.post("/meeting", data);
       if (response?.data) {
-        toast.success(response.data.message);
-        return response.data.meeting;
+        toast.success(response?.data?.message);
+        return response?.data?.meeting;
       } else {
-        toast.error(response.data.message);
+        toast.error(response?.data?.message);
       }
-      return rejectWithValue(response.data);
+      return rejectWithValue(response?.data);
     } catch (error: any) {
-      toast.error(error.response.data.message);
+      toast.error(error?.response?.data?.message);
       return rejectWithValue(error);
     }
   }
@@ -45,11 +45,11 @@ export const fetchMeeting = createAsyncThunk(
       if (response?.data) {
         return response.data;
       } else {
-        toast.error(response.data.message);
+        toast.error(response?.data?.message);
       }
-      return rejectWithValue(response.data);
+      return rejectWithValue(response?.data);
     } catch (error: any) {
-      toast.error(error.response.data.message);
+      toast.error(error?.response?.data?.message);
       return rejectWithValue(error);
     }
   }

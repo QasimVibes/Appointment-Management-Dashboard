@@ -14,11 +14,11 @@ export const resetPassword = createAsyncThunk(
   async (credentials: ResetPasswordProps, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post("/resetPassword", credentials);
-      toast.success(response.data.message);
+      toast.success(response?.data?.message);
       return response.data;
     } catch (error: any) {
-      toast.error(error.response.data.message);
-      return rejectWithValue(error.response.data);
+      toast.error(error?.response?.data?.message);
+      return rejectWithValue(error?.response?.data);
     }
   }
 );
