@@ -2,9 +2,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "@/hooks/reduxHook";
 import { verifyOtp } from "@/store/slice/verifyOtpSlice";
-import { otpSchema } from "@/constants/FormSchema";
+import { validateOTPData } from "@/constants/FormSchema";
 import { forgotPassword } from "@/store/slice/forgotPasswordSlice";
-import { z } from "zod";
 import toast from "react-hot-toast";
 
 export const useOtpVerification = () => {
@@ -47,7 +46,12 @@ export const useOtpVerification = () => {
   const handleVerifyOtp = async () => {
     try {
       const otpCode = otp.join("");
-      otpSchema.parse({ otp: otpCode });
+      const errors = validateOTPData({ otp: otpCode });
+      if (Object.keys(errors).length > 0) {
+        Object.values(errors).forEach((message) => toast.error(message));
+        return;
+      }
+
       const resultAction = await dispatch(verifyOtp({ email, otp: otpCode }));
       if (verifyOtp.fulfilled.match(resultAction)) {
         router.push(
@@ -55,13 +59,7 @@ export const useOtpVerification = () => {
         );
       }
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        error.errors.forEach((err) => {
-          toast.error(err.message);
-        });
-      } else {
-        toast.error("An unexpected error occurred. Please try again.");
-      }
+      toast.error("An error occurred while verifying the OTP.");
     }
   };
 

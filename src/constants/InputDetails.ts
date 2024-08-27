@@ -1,3 +1,5 @@
+import { InputFieldsResetPassword } from "@/types/types";
+
 export const inputDetails = [
   {
     id: "name",
@@ -34,12 +36,7 @@ export const inputFieldsResetPassword = ({
   confirmPassword,
   setNewPassword,
   setConfirmPassword,
-}: {
-  newPassword: string;
-  confirmPassword: string;
-  setNewPassword: Function;
-  setConfirmPassword: Function;
-}) => {
+}: InputFieldsResetPassword) => {
   const inputFields = [
     {
       id: "new-password",
@@ -86,3 +83,5 @@ export const inputFieldsSignup = [
     name: "password",
   },
 ];
+
+export const placeholders = Array.from({ length: 3 }, (_, index) => index);

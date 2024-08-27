@@ -1,8 +1,7 @@
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
-import { loginSchema } from "@/constants/FormSchema";
-import { z } from "zod";
+import { validateLoginData } from "@/constants/FormSchema";
 import {
   clearDetails,
   loginWithEmail,
@@ -38,15 +37,15 @@ export const useLogin = () => {
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
+    const errors = validateLoginData(data);
+    if (Object.keys(errors).length > 0) {
+      Object.values(errors).forEach((message) => toast.error(message));
+      return;
+    }
     try {
-      loginSchema.parse(data);
       await dispatch(loginWithEmail(data)).unwrap();
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        error.errors.forEach((err) => {
-          toast.error(err.message);
-        });
-      }
+      toast.error("An error occurred during sign-in.");
     }
   };
 

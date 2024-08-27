@@ -7,8 +7,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
-import { availabilitySchema } from "@/constants/FormSchema";
-import { z } from "zod";
+import { validateAvailabilityData } from "@/constants/FormSchema";
 import { SelectOption } from "@/types/types";
 
 export const useSelectAvailability = () => {
@@ -34,7 +33,16 @@ export const useSubmitAvailability = () => {
   const handleSubmit = useCallback(
     async (startHour: string, endHour: string, selectedDays: string[]) => {
       try {
-        availabilitySchema.parse({ startHour, endHour, selectedDays });
+        const errors = validateAvailabilityData({
+          startHour,
+          endHour,
+          selectedDays,
+        });
+        if (Object.keys(errors).length > 0) {
+          Object.values(errors).forEach((message) => toast.error(message));
+          return;
+        }
+
         if (session?.user?.id) {
           await dispatch(
             setAvailability({
@@ -47,13 +55,7 @@ export const useSubmitAvailability = () => {
           router.push("/eventBooking");
         }
       } catch (error) {
-        if (error instanceof z.ZodError) {
-          error.errors.forEach((err) => {
-            toast.error(err.message);
-          });
-        } else {
-          toast.error("An unexpected error occurred. Please try again.");
-        }
+        toast.error("An error occurred while saving availability.");
       }
     },
     [dispatch, session, router]

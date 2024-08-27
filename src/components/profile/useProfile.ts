@@ -3,6 +3,8 @@ import { useSession } from "next-auth/react";
 import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { updateUser, getUserDetails } from "@/store/slice/userSlice";
 import { UserData } from "@/types/types";
+import { validateProfileData } from "@/constants/FormSchema";
+import toast from "react-hot-toast";
 
 export const useUserProfile = () => {
   const dispatch = useAppDispatch();
@@ -40,8 +42,17 @@ export const useUserProfile = () => {
 
   const saveChangesHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await dispatch(updateUser(data)).unwrap();
-    setEditMode(false);
+    const errors = validateProfileData(data);
+    if (Object.keys(errors).length > 0) {
+      Object.values(errors).forEach((message) => toast.error(message));
+      return;
+    }
+    try {
+      await dispatch(updateUser(data)).unwrap();
+      setEditMode(false);
+    } catch (error) {
+      toast.error("An error occurred while updating the profile.");
+    }
   };
 
   const { isLoading, isError } = useAppSelector((state) => state.user);

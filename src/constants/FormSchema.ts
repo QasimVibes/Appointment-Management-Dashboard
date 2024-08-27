@@ -1,63 +1,184 @@
-import { z } from "zod";
+import {
+  AvailabilityData,
+  ForgotPasswordData,
+  LoginData,
+  OTPData,
+  PasswordResetData,
+  ProfileData,
+  ScheduledEventData,
+  SignupData,
+  ValidationErrorsAvailability,
+  ValidationErrorsForgotPassword,
+  ValidationErrorsLogin,
+  ValidationErrorsOTP,
+  ValidationErrorsPasswordReset,
+  ValidationErrorsProfile,
+  ValidationErrorsScheduledEvent,
+  ValidationErrorsSignup,
+} from "@/types/types";
 
-export const loginSchema = z.object({
-  email: z.string().email({ message: "Please enter a valid email address" }),
-  password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters" }),
-});
+export const validateLoginData = (data: LoginData): ValidationErrorsLogin => {
+  const errors: ValidationErrorsLogin = {};
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(data.email)) {
+    errors.email = "Please enter a valid email address";
+  }
 
-export const signupSchema = z.object({
-  email: z.string().email({ message: "Please enter a valid email address" }),
-  fullname: z
-    .string()
-    .min(3, { message: "Fullname must be at least 3 characters" }),
-  username: z
-    .string()
-    .min(3, { message: "Username must be at least 3 characters" }),
-  password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters" }),
-});
+  if (data.password.length < 8) {
+    errors.password = "Password must be at least 8 characters";
+  }
+  return errors;
+};
 
-export const forgotPasswordSchema = z.object({
-  email: z.string().email({ message: "Please enter a valid email address" }),
-});
+export const validateSignupData = (
+  data: SignupData
+): ValidationErrorsSignup => {
+  const errors: ValidationErrorsSignup = {};
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export const otpSchema = z.object({
-  otp: z.string().min(4, { message: "OTP must be at least 4 characters" }),
-});
+  if (!emailRegex.test(data.email)) {
+    errors.email = "Please enter a valid email address";
+  }
 
-export const resetPasswordSchema = z.object({
-  newPassword: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters" }),
-  confirmPassword: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters" }),
-});
+  if (data.fullname.length < 3) {
+    errors.fullname = "Fullname must be at least 3 characters";
+  }
 
-const timeFormat = z
-  .string()
-  .regex(/^(0[1-9]|1[0-2]):[0-5][0-9] (AM|PM)$/, "Invalid time format");
-export const availabilitySchema = z.object({
-  startHour: timeFormat.nonempty("Start hour is required"),
-  endHour: timeFormat.nonempty("End hour is required"),
-  selectedDays: z.array(z.string()).min(1, "At least one day must be selected"),
-});
+  if (data.username.length < 3) {
+    errors.username = "Username must be at least 3 characters";
+  }
 
-export const scheduledEventSchema = z.object({
-  schedulerEmail: z
-    .string()
-    .email({ message: "Please enter a valid email address" }),
-  schedulerName: z.string().nonempty("Name is required"),
-  description: z.string().optional(),
-  selectedTime: z.string().nonempty("Time is required"),
-  selectedDate: z.string().nonempty("Date is required"),
-  hostName: z.string().nonempty("Host name is required"),
-  hostEmail: z
-    .string()
-    .email({ message: "Please enter a valid email address" }),
-  userId: z.string().nonempty("User id is required"),
-  timezone: z.string().nonempty("Timezone is required"),
-});
+  if (data.password.length < 8) {
+    errors.password = "Password must be at least 8 characters";
+  }
+
+  return errors;
+};
+
+export const validateForgotPasswordData = (
+  data: ForgotPasswordData
+): ValidationErrorsForgotPassword => {
+  const errors: ValidationErrorsForgotPassword = {};
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(data.email)) {
+    errors.email = "Please enter a valid email address";
+  }
+
+  return errors;
+};
+
+export const validateOTPData = (data: OTPData): ValidationErrorsOTP => {
+  const errors: ValidationErrorsOTP = {};
+  if (data.otp.length < 4) {
+    errors.otp = "OTP must be at least 4 characters";
+  }
+
+  return errors;
+};
+
+export const validatePasswordResetData = (
+  data: PasswordResetData
+): ValidationErrorsPasswordReset => {
+  const errors: ValidationErrorsPasswordReset = {};
+
+  if (data.newPassword.length < 8) {
+    errors.newPassword = "Password must be at least 8 characters";
+  }
+  if (data.confirmPassword.length < 8) {
+    errors.confirmPassword = "Password must be at least 8 characters";
+  }
+
+  if (data.newPassword !== data.confirmPassword) {
+    errors.mismatch = "Passwords do not match";
+  }
+
+  return errors;
+};
+
+export const validateAvailabilityData = (
+  data: AvailabilityData
+): ValidationErrorsAvailability => {
+  const errors: ValidationErrorsAvailability = {};
+  const timeFormatRegex = /^(0[1-9]|1[0-2]):[0-5][0-9] (AM|PM)$/;
+
+  if (!timeFormatRegex.test(data.startHour)) {
+    errors.startHour = "Invalid time format";
+  }
+
+  if (!timeFormatRegex.test(data.endHour)) {
+    errors.endHour = "Invalid time format";
+  }
+
+  if (!data.startHour.trim()) {
+    errors.startHour = "Start hour is required";
+  }
+
+  if (!data.endHour.trim()) {
+    errors.endHour = "End hour is required";
+  }
+
+  if (data.selectedDays.length === 0) {
+    errors.selectedDays = "At least one day must be selected";
+  }
+
+  return errors;
+};
+
+export const validateScheduledEventData = (
+  data: ScheduledEventData
+): ValidationErrorsScheduledEvent => {
+  const errors: ValidationErrorsScheduledEvent = {};
+
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!emailRegex.test(data.schedulerEmail)) {
+    errors.schedulerEmail = "Please enter a valid email address";
+  }
+
+  if (!data.schedulerName.trim()) {
+    errors.schedulerName = "Name is required";
+  }
+
+  if (!data.selectedTime.trim()) {
+    errors.selectedTime = "Time is required";
+  }
+
+  if (!data.selectedDate || !data.selectedDate.trim()) {
+    errors.selectedDate = "Date is required";
+  }
+
+  if (data.hostName && !data.hostName.trim()) {
+    errors.hostName = "Host name is required";
+  }
+
+  if (data.hostEmail && !emailRegex.test(data.hostEmail)) {
+    errors.hostEmail = "Please enter a valid email address";
+  }
+
+  if (data.userId === undefined || !data.userId.trim()) {
+    errors.userId = "User id is required";
+  }
+
+  if (data.timezone && !data.timezone.trim()) {
+    errors.timezone = "Timezone is required";
+  }
+
+  return errors;
+};
+
+export const validateProfileData = (
+  data: ProfileData
+): ValidationErrorsProfile => {
+  const errors: ValidationErrorsProfile = {};
+
+  if (!data.id.trim()) {
+    errors.id = "ID is required";
+  }
+
+  if (!data.fullname.trim()) {
+    errors.fullname = "Fullname is required";
+  }
+
+  return errors;
+};

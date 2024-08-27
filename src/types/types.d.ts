@@ -187,12 +187,12 @@ export type NavbarProps = {
   url?: string;
 };
 
-export interface SelectOption {
+export type SelectOption = {
   value: string;
   label: string;
-}
+};
 
-export interface SelectProps {
+export type SelectProps = {
   options: SelectOption[];
   value: string;
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -200,7 +200,7 @@ export interface SelectProps {
   optionText?: string;
   name?: string;
   id?: string;
-}
+};
 
 export type ScheduledEventDetails = {
   name: string;
@@ -380,4 +380,148 @@ export type GoogleMeetEventDetails = {
 export type NodemailerProps = {
   to: string;
   templateVariables: { [key: string]: string };
+};
+
+export type LogoutBtnProps = {
+  text?: string;
+  className?: string;
+  children?: ReactNode;
+};
+
+export type InputFieldsResetPassword = {
+  newPassword: string;
+  confirmPassword: string;
+  setNewPassword: Function;
+  setConfirmPassword: Function;
+};
+
+export type ChartEventData = {
+  weeklyVisitsData: number[];
+  weeklyData: number[];
+  weeklyPeakHoursData: number[];
+};
+
+export type LoginData = {
+  email: string;
+  password: string;
+};
+
+export type ValidationErrorsLogin = {
+  email?: string;
+  password?: string;
+};
+
+export type SignupData = {
+  email: string;
+  fullname: string;
+  username: string;
+  password: string;
+};
+
+export type ValidationErrorsSignup = {
+  email?: string;
+  fullname?: string;
+  username?: string;
+  password?: string;
+};
+
+export type ForgotPasswordData = {
+  email: string;
+};
+
+export type ValidationErrorsForgotPassword = {
+  email?: string;
+};
+
+export type OTPData = {
+  otp: string;
+};
+
+export type ValidationErrorsOTP = {
+  otp?: string;
+};
+
+export type PasswordResetData = {
+  newPassword: string;
+  confirmPassword: string;
+};
+
+export type ValidationErrorsPasswordReset = {
+  newPassword?: string;
+  confirmPassword?: string;
+  mismatch?: string;
+};
+
+export type AvailabilityData = {
+  startHour: string;
+  endHour: string;
+  selectedDays: string[];
+};
+
+export type ValidationErrorsAvailability = {
+  startHour?: string;
+  endHour?: string;
+  selectedDays?: string;
+};
+
+export type ScheduledEventData = {
+  schedulerEmail: string;
+  schedulerName: string;
+  description?: string;
+  selectedTime: string;
+  selectedDate: string | null;
+  hostName: string | null;
+  hostEmail: string | null;
+  userId: string | undefined;
+  timezone: string | null;
+};
+
+export type ValidationErrorsScheduledEvent = {
+  schedulerEmail?: string;
+  schedulerName?: string;
+  description?: string;
+  selectedTime?: string;
+  selectedDate?: string;
+  hostName?: string;
+  hostEmail?: string;
+  userId?: string;
+  timezone?: string;
+};
+
+export type ProfileData = {
+  fullname: string;
+  welcomeMessage?: string;
+  language?: string;
+  dateFormat?: string;
+  timeFormat?: string;
+  country?: string;
+  timezone?: string;
+  id: string;
+};
+
+export type ValidationErrorsProfile = {
+  fullname?: string;
+  id?: string;
+};
+
+export type AccountDetailsProps = {
+  data: UserData;
+  handleChange: (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => void;
+  saveChangesHandler: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  currentTime: string;
+  editMode: boolean;
+};
+
+export type ProfileNavbarProps = {
+  userName: string;
+  toggleSidebar: () => void;
+};
+
+export type EventsProps = {
+  activeTab: string;
+  setActiveTab: (tab: string) => void;
 };

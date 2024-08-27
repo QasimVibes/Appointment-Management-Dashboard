@@ -5,7 +5,6 @@ import {
   scheduledEvent,
   analytics,
   adminCenter,
-  filter,
   clockDashboard,
   plus,
   opner,
@@ -13,26 +12,14 @@ import {
 } from "../../../public";
 import Button from "@/components/button/Button";
 import Link from "next/link";
-import {
-  useCategorizeEvents,
-  useDashboard,
-  useFetchEvents,
-  useNavigateHandler,
-} from "./useDashboard";
-import EventList from "@/components/eventList/EventList";
+import { useDashboard, useNavigateHandler } from "./useDashboard";
 import DropDown from "@/components/dropDown/DropDown";
 import Image from "next/image";
 import Analytics from "@/components/chart/Chart";
 import SideBar from "@/components/sidebar/SideBar";
-import GenerateICS from "@/components/generateICS/GenerateICS";
-import Loading from "../loading/Loading";
-import { tabs } from "@/constants/EventTabs";
-import Error from "../error/Error";
+import Events from "../events/Events";
 
 export default function Dashboard() {
-  const { userName, events, isLoading, isError } = useFetchEvents();
-  const { upcomingEvents, pastEvents } = useCategorizeEvents(events);
-
   const {
     activeTab,
     setActiveTab,
@@ -41,12 +28,10 @@ export default function Dashboard() {
     isSidebarOpen,
     setIsSidebarOpen,
     menuItems,
+    userName,
   } = useDashboard();
 
   const { handleNavigate, onNavigate } = useNavigateHandler();
-
-  if (isLoading) return <Loading />;
-  if (isError) return <Error />;
 
   return (
     <>
@@ -205,85 +190,11 @@ export default function Dashboard() {
                       </p>
                     </div>
                   </div>
-
-                  <div className="border border-solid border-tertiary rounded-[6px] bg-white">
-                    <div className="flex flex-row justify-between border-b-[1px] border-solid border-tertiary">
-                      <div className="pt-[16px] px-[12px] md:px-[24px]">
-                        <div className="flex font-inter font-[400] text-[15px] leading-[24px] text-secondary">
-                          {tabs?.map((tab) => (
-                            <div
-                              key={tab?.value}
-                              className={`cursor-pointer px-[8px] ${
-                                tab?.value === "Upcoming"
-                                  ? "md:pr-[16px] md:px-0"
-                                  : "md:px-[16px]"
-                              }`}
-                            >
-                              <Button
-                                className={`pt-[7px] pb-[17px] ${
-                                  activeTab === tab?.value
-                                    ? "text-primary border-b-[2px] border-solid border-quaternary"
-                                    : ""
-                                }`}
-                                onClick={() => setActiveTab(tab?.value)}
-                              >
-                                <span className="block sm:hidden truncate w-[5ch] overflow-hidden whitespace-nowrap text-ellipsis">
-                                  {tab?.label}
-                                </span>
-                                <span className="hidden sm:inline">
-                                  {tab?.label}
-                                </span>
-                              </Button>
-                            </div>
-                          ))}
-                          <div className="pl-[16px] hidden md:block">
-                            <Button className="pt-[7px] pb-[17px]">
-                              Date Range
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="flex flex-row justify-center items-center pr-[12px] md:pr-[24px] space-x-2">
-                        <GenerateICS events={events} />
-                        <div>
-                          <Button className="hidden md:flex font-inter font-[500] text-[12.69px] leading-[20px] text-primary  border border-solid border-primary rounded-[40px] px-[13px] py-[6px] ">
-                            <Image
-                              src={filter}
-                              alt="filter"
-                              className="mr-1"
-                              width={16}
-                              height={16}
-                            />
-                            Filter
-                          </Button>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="overflow-x-auto">
-                      <div className="max-h-[313px] min-w-[800px] md:min-w-[1020px] overflow-y-auto ">
-                        {activeTab === "Upcoming" && (
-                          <EventList events={upcomingEvents} title="Upcoming" />
-                        )}
-                        {activeTab === "Pending" && (
-                          <EventList events={[]} title="Pending" />
-                        )}
-                        {activeTab === "Past" && (
-                          <EventList events={pastEvents} title="Past" />
-                        )}
-                      </div>
-
-                      <div className="py-[17px]">
-                        <p className="font-inter font-[400] text-[14.88px] leading-[24px] text-secondary text-center">
-                          You&apos;ve reached the end of the list
-                        </p>
-                      </div>
-                    </div>
-                  </div>
+                  <Events activeTab={activeTab} setActiveTab={setActiveTab} />
                 </div>
               </div>
             </div>
           )}
-
           {dashboardActiveTab === "Analytics" && (
             <div className="px-[32px] py-[15.75px]">
               <h1 className="font-inter font-[700] text-[25.75px] leading-[39.2px] text-primary">

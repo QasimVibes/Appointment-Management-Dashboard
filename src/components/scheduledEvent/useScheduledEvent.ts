@@ -2,8 +2,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { setScheduledEvent } from "@/store/slice/scheduledEventSlice";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
-import { scheduledEventSchema } from "@/constants/FormSchema";
-import { z } from "zod";
+import { validateScheduledEventData } from "@/constants/FormSchema";
 import toast from "react-hot-toast";
 import { useSession, signIn } from "next-auth/react";
 import { ScheduledEventDetails, ScheduledEventHostData } from "@/types/types";
@@ -69,19 +68,18 @@ export const useSubmitScheduledEvent = (
         return;
       }
 
-      scheduledEventSchema.parse(submitData);
+      const errors = validateScheduledEventData(submitData);
+
+      if (Object.keys(errors).length > 0) {
+        Object.values(errors).forEach((message) => toast.error(message));
+        return;
+      }
       const resultAction = await dispatch(setScheduledEvent(submitData));
       if (setScheduledEvent.fulfilled.match(resultAction)) {
         router.push(`/scheduled/${resultAction.payload.url}`);
       }
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        error.errors.forEach((err) => {
-          toast.error(err.message);
-        });
-      } else {
-        toast.error("An unexpected error occurred. Please try again.");
-      }
+      toast.error("An error occurred while saving the scheduled event.");
     }
   }, [details, hostData, accessToken, dispatch, router, session?.user?.id]);
 

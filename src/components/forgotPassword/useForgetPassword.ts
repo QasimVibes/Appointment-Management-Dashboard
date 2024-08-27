@@ -2,9 +2,8 @@ import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { forgotPassword as forgotPasswordAsyncThunk } from "@/store/slice/forgotPasswordSlice";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { z } from "zod";
-import { forgotPasswordSchema } from "@/constants/FormSchema";
 import toast from "react-hot-toast";
+import { validateForgotPasswordData } from "@/constants/FormSchema";
 
 export const useForgotPassword = () => {
   const [email, setEmail] = useState<string>("");
@@ -13,17 +12,17 @@ export const useForgotPassword = () => {
   const { isLoading } = useAppSelector((state) => state.forgotPassword);
 
   const onHandleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const errors = validateForgotPasswordData({ email });
+    if (Object.keys(errors).length > 0) {
+      Object.values(errors).forEach((message) => toast.error(message));
+      return;
+    }
     try {
       e.preventDefault();
-      forgotPasswordSchema.parse({ email });
       await dispatch(forgotPasswordAsyncThunk({ email })).unwrap();
       router.push(`/otpVerification?email=${encodeURIComponent(email)}`);
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        error.errors.forEach((err) => {
-          toast.error(err.message);
-        });
-      }
+      toast.error("An error occurred while sending the password reset link.");
     }
   };
 

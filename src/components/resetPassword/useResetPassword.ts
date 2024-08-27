@@ -3,8 +3,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/reduxHook";
 import { useEffect, useState } from "react";
 import { resetPassword } from "@/store/slice/resetPasswordSlice";
 import toast from "react-hot-toast";
-import { resetPasswordSchema } from "@/constants/FormSchema";
-import { z } from "zod";
+import { validatePasswordResetData } from "@/constants/FormSchema";
 
 export const useResetPassword = () => {
   const [newPassword, setNewPassword] = useState<string>("");
@@ -32,7 +31,15 @@ export const useResetPassword = () => {
   const handleResetPassword = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-      resetPasswordSchema?.parse({ newPassword, confirmPassword });
+      const errors = validatePasswordResetData({
+        newPassword,
+        confirmPassword,
+      });
+      if (Object.keys(errors).length > 0) {
+        Object.values(errors).forEach((message) => toast.error(message));
+        return;
+      }
+
       if (newPassword === confirmPassword) {
         const resultAction = await dispatch(
           resetPassword({ email, otp, newPassword })
@@ -40,17 +47,9 @@ export const useResetPassword = () => {
         if (resetPassword.fulfilled.match(resultAction)) {
           router.push("/login");
         }
-      } else {
-        toast.error("Passwords do not match");
       }
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        error.errors.forEach((err) => {
-          toast.error(err.message);
-        });
-      } else {
-        toast.error("An unexpected error occurred. Please try again.");
-      }
+      toast.error("An error occurred while resetting the password.");
     }
   };
   return {
