@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import { SetAvailabilityProps, AvailabilityState } from "@/types/types";
 
 const initialState: AvailabilityState = {
-  isLoading: false,
+  isLoading: true,
   isError: false,
   availabilityData: null,
 };
@@ -73,7 +73,7 @@ const availabilitySlice = createSlice({
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(setAvailability.fulfilled, (state, action) => {
+      .addCase(setAvailability.fulfilled, (state) => {
         state.isLoading = false;
         state.isError = false;
       })

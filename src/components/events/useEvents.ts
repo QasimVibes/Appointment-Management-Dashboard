@@ -13,14 +13,17 @@ export const useFetchEvents = () => {
     (state) => state.scheduledEvent
   );
   const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const fetchEvents = useCallback(async () => {
     try {
       const fetchedData = await dispatch(fetchMeeting({ userId })).unwrap();
       setEvents(fetchedData?.meetings || []);
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching meeting data:", error);
       setEvents([]);
+      setLoading(false);
     }
   }, [dispatch, userId]);
 
@@ -30,7 +33,7 @@ export const useFetchEvents = () => {
     }
   }, [fetchEvents, userId]);
 
-  return { events, isLoading, isError };
+  return { events, isLoading, isError, loading };
 };
 
 export const useCategorizeEvents = (events: Event[]) => {

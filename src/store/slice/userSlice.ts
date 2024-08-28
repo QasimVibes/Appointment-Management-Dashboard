@@ -4,7 +4,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import toast from "react-hot-toast";
 
 const initialState: UserState = {
-  isLoading: false,
+  isLoading: true,
   isError: false,
   userDetails: null,
 };

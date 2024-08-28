@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import { AnalyticsState, PeakHoursAnalyticsData } from "@/types/types";
 
 const initialState: AnalyticsState = {
-  isLoading: false,
+  isLoading: true,
   isError: false,
   analyticsData: null,
 };

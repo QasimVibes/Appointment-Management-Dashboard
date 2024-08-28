@@ -23,9 +23,9 @@ export default function AccountDetails({
 }: AccountDetailsProps) {
   return (
     <div className="py-3 space-y-5">
-      <div className="flex flex-col sm:flex-row items-center space-y-5 sm:space-y-0 sm:space-x-5">
+      <div className="flex flex-col lg:flex-row items-center space-y-5 lg:space-y-0 lg:space-x-5">
         <Image src={personButton} alt="personButton" width={70} height={70} />
-        <div className="space-y-3 text-center sm:text-left">
+        <div className="space-y-3 text-center lg:text-left">
           <Button
             text="Upload picture"
             className="rounded-[40px] font-inter font-[400] text-[14px] leading-[21px] text-primary border border-solid border-primary py-2 px-3"
@@ -35,14 +35,14 @@ export default function AccountDetails({
           </p>
         </div>
       </div>
-      <div className="w-full max-w-full sm:max-w-[90%] lg:max-w-[80%]">
+      <div className="w-full max-w-full lg:max-w-[80%]">
         <div>
           <Input
             type="text"
             id="fullname"
             value={data?.fullname}
             onChange={handleChange}
-            className="w-full sm:w-[60%] border border-solid border-lightgray rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-primary mb-7"
+            className="w-full lg:w-[60%] border border-solid border-lightgray rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-primary mb-7"
             label="Name"
             labelClassName="block font-inter font-[700] text-[14px] leading-[21px] text-primary mb-2"
           />
@@ -57,10 +57,10 @@ export default function AccountDetails({
             name="welcomeMessage"
             value={data?.welcomeMessage || ""}
             onChange={handleChange}
-            className="w-full sm:w-[60%] border border-solid border-lightgray rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-primary mb-7"
+            className="w-full lg:w-[60%] border border-solid border-lightgray rounded-[8px] py-3 px-5 font-inter font-[400] text-[14px] leading-[21px] text-primary mb-7"
           />
 
-          <div className="relative w-full sm:w-[60%] ">
+          <div className="relative w-full lg:w-[60%] ">
             <Label
               htmlFor="language"
               label="Language"
@@ -79,7 +79,7 @@ export default function AccountDetails({
               <Image src={dropDownBtn} alt="dropDownBtn" width={9} height={6} />
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row sm:space-x-5 w-full sm:w-[60%]">
+          <div className="flex flex-col lg:flex-row lg:space-x-5 w-full lg:w-[60%]">
             <div className="w-full relative">
               <Label
                 htmlFor="dateFormat"
@@ -129,7 +129,7 @@ export default function AccountDetails({
               </div>
             </div>
           </div>
-          <div className="relative w-full sm:w-[60%]">
+          <div className="relative w-full lg:w-[60%]">
             <Label
               htmlFor="country"
               label="Country"
@@ -149,7 +149,7 @@ export default function AccountDetails({
             </div>
           </div>
 
-          <div className="relative w-full sm:w-[60%]">
+          <div className="relative w-full lg:w-[60%]">
             <div className="flex justify-between w-full mb-2">
               <Label
                 htmlFor="timezone"
@@ -174,19 +174,19 @@ export default function AccountDetails({
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row justify-between space-y-3 sm:space-y-0">
-            <div className="space-y-3 sm:space-y-0 sm:space-x-3">
+          <div className="flex flex-col lg:flex-row justify-between space-y-3 lg:space-y-0">
+            <div className="space-y-3 lg:space-y-0 lg:space-x-3">
               <Button
                 text="Save Changes"
                 onClick={saveChangesHandler}
                 disabled={!editMode}
-                className={`py-3 w-full sm:w-auto px-[14px] font-inter font-[600] text-[14px] leading-[21px] bg-quaternary text-white rounded-[40px] ${
+                className={`py-3 w-full lg:w-auto px-[14px] font-inter font-[600] text-[14px] leading-[21px] bg-quaternary text-white rounded-[40px] ${
                   !editMode && "cursor-not-allowed"
                 }`}
               />
               <Button
                 text="Cancel"
-                className="py-3 w-full sm:w-auto px-[14px] font-inter font-[500] text-[14px] leading-[21px] text-black rounded-[40px] border border-solid border-black"
+                className="py-3 w-full lg:w-auto px-[14px] font-inter font-[500] text-[14px] leading-[21px] text-black rounded-[40px] border border-solid border-black"
               />
             </div>
             <Button

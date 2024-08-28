@@ -11,7 +11,7 @@ import Loader from "../loader/Loader";
 import { EventsProps } from "@/types/types";
 
 export default function Events({ activeTab, setActiveTab }: EventsProps) {
-  const { events, isLoading, isError } = useFetchEvents();
+  const { events, isLoading, isError, loading } = useFetchEvents();
   const { upcomingEvents, pastEvents } = useCategorizeEvents(events);
 
   if (isError) return <Error />;
@@ -68,7 +68,7 @@ export default function Events({ activeTab, setActiveTab }: EventsProps) {
       </div>
       <div className="overflow-x-auto">
         <div className="max-h-[313px] min-w-[800px] md:min-w-[1020px] overflow-y-auto">
-          {isLoading ? (
+          {isLoading || loading ? (
             <div className="py-[17px] flex justify-center items-center border-b-[1px]">
               <Loader className="w-6 h-6" />
             </div>
