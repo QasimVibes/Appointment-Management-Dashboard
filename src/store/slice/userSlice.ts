@@ -1,7 +1,6 @@
 import { UserState, UserData } from "@/types/types";
 import { AxiosInstance } from "@/utils/instance/axiosInstance";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import toast from "react-hot-toast";
 
 const initialState: UserState = {
   isLoading: true,
@@ -15,14 +14,11 @@ export const updateUser = createAsyncThunk(
     try {
       const response = await AxiosInstance.put("/user", data);
       if (response?.data) {
-        toast.success(response?.data?.message);
         return response?.data;
       } else {
-        toast.error(response?.data?.message);
         return rejectWithValue(response?.data);
       }
     } catch (error: any) {
-      toast.error(error?.response?.data?.message);
       return rejectWithValue(error?.response?.data);
     }
   }
@@ -38,11 +34,9 @@ export const getUserDetails = createAsyncThunk(
       if (response?.data) {
         return response?.data?.user;
       } else {
-        toast.error(response?.data?.message);
         return rejectWithValue("Failed to fetch user details");
       }
     } catch (error: any) {
-      toast.error(error?.response?.data?.message || "An error occurred");
       return rejectWithValue(error?.response?.data || "An error occurred");
     }
   }

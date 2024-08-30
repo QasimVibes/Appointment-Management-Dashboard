@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { signIn } from "next-auth/react";
 import { AxiosInstance } from "@/utils/instance/axiosInstance";
-import { toast } from "react-hot-toast";
 import { SignupProps, AuthState } from "@/types/types";
 
 const initialState: AuthState = {
@@ -16,18 +15,14 @@ const initialState: AuthState = {
 export const loginWithEmail = createAsyncThunk(
   "auth/loginWithEmail",
   async (credentials: { email: string; password: string }, thunkAPI) => {
-    try {
-      const response = await signIn("credentials", {
-        ...credentials,
-        redirect: false,
-      });
-      if (response?.ok) {
-        return response;
-      } else {
-        return thunkAPI.rejectWithValue(response?.error);
-      }
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue(error?.message || "Login failed");
+    const response = await signIn("credentials", {
+      ...credentials,
+      redirect: false,
+    });
+    if (response?.ok) {
+      return response;
+    } else {
+      return thunkAPI.rejectWithValue(response?.error || "Login failed");
     }
   }
 );
@@ -39,7 +34,6 @@ export const loginWithGoogle = createAsyncThunk(
       const response = await signIn("google", { redirect: false });
       return response;
     } catch (error: any) {
-      console.error("Error during login with Google:", error);
       return thunkAPI.rejectWithValue(error?.message);
     }
   }
@@ -50,10 +44,8 @@ export const signupUser = createAsyncThunk(
   async (data: SignupProps, { rejectWithValue }) => {
     try {
       const response = await AxiosInstance.post("/signup", data);
-      toast.success(response?.data?.message);
       return response?.data;
     } catch (error: any) {
-      toast.error(error?.response?.data?.message);
       return rejectWithValue(error?.response?.data);
     }
   }

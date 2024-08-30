@@ -35,9 +35,10 @@ export const useSignup = () => {
 
     try {
       await dispatch(signupUser(data)).unwrap();
+      toast.success("Signup Successful");
       router.push("/login");
-    } catch (error) {
-      toast.error("An error occurred during sign-up.");
+    } catch (error: any) {
+      toast.error(error?.message);
     }
   };
 

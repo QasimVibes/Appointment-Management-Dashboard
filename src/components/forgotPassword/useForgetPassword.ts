@@ -20,9 +20,10 @@ export const useForgotPassword = () => {
     try {
       e.preventDefault();
       await dispatch(forgotPasswordAsyncThunk({ email })).unwrap();
+      toast.success("Password reset link sent to your email.");
       router.push(`/otpVerification?email=${encodeURIComponent(email)}`);
-    } catch (error) {
-      toast.error("An error occurred while sending the password reset link.");
+    } catch (error: any) {
+      toast.error(error?.message);
     }
   };
 

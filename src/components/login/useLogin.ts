@@ -44,8 +44,10 @@ export const useLogin = () => {
     }
     try {
       await dispatch(loginWithEmail(data)).unwrap();
-    } catch (error) {
-      toast.error("An error occurred during sign-in.");
+    } catch (error: any) {
+      if (error.message) {
+        toast.error(error?.message);
+      }
     }
   };
 

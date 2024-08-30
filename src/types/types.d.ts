@@ -513,7 +513,6 @@ export type AccountDetailsProps = {
   ) => void;
   saveChangesHandler: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   currentTime: string;
-  editMode: boolean;
 };
 
 export type ProfileNavbarProps = {

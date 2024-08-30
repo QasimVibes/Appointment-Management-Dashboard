@@ -25,14 +25,12 @@ export const useUserProfile = () => {
     timezone: "",
     id: "",
   });
-  const [editMode, setEditMode] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    setEditMode(true);
     const { name, value } = e.target;
     setData((prevData) => ({
       ...prevData,
@@ -49,9 +47,9 @@ export const useUserProfile = () => {
     }
     try {
       await dispatch(updateUser(data)).unwrap();
-      setEditMode(false);
-    } catch (error) {
-      toast.error("An error occurred while updating the profile.");
+      toast.success("Profile updated successfully");
+    } catch (error: any) {
+      toast.error(error?.message);
     }
   };
 
@@ -80,7 +78,6 @@ export const useUserProfile = () => {
     handleChange,
     saveChangesHandler,
     currentTime,
-    editMode,
     isLoading,
     isError,
   };

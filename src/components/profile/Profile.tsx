@@ -19,7 +19,6 @@ export function Profile() {
     handleChange,
     saveChangesHandler,
     currentTime,
-    editMode,
     isError,
     isLoading,
   } = useUserProfile();
@@ -112,7 +111,6 @@ export function Profile() {
             handleChange={handleChange}
             saveChangesHandler={saveChangesHandler}
             currentTime={currentTime}
-            editMode={editMode}
           />
         </div>
       </div>

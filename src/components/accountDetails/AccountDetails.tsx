@@ -19,7 +19,6 @@ export default function AccountDetails({
   handleChange,
   saveChangesHandler,
   currentTime,
-  editMode,
 }: AccountDetailsProps) {
   return (
     <div className="py-3 space-y-5">
@@ -179,10 +178,7 @@ export default function AccountDetails({
               <Button
                 text="Save Changes"
                 onClick={saveChangesHandler}
-                disabled={!editMode}
-                className={`py-3 w-full lg:w-auto px-[14px] font-inter font-[600] text-[14px] leading-[21px] bg-quaternary text-white rounded-[40px] ${
-                  !editMode && "cursor-not-allowed"
-                }`}
+                className="py-3 w-full lg:w-auto px-[14px] font-inter font-[600] text-[14px] leading-[21px] bg-quaternary text-white rounded-[40px]"
               />
               <Button
                 text="Cancel"
