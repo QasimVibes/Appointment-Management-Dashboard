@@ -34,7 +34,7 @@ export function ScheduledEvent() {
               </Link>
             </div>
             <div className="space-y-[6px]">
-              <p className="font-[400] text-[16px] leading-[22px] text-primary">
+              <p className="font-[600] text-[16px] leading-[22px] text-primary">
                 {hostData?.host}
               </p>
               <h1 className="font-[700] text-[28px] leading-[28px] text-primary">
@@ -44,26 +44,26 @@ export function ScheduledEvent() {
             <div className="space-y-[12px]">
               <div className="flex space-x-2">
                 <Image src={clock} alt="clock" width={24} height={24} />
-                <p className="font-[400] text-[14px] leading-[22px] text-primary">
+                <p className="font-[600] text-[14px] leading-[22px] text-primary">
                   30 min
                 </p>
               </div>
               <div className="flex space-x-2">
                 <Image src={briefcase} alt="briefcase" width={24} height={24} />
-                <p className="font-[400] text-[14px] leading-[22px] text-primary">
+                <p className="font-[600] text-[14px] leading-[22px] text-primary">
                   {hostData?.startingTime} - {hostData?.endingTime},{" "}
                   {hostData?.day}
                 </p>
               </div>
               <div className="flex space-x-2">
                 <Image src={globe} alt="globe" width={24} height={24} />
-                <p className="font-[400] text-[14px] leading-[22px] text-primary">
+                <p className="font-[600] text-[14px] leading-[22px] text-primary">
                   {hostData?.location}
                 </p>
               </div>
             </div>
             <div className="hidden lg:flex justify-between absolute bottom-7 left-7 right-7">
-              <div className="font-[400] text-[14px] leading-[22px] text-quaternary">
+              <div className="font-[400] text-[14px] leading-[22px] text-purpleShade">
                 Cookie Setting
               </div>
               <div className="font-[400] text-[14px] leading-[22px] text-primary">
@@ -120,11 +120,11 @@ export function ScheduledEvent() {
               </div>
               <p className="font-[400] text-[14px] leading-[20px] text-primary text-center lg:text-left">
                 By proceeding, you confirm that you have read and agree to{" "}
-                <span className="text-quaternary font-[600]">
+                <span className="text-purpleShade font-[600]">
                   Calendly&apos;s Term of Use
                 </span>{" "}
                 and{" "}
-                <span className="text-quaternary font-[600]">
+                <span className="text-purpleShade font-[600]">
                   Privacy Policy
                 </span>
                 .
@@ -133,7 +133,7 @@ export function ScheduledEvent() {
                 text="Schedule Event"
                 onClick={handleButtonClick}
                 isLoading={isLoading}
-                className="w-full lg:w-auto rounded-[28px] border border-solid px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] bg-blue-700 text-white"
+                className="w-full lg:w-auto rounded-[28px] border border-solid px-[15px] py-[14px] text-[16px] font-normal font-Arial leading-[24px] bg-purpleShade text-white"
               />
             </div>
           </div>

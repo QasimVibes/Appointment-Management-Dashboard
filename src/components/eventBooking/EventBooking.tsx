@@ -65,7 +65,7 @@ export function EventBooking() {
                     tileDisabled={EventBookingState?.tileDisabled}
                   />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 lg:space-y-0 lg:pt-[13px] pt-[0px]">
                   <h2 className="font-bold text-[16px] leading-[28px] text-primary">
                     Time zone
                   </h2>
@@ -100,7 +100,7 @@ export function EventBooking() {
                   {EventBookingState?.value?.toString().slice(0, 16)}
                 </h2>
               </div>
-              <div className="space-y-[10px] overflow-auto max-h-[200px] lg:max-h-[550px] ">
+              <div className="space-y-[10px] overflow-auto max-h-[200px] lg:max-h-[600px] ">
                 {timeSlots?.map((time) =>
                   EventBookingState?.selectedTime !== time ? (
                     <div key={time}>

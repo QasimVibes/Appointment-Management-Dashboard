@@ -25,7 +25,7 @@ export function Signup() {
           ))}
         </div>
         <div className=" w-full h-[6px] bg-redwhite"></div>
-        <div className="font-inter font-normal text-[12.91px] leading-[21px] text-danger pt-[11.5px] pl-[20px] mb-[12px]">
+        <div className="font-inter font-normal text-[12.91px] leading-[21px] text-darkRed pt-[11.5px] pl-[20px] mb-[12px]">
           <p>Use a few words, avoid common phrases</p>
           <p>No need for symbols, digits, or uppercase letters</p>
         </div>
@@ -41,7 +41,7 @@ export function Signup() {
             text="Sign Up"
             disabled={signupState?.signupStatus === "loading"}
             isLoading={signupState?.isLoading}
-            className="border border-solid border-quaternary py-[11px] px-[16.5px] bg-quaternary text-white rounded-[40px]"
+            className="font-inter font-[700] text-[12.91px] leading-[22px] border border-solid border-quaternary py-[11px] px-[16.5px] bg-quaternary text-white rounded-[40px]"
           />
         </div>
       </form>

@@ -33,10 +33,10 @@ export default function MeetingConfirm({
   const { invitationHandler } = useInvitationHandler(meetingLink, userId, url);
 
   return (
-    <div className="flex flex-col items-center justify-center py-[66px]">
-      <div className="w-[75%] text-center border border-solid border-lightgray shadow p-8 relative ">
-        <div className="flex flex-col items-center space-y-5 ">
-          <div className="flex flex-col  sm:flex-row items-center">
+    <div className="flex flex-col items-center justify-center py-[33px] h-[100vh] bg-lightwhite">
+      <div className="w-[75%] h-[90%] text-center border border-solid border-lightgray bg-white shadow p-8 relative overflow-hidden">
+        <div className="flex flex-col items-center space-y-5 h-full overflow-y-auto">
+          <div className="flex flex-col sm:flex-row items-center">
             <div className="mr-[8px] flex">
               <Image src={checkmark} width={20} height={20} alt="checkmark" />
             </div>
@@ -47,10 +47,10 @@ export default function MeetingConfirm({
           <div className="font-inter font-[400] text-[12px] leading-[16px] sm:text-[14px] sm:leading-[22px] text-primary text-center px-4">
             <p>A calendar invitation has been sent to your email address</p>
           </div>
-          <div className="flex ">
+          <div className="flex">
             <button
               onClick={invitationHandler}
-              className="font-inter py-[10px] px-[24px] border border-solid border-primary rounded-[40px] font-[500] text-[12px] leading-[16px]  sm:text-[14px] sm:leading-[22px] text-primary flex items-center"
+              className="font-inter py-[10px] px-[24px] border border-solid border-primary rounded-[40px] font-[500] text-[12px] leading-[16px] sm:text-[14px] sm:leading-[22px] text-primary flex items-center"
             >
               Open invitation
               <span className="ml-2">
@@ -64,14 +64,14 @@ export default function MeetingConfirm({
               </span>
             </button>
           </div>
-          <div className=" border border-solid border-lightgray w-full max-w-[445px] rounded-[8px] px-[16px] py-[16px] space-y-[14px]">
+          <div className="border border-solid border-lightgray w-full max-w-[445px] rounded-[8px] px-[16px] py-[16px] space-y-[14px]">
             <h2 className="font-inter font-[700] text-[16px] leading-[18px] sm:text-[22px] sm:leading-[22px] text-primary text-start">
               30 Minutes Meeting
             </h2>
             {data?.map((item, index) => (
               <div
                 key={index}
-                className="flex flex-col sm:flex-row items-center font-inter font-[400] text-[14px] leading-[22px] text-secondary"
+                className="flex flex-col sm:flex-row items-center font-inter font-[600] text-[14px] leading-[22px] text-secondary"
               >
                 <Image
                   src={item?.icon}
@@ -85,7 +85,7 @@ export default function MeetingConfirm({
             ))}
           </div>
           <div className="hidden lg:block absolute bottom-3 left-5 cursor-pointer">
-            <p className="text-[14px] leading-[18px]  text-purple-600">
+            <p className="text-[14px] leading-[18px] text-purpleShade">
               Cookie settings
             </p>
           </div>

@@ -7,6 +7,7 @@ export const Colors = {
   lightwhite: "#FBFCFD",
   darkgray: "#B2B2B2",
   danger: "#FF0000",
+  darkRed: "#C84545",
   lightzinc: "#f1eeee",
   darkzinc: "#F9F9F9",
   redwhite: "#F2F2F2",
@@ -15,4 +16,5 @@ export const Colors = {
   greenShade: "#00E396",
   pinkShade: "#FF4560",
   blueShade: "#0099FF",
+  purpleShade: "#4203FF",
 };

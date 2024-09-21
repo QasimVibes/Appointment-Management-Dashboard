@@ -38,7 +38,8 @@ import dropDownBtn from "./asset/dropdownBtn.svg";
 import showPassword from "./asset/showPassword.svg";
 import hidePassword from "./asset/hidePassword.svg";
 import anocement from "./asset/anocement.svg";
-import troubleshoot from "./asset/troubleshoot.svg"
+import troubleshoot from "./asset/troubleshoot.svg";
+import blueDropDown from "./asset/blueDropDown.svg";
 
 export {
   logo,
@@ -82,4 +83,5 @@ export {
   hidePassword,
   anocement,
   troubleshoot,
+  blueDropDown,
 };

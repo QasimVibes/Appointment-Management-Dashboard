@@ -42,7 +42,7 @@ const EventList = ({ events, title }: EventListProps): JSX.Element => {
                 className="flex flex-row items-center space-x-[6px]"
               >
                 <Image src={details} alt="details" width={10} height={14} />
-                <p className="text-[14.88px] leading-[22.4px] text-gray-600">
+                <p className="text-[14.88px] leading-[22.4px] text-secondary">
                   Details
                 </p>
               </Link>

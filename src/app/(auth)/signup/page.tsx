@@ -19,7 +19,7 @@ export default function Signup() {
         <Logo width={150} height={35} className="md:w-[182px] md:h-[45px]" />
       </div>
       <div className="w-[200px] mb-[9.3px] text-center md:w-[268.65px]">
-        <h1 className="text-[18px] font-bold font-inter leading-[24px] md:text-[20px] md:leading-[28px]">
+        <h1 className="text-[18px] font-bold font-inter leading-[24px] md:text-[20px] md:leading-[28px] text-primary">
           Sign up with Calendly for free
         </h1>
       </div>

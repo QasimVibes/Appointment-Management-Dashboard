@@ -2,7 +2,7 @@
 import {
   availability,
   progressbar,
-  dropDownBtn,
+  blueDropDown,
   anocement,
 } from "../../../public";
 import {
@@ -60,10 +60,10 @@ export function Availability() {
         <div className="flex flex-col  md:w-[645px] border border-solid border-lightgray rounded-lg w-[90%]">
           <div className="flex flex-col md:flex-row h-full">
             <div className="py-6 px-6  md:py-8 space-y-4 m:space-y-6 flex-grow w-auto md:max-w-[457.33px]">
-              <h1 className="font-inter font-bold text-lg md:text-[18.44px] leading-7 md:leading-[28px]">
+              <h1 className="font-inter font-bold text-lg md:text-[18.44px] leading-7 md:leading-[28px] text-primary">
                 Set your availability
               </h1>
-              <p className="md:w-[365px] w-auto font-inter font-normal text-sm md:text-[14.88px] leading-6 md:leading-[22.4px]">
+              <p className="md:w-[365px] w-auto font-inter font-normal text-sm md:text-[14.88px] leading-6 md:leading-[22.4px] text-primary">
                 Let Calendly know when you&apos;re typically available to accept
                 meetings.
               </p>
@@ -82,11 +82,11 @@ export function Availability() {
             <div className="space-y-5">
               <div className="space-y-2">
                 <div>
-                  <h2 className="font-inter font-bold text-sm md:text-[14.88px] leading-6 md:leading-[22px]">
+                  <h2 className="font-inter text-primary font-bold text-sm md:text-[14.88px] leading-6 md:leading-[22px]">
                     Available hours
                   </h2>
                 </div>
-                <div className="relative flex flex-col md:flex-row gap-y-4 md:gap-x-8 items-center">
+                <div className="relative flex flex-col md:flex-row gap-y-4 md:gap-x-8 items-center w-full justify-between">
                   <div className="relative w-full md:w-auto">
                     <SelectBox
                       name="startingHours"
@@ -94,12 +94,12 @@ export function Availability() {
                       options={startingHoursOptions}
                       value={startHour || ""}
                       onChange={handleStartHourChange}
-                      className="py-3.5 px-4 w-full md:w-[278px] rounded-lg border border-solid border-darkgray appearance-none"
+                      className="py-[13px] px-4 w-full md:w-[278px] rounded-lg border border-solid border-darkgray appearance-none font-inter font-[400] text-[15.13px] leading-[20px] text-primary"
                       optionText="Select a time"
                     />
                     <div className="absolute inset-y-0 right-[21px] flex items-center pointer-events-none">
                       <Image
-                        src={dropDownBtn}
+                        src={blueDropDown}
                         alt="dropDownBtn"
                         width={9}
                         height={6}
@@ -113,12 +113,12 @@ export function Availability() {
                       options={endingHoursOptions}
                       value={endHour || ""}
                       onChange={handleEndHourChange}
-                      className="py-3.5 px-4 w-full md:w-[278px] rounded-lg border border-solid border-darkgray appearance-none"
+                      className="py-[13px] px-4 w-full md:w-[278px] rounded-lg border border-solid border-darkgray appearance-none font-inter font-[400] text-[15.13px] leading-[20px] text-primary"
                       optionText="Select a time"
                     />
                     <div className="absolute inset-y-0 right-[21px] flex items-center pointer-events-none">
                       <Image
-                        src={dropDownBtn}
+                        src={blueDropDown}
                         alt="dropDownBtn"
                         width={9}
                         height={6}
@@ -129,7 +129,7 @@ export function Availability() {
               </div>
               <div className="space-y-2">
                 <div>
-                  <h2 className="font-inter font-bold text-sm md:text-[14.88px] leading-6 md:leading-[22px]">
+                  <h2 className="font-inter text-primary font-bold text-sm md:text-[14.88px] leading-6 md:leading-[22px]">
                     Available days
                   </h2>
                 </div>
@@ -176,7 +176,7 @@ export function Availability() {
                     width={16}
                     height={16}
                   />
-                  <p className="mt-2 md:mt-0 font-inter font-[400] text-[14.75px] leading-[24px]">
+                  <p className="mt-2 md:mt-0 font-inter font-[400] text-[14.75px] leading-[24px] text-primary">
                     Don&apos;t worry! You&apos;ll be able to further customize
                     your availability later on.
                   </p>
