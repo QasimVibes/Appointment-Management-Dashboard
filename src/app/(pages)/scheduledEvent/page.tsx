@@ -18,7 +18,7 @@ export default function ScheduledEvent() {
   return (
     <>
       <Navbar />
-      <div className="pt-[46px] flex justify-center bg-lightwhitered mb-[48px]">
+      <div className="pt-[46px] flex justify-center bg-lightwhitered pb-[48px] h-[100vh]">
         <div className="relative flex flex-col items-center rounded w-[90%] lg:w-auto bg-white">
           <Suspense fallback={<div>Loading Scheduled Event...</div>}>
             <ScheduledEventComponent />

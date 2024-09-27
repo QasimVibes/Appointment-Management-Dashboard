@@ -41,7 +41,7 @@ export function Signup() {
             text="Sign Up"
             disabled={signupState?.signupStatus === "loading"}
             isLoading={signupState?.isLoading}
-            className="font-inter font-[700] text-[12.91px] leading-[22px] border border-solid border-quaternary py-[11px] px-[16.5px] bg-quaternary text-white rounded-[40px]"
+            className="font-inter font-[700] text-[12.91px] leading-[22px] w-[92px] h-11 bg-quaternary text-white rounded-[40px]"
           />
         </div>
       </form>

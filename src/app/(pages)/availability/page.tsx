@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function Availability() {
   return (
-    <div className="flex flex-col items-center space-y-8 mb-12">
+    <div className="flex flex-col items-center space-y-8 mb-12 h-[100vh]">
       <div className="flex items-center justify-center pt-3 pb-2">
         <Logo width={160} height={38} className="md:w-[180px] md:h-[42px]" />
       </div>
