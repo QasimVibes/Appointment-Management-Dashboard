@@ -81,9 +81,10 @@ export const analyticsSlice = createSlice({
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(putPeakHoursAnalyticsData.fulfilled, (state) => {
+      .addCase(putPeakHoursAnalyticsData.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
+        state.analyticsData = action.payload;
       })
       .addCase(putPeakHoursAnalyticsData.rejected, (state) => {
         state.isLoading = false;

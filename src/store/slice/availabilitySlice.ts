@@ -73,9 +73,10 @@ const availabilitySlice = createSlice({
         state.isLoading = true;
         state.isError = false;
       })
-      .addCase(setAvailability.fulfilled, (state) => {
+      .addCase(setAvailability.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
+        state.availabilityData = action.payload;
       })
       .addCase(setAvailability.rejected, (state) => {
         state.isLoading = false;

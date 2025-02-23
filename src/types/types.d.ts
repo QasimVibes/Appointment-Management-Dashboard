@@ -77,6 +77,7 @@ export type ScheduledEventState = {
   isLoading: boolean;
   isError: boolean;
   scheduledEventStatus: "idle" | "loading" | "succeeded" | "failed";
+  meeting: ScheduledAppointmentData | null;
 };
 
 export type ForgotPasswordProps = {

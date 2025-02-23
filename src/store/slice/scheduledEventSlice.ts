@@ -7,6 +7,7 @@ const initialState: ScheduledEventState = {
   isLoading: false,
   isError: false,
   scheduledEventStatus: "idle",
+  meeting: null,
 };
 
 export const setScheduledEvent = createAsyncThunk(
@@ -43,7 +44,7 @@ export const fetchMeeting = createAsyncThunk(
       const response = await AxiosInstance.get(`/meeting${queryString}`);
 
       if (response?.data) {
-        return response.data;
+        return response.data?.meeting;
       } else {
         toast.error(response?.data?.message);
       }
@@ -66,10 +67,11 @@ export const scheduledEventSlice = createSlice({
         state.isError = false;
         state.scheduledEventStatus = "loading";
       })
-      .addCase(setScheduledEvent.fulfilled, (state) => {
+      .addCase(setScheduledEvent.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.scheduledEventStatus = "succeeded";
+        state.meeting = action.payload;
       })
       .addCase(setScheduledEvent.rejected, (state) => {
         state.isLoading = false;
@@ -83,10 +85,11 @@ export const scheduledEventSlice = createSlice({
         state.isError = false;
         state.scheduledEventStatus = "loading";
       })
-      .addCase(fetchMeeting.fulfilled, (state) => {
+      .addCase(fetchMeeting.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isError = false;
         state.scheduledEventStatus = "succeeded";
+        state.meeting = action.payload;
       })
       .addCase(fetchMeeting.rejected, (state) => {
         state.isLoading = false;
